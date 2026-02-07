@@ -3,27 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <title>Resident RP</title>
-    <link rel="headsheet" href="headst.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <!-- HERO -->
-<section class="hero">
-    <div class="hero-content">
-        <h1>🚓 Resident RP</h1>
-        <p>Dansk FiveM RP-server med seriøst og realistisk roleplay</p>
+<section class="hero" id="forside">
+    <h1>🚓 Resident RP</h1>
+    <p>Dansk FiveM RP-server med seriøst og realistisk roleplay</p>
 
-        <div class="hero-buttons">
-            <a href="cfx.re/join/XXXXXX" class="btn primary">🎮 Connect</a>
-            <a href="#" class="btn secondary">https://discord.gg/eYAAuNpKbu</a>
+    <div class="buttons">
+        <!-- FiveM connect -->
+        <a href="https://cfx.re/join/XXXXXX" class="btn primary" target="_blank">
+            🎮 Connect
+        </a>
+
+        <!-- Discord -->
+        <a href="https://discord.gg/DITDISCORDLINK" class="btn secondary" target="_blank">
+            💬 Join Discord
+        </a>
+    </div>
+
+    <nav>
+        <a href="#forside">Forside</a>
+        <a href="#regler">Regler</a>
+        <a href="#staff">Staff</a>
+        <a href="#ansogning">Ansøgning</a>
+    </nav>
+</section>
+
+<!-- REGLER -->
+<section class="section" id="regler">
+    <h2>📜 Regler</h2>
+    <p>
+        Vi forventer seriøs og realistisk roleplay.
+        Respekt for andre spillere og staff er et krav.
+    </p>
+</section>
+
+<!-- STAFF -->
+<section class="section" id="staff">
+    <h2>👑 Staff Team</h2>
+
+    <div class="staff">
+        <div class="card owner">
+            <span class="role">Owner</span>
+            <span class="name">WantedMK</span>
+        </div>
+
+        <div class="card admin">
+            <span class="role">Admin</span>
+            <span class="name">AdminNavn</span>
+        </div>
+
+        <div class="card mod">
+            <span class="role">Moderator</span>
+            <span class="name">ModNavn</span>
         </div>
     </div>
 </section>
 
-<!-- INFO -->
-<section class="info">
-    <div class="info-box">
-        <h2>💡 Om serveren</h2>
-        <p>
-            Resident RP er en dansk FiveM roleplay server med fokus på
+<!-- ANSØGNING -->
+<section class="section" id="ansogning">
+    <h2>📝 Ansøgning</h2>
+    <p>
+        Vil du være en del af staff eller whitelist?
+        Ansøg via vores Discord.
+    </p>
+</section>
+
+<footer>
+    © 2026 Resident RP
+</footer>
+
+</body>
+</html>
