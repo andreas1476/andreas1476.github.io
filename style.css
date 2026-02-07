@@ -1,83 +1,46 @@
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #0b0b0b, #141414);
-  color: white;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0f0f0f;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-/* Navigation */
-nav {
-  background: #0f0f0f;
-  padding: 15px;
-  text-align: center;
-  border-bottom: 1px solid #222;
+.staff-card {
+    background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    min-width: 280px;
 }
 
-nav a {
-  color: #00ffcc;
-  text-decoration: none;
-  margin: 0 15px;
-  font-size: 18px;
-  font-weight: bold;
+.staff-card h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    letter-spacing: 1px;
 }
 
-nav a:hover {
-  color: white;
+.staff-role {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Hero section */
-.hero {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
+.staff-role:last-child {
+    border-bottom: none;
 }
 
-.hero-box {
-  background: rgba(20, 20, 20, 0.9);
-  padding: 50px;
-  max-width: 700px;
-  width: 90%;
-  text-align: center;
-  border-radius: 15px;
-  box-shadow: 0 0 25px rgba(0, 255, 204, 0.15);
+.role {
+    font-weight: bold;
+    color: #f1c40f;
 }
 
-.hero-box h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
-}
-
-.hero-box p {
-  font-size: 18px;
-  opacity: 0.9;
-}
-
-/* Buttons */
-.buttons {
-  margin-top: 30px;
-}
-
-.btn {
-  display: inline-block;
-  padding: 15px 30px;
-  margin: 10px;
-  border-radius: 8px;
-  font-size: 16px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.btn-discord {
-  background: #5865F2;
-  color: white;
-}
-
-.btn-connect {
-  background: #00ffcc;
-  color: black;
-}
-
-.btn:hover {
-  opacity: 0.85;
+.name {
+    color: #ffffff;
 }
