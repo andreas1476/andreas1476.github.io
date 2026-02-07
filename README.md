@@ -2,19 +2,7 @@
 mit-første-projekt
 
 index.html
-<!DOCTYPE html>
-<html lang="da">
-<head>
-  <meta charset="UTF-8">
-  <title>Min FiveM Server</title>
-  <style>
-    body {
-      background: #0f0f0f;
-      color: white;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-    }
+ }
     a {
       color: #00ffcc;
       text-decoration: none;
