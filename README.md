@@ -36,7 +36,7 @@ index.html
 
     <p><strong>IP:</strong> connect cfx.re/join/XXXXXX</p>
 
-    <a href="https://discord.gg/DITDISCORD" target="_blank">
+    <a href="https://discord.gg/TTTqQEzkDk" target="_blank">
       👉 Join vores Discord
     </a>
   </div>
