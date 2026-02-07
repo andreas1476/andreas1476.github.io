@@ -1,67 +1,64 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <title>Ansøgning | Resident RP</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Ansøgning | Resident RP</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav>
-  <a href="index.html">Forside</a>
-  <a href="regler.html">Regler</a>
-  <a href="staff.html">Staff</a>
-  <a href="ansogning.html">Ansøgning</a>
-</nav>
+<header class="page-header">
+    <h1>📝 Ansøgning</h1>
+    <nav>
+        <a href="index.html">Forside</a>
+        <a href="regler.html">Regler</a>
+        <a href="ansogning.html">Ansøgning</a>
+    </nav>
+</header>
 
-<div class="box">
-  <h1>📝 RP-Ansøgning</h1>
-  <p>Udfyld ansøgningen seriøst. Troll-ansøgninger bliver afvist.</p>
+<section class="section">
+    <form class="application">
+        <label>
+            Discord navn
+            <input type="text" placeholder="Navn#0000" required>
+        </label>
 
-  <form>
-    <p>
-      <label>Dit navn (IRL)</label><br>
-      <input type="text" required>
-    </p>
+        <label>
+            Alder
+            <input type="number" required>
+        </label>
 
-    <p>
-      <label>Discord navn</label><br>
-      <input type="text" placeholder="Navn#0000" required>
-    </p>
+        <label>
+            Hvad ansøger du om?
+            <select>
+                <option>Whitelist</option>
+                <option>Staff</option>
+            </select>
+        </label>
 
-    <p>
-      <label>Alder</label><br>
-      <input type="number" required>
-    </p>
+        <label>
+            Fortæl lidt om dig selv
+            <textarea rows="4" required></textarea>
+        </label>
 
-    <p>
-      <label>Hvor meget RP-erfaring har du?</label><br>
-      <textarea rows="4" required></textarea>
-    </p>
+        <label>
+            RP-erfaring
+            <textarea rows="4" required></textarea>
+        </label>
 
-    <p>
-      <label>Beskriv din karakter</label><br>
-      <textarea rows="5" required></textarea>
-    </p>
+        <button type="submit" class="btn primary">
+            Send ansøgning
+        </button>
 
-    <p>
-      <label>Hvorfor vil du spille på Resident RP?</label><br>
-      <textarea rows="5" required></textarea>
-    </p>
+        <p class="note">
+            ⚠ Ansøgninger behandles via Discord
+        </p>
+    </form>
+</section>
 
-     <label>hvor mange timer har du i fivem</label><br>
-      <textarea rows="5" required></textarea>
-   <p>
-
-     <label>hvilke server har du spillet på</label><br>
-      <textarea rows="5" required></textarea>
-  <p>
-     <button type="submit">Send ansøgning</button>
-    </p>
-  </form>
-
-  <p><small>Ansøgninger behandles via Discord</small></p>
-</div>
+<footer>
+    © 2026 Resident RP
+</footer>
 
 </body>
 </html>
