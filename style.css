@@ -33,3 +33,25 @@ nav a:hover {
 h1 {
   margin-top: 0;
 }
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-top: 5px;
+}
+
+button {
+  background: #00ffcc;
+  color: black;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
