@@ -1,102 +1,42 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Regler</title>
-<style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #121212;
-        color: #f5f5f5;
-        margin: 0;
-        padding: 0;
-    }
-
-    nav {
-        background-color: #1f1f1f;
-        padding: 10px 20px;
-        display: flex;
-        gap: 20px;
-    }
-
-    nav a {
-        color: #80c9ff;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    nav a:hover {
-        text-decoration: underline;
-    }
-
-    .container {
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 0 20px;
-    }
-
-    h1 {
-        font-size: 2.5rem;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: #ffcc00;
-    }
-
-    h1::before {
-        content: "📜";
-        font-size: 2rem;
-    }
-
-    ul.rules {
-        list-style: none;
-        padding: 0;
-    }
-
-    ul.rules li {
-        background-color: #1f1f1f;
-        margin-bottom: 10px;
-        padding: 15px 20px;
-        border-radius: 10px;
-        transition: transform 0.2s, background-color 0.2s;
-    }
-
-    ul.rules li:hover {
-        background-color: #292929;
-        transform: translateX(5px);
-    }
-
-    ul.rules li::before {
-        content: "✔️";
-        margin-right: 10px;
-    }
-</style>
+    <meta charset="UTF-8">
+    <title>Regler | Resident RP</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav>
-        <a href="#">Forside</a>
-        <a href="#">Regler</a>
-        <a href="#">Staff</a>
-        <a href="#">Ansøgning</a>
-    </nav>
 
-    <div class="container">
-        <h1>Regler</h1>
-        <ul class="rules">
-            <li>Ingen RDM / VDM</li>
-            <li>Realistisk roleplay er påkrævet</li>
-            <li>Respektér staff og spillere</li>
-            <li>Ingen powergaming</li>
-            <li>Meta-gaming er forbudt</li>
-            <li>OOC er ikke tilladt</li>
-            <li>Bug abuse kan medføre ban</li>
-            <li>Cheat = permaban</li>
-            <li>Du skal altid lytte til staff teamet</li>
-            <li>Send links er timeout eller udelukkes fra discord</li>
-            <li>Tale grimt eller ingen i support er timeout</li>
-        </ul>
-    </div>
+<header class="page-header">
+    <h1>📜 Regler</h1>
+    <nav>
+        <a href="index.html">Forside</a>
+        <a href="regler.html">Regler</a>
+        <a href="ansogning.html">Ansøgning</a>
+    </nav>
+</header>
+
+<section class="section">
+    <h2>Generelle regler</h2>
+    <ul class="rules">
+        <li>Seriøs og realistisk roleplay er et krav</li>
+        <li>Respekt for andre spillere og staff</li>
+        <li>Ingen RDM / VDM</li>
+        <li>FearRP skal altid overholdes</li>
+        <li>Meta- og powergaming er forbudt</li>
+    </ul>
+
+    <h2>Staff & sanktioner</h2>
+    <ul class="rules">
+        <li>Staffs beslutninger skal respekteres</li>
+        <li>Regelbrud kan medføre advarsel, ban eller permanent udelukkelse</li>
+        <li>Misbrug af bugs exploits er forbudt</li>
+    </ul>
+</section>
+
+<footer>
+    © 2026 Resident RP
+</footer>
+
 </body>
 </html>
