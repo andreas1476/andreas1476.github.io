@@ -2,45 +2,71 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Panel | Resident RP</title>
+    <title>Resident RP – Staff Panel</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="nav-container">
-        <div class="logo">Resident RP – Staff</div>
-        <div class="nav-links">
-            <a href="index.html">Forside</a>
-            <a href="staff.html">Staff</a>
-            <a href="https://discord.gg/tbdQYDa4hB" target="_blank" class="nav-btn">
-                Discord
-            </a>
-        </div>
-    </div>
-</nav>
-
 <section>
-    <h2>Whitelist – Godkend / Afvis</h2>
+    <h2>Whitelist – Staff Panel</h2>
     <p class="section-text">
-        Brug Discord til ansøgninger. Brug denne side til beslutning og overblik.
+        Status gemmes lokalt på din computer.
     </p>
 
-    <div class="features">
-        <div class="feature">
-            <h3>👤 Eksempel Ansøgning</h3>
-            <p><strong>Discord:</strong> User#1234</p>
-            <p><strong>Alder:</strong> 19</p>
-            <p><strong>Vurdering:</strong> God RP-idé, realistisk karakter.</p>
-
-            <div style="margin-top:1rem; display:flex; gap:1rem;">
-                <button class="btn btn-primary">Godkend</button>
-                <button class="btn btn-secondary">Afvis</button>
-            </div>
-        </div>
-    </div>
+    <div id="applications" class="features"></div>
 </section>
 
-</body>
-</html>
+<script>
+const applications = [
+    {
+        id: 1,
+        discord: "User#1234",
+        age: 19,
+        experience: "2 års seriøs RP",
+        character: "Civil mekaniker",
+        status: "Afventer"
+    }
+];
+
+function saveStatus(id, status) {
+    localStorage.setItem("app_" + id, status);
+    render();
+}
+
+function getStatus(id) {
+    return localStorage.getItem("app_" + id) || "Afventer";
+}
+
+function render() {
+    const container = document.getElementById("applications");
+    container.innerHTML = "";
+
+    applications.forEach(app => {
+        const status = getStatus(app.id);
+
+        const div = document.createElement("div");
+        div.className = "feature";
+
+        div.innerHTML = `
+            <h3>${app.discord}</h3>
+            <p><strong>Alder:</strong> ${app.age}</p>
+            <p><strong>RP:</strong> ${app.experience}</p>
+            <p><strong>Karakter:</strong> ${app.character}</p>
+            <p><strong>Status:</strong> 
+                <span class="status ${status}">
+                    ${status}
+                </span>
+            </p>
+
+            <div style="margin-top:1rem; display:flex; gap:1rem;">
+                <button class="btn btn-primary" onclick="saveStatus(${app.id}, 'Godkendt')">
+                    Godkend
+                </button>
+                <button class="btn btn-secondary" onclick="saveStatus(${app.id}, 'Afvist')">
+                    Afvis
+                </button>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
