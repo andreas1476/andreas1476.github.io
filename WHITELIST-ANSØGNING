@@ -8,23 +8,54 @@
 </head>
 <body>
 
-<section class="cta">
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">Resident RP</div>
+        <div class="nav-links">
+            <a href="index.html">Forside</a>
+            <a href="regler.html">Regler</a>
+            <a href="whitelist.html">Whitelist</a>
+            <a href="https://discord.gg/tbdQYDa4hB" target="_blank" class="nav-btn">Discord</a>
+        </div>
+    </div>
+</nav>
+
+<section>
     <h2>Whitelist-ansøgning</h2>
-    <p class="section-text" style="margin: 0 auto 2rem;">
-        For at spille på Resident RP skal du være whitelisted.
-        Ansøgningen foregår via vores Discord.
+    <p class="section-text">
+        Udfyld formularen grundigt. Vi prioriterer kvalitet over kvantitet.
     </p>
 
-    <!-- DISCORD LINK -->
-    <a href="https://discord.gg/tbdQYDa4hB" 
-       class="btn btn-primary" 
-       target="_blank">
-        Gå til Discord
-    </a>
+    <form class="whitelist-form">
+        <label>
+            Discord-navn
+            <input type="text" placeholder="Navn#1234" required>
+        </label>
 
-    <div style="margin-top:2rem;">
-        <a href="index.html" class="btn btn-secondary">⬅ Tilbage</a>
-    </div>
+        <label>
+            Alder
+            <input type="number" min="15" required>
+        </label>
+
+        <label>
+            RP-erfaring
+            <textarea rows="4" placeholder="Fortæl om din RP-erfaring..." required></textarea>
+        </label>
+
+        <label>
+            Karakter-idé
+            <textarea rows="4" placeholder="Hvem er din karakter?" required></textarea>
+        </label>
+
+        <label>
+            Hvorfor Resident RP?
+            <textarea rows="4" required></textarea>
+        </label>
+
+        <button type="submit" class="btn btn-primary">
+            Send ansøgning
+        </button>
+    </form>
 </section>
 
 </body>
