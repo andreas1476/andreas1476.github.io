@@ -1,0 +1,56 @@
+<div class="rp-form-wrapper">
+<h2>Staff-ansøgning</h2>
+
+<form id="staffForm">
+
+  <div class="rp-field">
+    <label>Discord navn</label>
+    <input type="text" required>
+  </div>
+
+  <div class="rp-field">
+    <label>Alder</label>
+    <input type="number" required>
+  </div>
+
+  <div class="rp-field">
+    <label>Hvorfor vil du være staff?</label>
+    <textarea required placeholder="Minimum 75 ord"></textarea>
+  </div>
+
+  <div class="rp-field">
+    <label>Tid pr. uge</label>
+    <input type="text" required placeholder="Fx 10-15 timer">
+  </div>
+
+  <div class="rp-submit">
+    <button type="submit">Send staff-ansøgning</button>
+  </div>
+</form>
+</div>
+
+<script>
+document.getElementById("staffForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  fetch("DIN_STAFF_WEBHOOK_URL", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      embeds: [{
+        title: "🛡️ Ny Staff-ansøgning",
+        color: 15548997,
+        fields: [
+          { name: "Discord", value: e.target[0].value },
+          { name: "Alder", value: e.target[1].value },
+          { name: "Motivation", value: e.target[2].value },
+          { name: "Tid pr. uge", value: e.target[3].value }
+        ]
+      }]
+    })
+  });
+
+  alert("Staff-ansøgning sendt!");
+  e.target.reset();
+});
+</script>
