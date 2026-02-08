@@ -216,3 +216,19 @@ footer {
     outline: none;
     border-color: var(--primary);
 }
+/* STATUS */
+.status {
+    font-weight: 700;
+}
+
+.status.Afventer {
+    color: #facc15;
+}
+
+.status.Godkendt {
+    color: #22c55e;
+}
+
+.status.Afvist {
+    color: #ef4444;
+}
