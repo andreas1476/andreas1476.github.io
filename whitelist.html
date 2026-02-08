@@ -6,22 +6,22 @@
 
     <label>
         Alder
-        <input type="number" id="age" min="15" required>
+        <input type="number" id="age" required>
     </label>
 
     <label>
         RP-erfaring
-        <textarea id="experience" rows="4" required></textarea>
+        <textarea id="experience" required></textarea>
     </label>
 
     <label>
         Karakter-idé
-        <textarea id="character" rows="4" required></textarea>
+        <textarea id="character" required></textarea>
     </label>
 
     <label>
         Hvorfor Resident RP?
-        <textarea id="why" rows="4" required></textarea>
+        <textarea id="why" required></textarea>
     </label>
 
     <button type="submit" class="btn btn-primary">
@@ -29,7 +29,7 @@
     </button>
 </form>
 
-<p id="formStatus" style="margin-top:1rem;"></p>
+<p id="formStatus"></p>
 
 <script>
 const webhookURL = "https://discord.com/api/webhooks/1470183171432906784/LspcUr22eCGx-ZKt9AYBynZjPFPexbQTMrLok0oUUmlpX5QRljS2PwpFVGNz-D5vxqYb";
@@ -37,33 +37,27 @@ const webhookURL = "https://discord.com/api/webhooks/1470183171432906784/LspcUr2
 document.getElementById("whitelistForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    const data = {
-        content: null,
-        embeds: [{
-            title: "📋 Ny whitelist-ansøgning",
-            color: 3447003,
-            fields: [
-                { name: "Discord", value: document.getElementById("discord").value },
-                { name: "Alder", value: document.getElementById("age").value },
-                { name: "RP-erfaring", value: document.getElementById("experience").value },
-                { name: "Karakter-idé", value: document.getElementById("character").value },
-                { name: "Hvorfor Resident RP?", value: document.getElementById("why").value }
-            ],
-            footer: { text: "Resident RP Whitelist" }
-        }]
-    };
-
     fetch(webhookURL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+            embeds: [{
+                title: "📋 Ny whitelist-ansøgning",
+                color: 3447003,
+                fields: [
+                    { name: "Discord", value: discord.value },
+                    { name: "Alder", value: age.value },
+                    { name: "RP-erfaring", value: experience.value },
+                    { name: "Karakter", value: character.value },
+                    { name: "Hvorfor Resident RP?", value: why.value }
+                ]
+            }]
+        })
     }).then(() => {
-        document.getElementById("formStatus").innerText =
-            "✅ Din ansøgning er sendt!";
-        document.getElementById("whitelistForm").reset();
+        formStatus.innerText = "✅ Ansøgning sendt!";
+        whitelistForm.reset();
     }).catch(() => {
-        document.getElementById("formStatus").innerText =
-            "❌ Noget gik galt. Prøv igen.";
+        formStatus.innerText = "❌ Noget gik galt.";
     });
 });
 </script>
