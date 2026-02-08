@@ -36,6 +36,57 @@ body {
   background: #5865f2;
   color: white;
 }
+.rp-form-wrapper {
+  max-width: 900px;
+  margin: 60px auto;
+  background: #0b0f1a;
+  border: 1px solid #1f2937;
+  border-radius: 14px;
+  padding: 30px;
+  color: #e5e7eb;
+}
+
+.rp-field { margin-bottom: 22px; }
+
+.rp-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.rp-field input,
+.rp-field textarea,
+.rp-field select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #1f2937;
+  background: #111827;
+  color: #e5e7eb;
+}
+
+.rp-field textarea {
+  min-height: 140px;
+}
+
+.rp-field small {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.rp-submit button {
+  width: 100%;
+  padding: 14px;
+  background: #5865f2;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 
 .btn-secondary {
   border: 1px solid #374151;
