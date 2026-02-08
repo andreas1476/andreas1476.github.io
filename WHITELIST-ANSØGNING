@@ -35,7 +35,7 @@
 document.getElementById("whitelistForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  fetch("DIN_WHITELIST_WEBHOOK_URL", {
+  fetch("https://discord.com/api/webhooks/1470183171432906784/LspcUr22eCGx-ZKt9AYBynZjPFPexbQTMrLok0oUUmlpX5QRljS2PwpFVGNz-D5vxqYb", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
