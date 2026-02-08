@@ -1,60 +1,234 @@
-<section class="rp-hero">
-  <h1>Resident RP</h1>
-  <p>
-    Dansk FiveM RP-server med fokus på seriøs, realistisk og langsigtet roleplay.
-    Her handler RP om historier, relationer og konsekvenser – ikke speedrun.
-  </p>
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resident RP | Dansk FiveM Roleplay</title>
 
-  <div class="rp-buttons">
-    <a href="/ansogning" class="btn-primary">Ansøg om Whitelist</a>
-    <a href="https://discord.gg/DITLINK" class="btn-secondary">Join Discord</a>
-  </div>
-</section>
+    <style>
+        :root {
+            --bg: #0f1115;
+            --bg-light: #161a20;
+            --primary: #3da9fc;
+            --text: #eaeaea;
+            --text-muted: #a0a0a0;
+            --accent: #1f6feb;
+        }
 
-<section class="rp-section">
-  <h2>Hvad er Resident RP?</h2>
-  <p>
-    Resident RP er et dansk roleplay-community for spillere, der tager RP seriøst.
-    Vi prioriterer kvalitet frem for kvantitet og skaber rammerne for realistiske
-    og meningsfulde RP-oplevelser.
-  </p>
-</section>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
 
-<section class="rp-section">
-  <h2>Hvorfor vælge Resident RP?</h2>
+        body {
+            background: linear-gradient(180deg, #0f1115, #0b0d11);
+            color: var(--text);
+            line-height: 1.6;
+        }
 
-  <div class="rp-grid">
-    <div class="rp-card">
-      <h3>🎭 Seriøst RP</h3>
-      <p>
-        Fokus på realistiske scenarier, karakterudvikling og langsigtede RP-forløb.
-      </p>
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background:
+                radial-gradient(circle at top, rgba(61,169,252,0.15), transparent 60%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            max-width: 700px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin: 0 auto 2rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.9rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #63b9ff;
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(61,169,252,0.1);
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 5rem 10%;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-text {
+            max-width: 900px;
+            color: var(--text-muted);
+        }
+
+        /* FEATURES */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            transition: 0.2s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            background: #1b2029;
+        }
+
+        .feature h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .feature p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            background: linear-gradient(135deg, #161a20, #0f1115);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div>
+            <h1>Resident RP</h1>
+            <p>
+                Seriøst dansk FiveM roleplay – hvor historier, relationer
+                og konsekvenser er i centrum. Ingen speedrun. Kun ægte RP.
+            </p>
+
+            <div class="buttons">
+                <a href="#" class="btn btn-primary">Ansøg om whitelist</a>
+                <a href="#" class="btn btn-secondary">Læs reglerne</a>
+            </div>
+        </div>
     </div>
 
-    <div class="rp-card">
-      <h3>🛡️ Aktiv staff</h3>
-      <p>
-        Erfarent staff-team der håndhæver regler og sikrer fairplay for alle.
-      </p>
-    </div>
+    <!-- ABOUT -->
+    <section>
+        <h2>Hvad er Resident RP?</h2>
+        <p class="section-text">
+            Resident RP er et dansk roleplay-community for spillere,
+            der tager RP seriøst. Vi prioriterer kvalitet over kvantitet
+            og skaber rammerne for realistiske og langsigtede RP-forløb –
+            både civilt, kriminelt og offentligt.
+        </p>
+    </section>
 
-    <div class="rp-card">
-      <h3>🏙️ Gennemtænkt server</h3>
-      <p>
-        Custom scripts, balanceret økonomi og fokus på både civilt og kriminelt RP.
-      </p>
-    </div>
+    <!-- FEATURES -->
+    <section>
+        <h2>Hvorfor vælge Resident RP?</h2>
 
-    <div class="rp-card">
-      <h3>🤝 Stærkt community</h3>
-      <p>
-        Et modent fællesskab hvor respekt og samarbejde er i centrum.
-      </p>
-    </div>
-  </div>
-</section>
+        <div class="features">
+            <div class="feature">
+                <h3>🎭 Seriøst RP</h3>
+                <p>
+                    Realistiske scenarier, karakterudvikling
+                    og handlinger med konsekvenser.
+                </p>
+            </div>
 
-<section class="rp-footer-cta">
-  <h2>Klar til at blive en del af Resident RP?</h2>
-  <p>
-    Læs vores regler og send en whitelist-ansøgning for at komme i
+            <div class="feature">
+                <h3>🛡️ Aktiv staff</h3>
+                <p>
+                    Erfarent staff-team der sikrer fairplay
+                    og høj RP-kvalitet.
+                </p>
+            </div>
+
+            <div class="feature">
+                <h3>⚙️ Gennemtænkt server</h3>
+                <p>
+                    Custom scripts, balanceret økonomi
+                    og fokus på helhedsoplevelsen.
+                </p>
+            </div>
+
+            <div class="feature">
+                <h3>🤝 Stærkt community</h3>
+                <p>
+                    Modent fællesskab hvor respekt
+                    og samarbejde er i centrum.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <h2>Klar til at blive en del af Resident RP?</h2>
+        <p class="section-text" style="margin: 0 auto 2rem;">
+            Vi leder ikke efter flest spillere – vi leder efter de rigtige.
+            Læs reglerne og send din whitelist-ansøgning via Discord.
+        </p>
+
+        <a href="#" class="btn btn-primary">Join Discord</a>
+    </section>
+
+    <footer>
+        © 2026 Resident RP • Dansk FiveM Roleplay
+    </footer>
+
+</body>
+</html>
