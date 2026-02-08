@@ -1,0 +1,59 @@
+<div class="rp-form-wrapper">
+<h2>Whitelist-ansøgning</h2>
+
+<form id="whitelistForm">
+
+  <div class="rp-field">
+    <label>Discord navn</label>
+    <input type="text" required placeholder="Navn#1234">
+  </div>
+
+  <div class="rp-field">
+    <label>Alder</label>
+    <input type="number" required>
+  </div>
+
+  <div class="rp-field">
+    <label>Fortæl lidt om dig selv</label>
+    <textarea required placeholder="Minimum 50 ord"></textarea>
+    <small>Minimum 50 ord – useriøse ansøgninger afvises.</small>
+  </div>
+
+  <div class="rp-field">
+    <label>RP-erfaring</label>
+    <textarea required placeholder="Fortæl om din RP-erfaring"></textarea>
+    <small>Minimum 50 ord – vis forståelse for RP-regler.</small>
+  </div>
+
+  <div class="rp-submit">
+    <button type="submit">Send ansøgning</button>
+  </div>
+</form>
+</div>
+
+<script>
+document.getElementById("whitelistForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  fetch("DIN_WHITELIST_WEBHOOK_URL", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      embeds: [{
+        title: "📝 Ny Whitelist-ansøgning",
+        color: 5793266,
+        fields: [
+          { name: "Discord", value: e.target[0].value },
+          { name: "Alder", value: e.target[1].value },
+          { name: "Om spilleren", value: e.target[2].value },
+          { name: "RP-erfaring", value: e.target[3].value }
+        ],
+        footer: { text: "Resident RP" }
+      }]
+    })
+  });
+
+  alert("Ansøgning sendt!");
+  e.target.reset();
+});
+</script>
