@@ -1,62 +1,71 @@
-<!DOCTYPE html>
-<html lang="da">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whitelist | Resident RP</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<form class="whitelist-form" id="whitelistForm">
+    <label>
+        Discord-navn
+        <input type="text" id="discord" required>
+    </label>
+
+    <label>
+        Alder
+        <input type="number" id="age" min="15" required>
+    </label>
+
+    <label>
+        RP-erfaring
+        <textarea id="experience" rows="4" required></textarea>
+    </label>
+
+    <label>
+        Karakter-idé
+        <textarea id="character" rows="4" required></textarea>
+    </label>
+
+    <label>
+        Hvorfor Resident RP?
+        <textarea id="why" rows="4" required></textarea>
+    </label>
+
+    <button type="submit" class="btn btn-primary">
+        Send ansøgning
+    </button>
+</form>
+
+<p id="formStatus" style="margin-top:1rem;"></p>
+
+<script>
+const webhookURL = "https://discord.com/api/webhooks/1470183171432906784/LspcUr22eCGx-ZKt9AYBynZjPFPexbQTMrLok0oUUmlpX5QRljS2PwpFVGNz-D5vxqYb";
+
+document.getElementById("whitelistForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const data = {
+        content: null,
+        embeds: [{
+            title: "📋 Ny whitelist-ansøgning",
+            color: 3447003,
+            fields: [
+                { name: "Discord", value: document.getElementById("discord").value },
+                { name: "Alder", value: document.getElementById("age").value },
+                { name: "RP-erfaring", value: document.getElementById("experience").value },
+                { name: "Karakter-idé", value: document.getElementById("character").value },
+                { name: "Hvorfor Resident RP?", value: document.getElementById("why").value }
+            ],
+            footer: { text: "Resident RP Whitelist" }
+        }]
+    };
+
+    fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    }).then(() => {
+        document.getElementById("formStatus").innerText =
+            "✅ Din ansøgning er sendt!";
+        document.getElementById("whitelistForm").reset();
+    }).catch(() => {
+        document.getElementById("formStatus").innerText =
+            "❌ Noget gik galt. Prøv igen.";
+    });
+});
+</script>
+
 <body>
-
-<nav class="navbar">
-    <div class="nav-container">
-        <div class="logo">Resident RP</div>
-        <div class="nav-links">
-            <a href="index.html">Forside</a>
-            <a href="regler.html">Regler</a>
-            <a href="whitelist.html">Whitelist</a>
-            <a href="https://discord.gg/tbdQYDa4hB" target="_blank" class="nav-btn">Discord</a>
-        </div>
-    </div>
-</nav>
-
-<section>
-    <h2>Whitelist-ansøgning</h2>
-    <p class="section-text">
-        Udfyld formularen grundigt. Vi prioriterer kvalitet over kvantitet.
-    </p>
-
-    <form class="whitelist-form">
-        <label>
-            Discord-navn
-            <input type="text" placeholder="Navn#1234" required>
-        </label>
-
-        <label>
-            Alder
-            <input type="number" min="15" required>
-        </label>
-
-        <label>
-            RP-erfaring
-            <textarea rows="4" placeholder="Fortæl om din RP-erfaring..." required></textarea>
-        </label>
-
-        <label>
-            Karakter-idé
-            <textarea rows="4" placeholder="Hvem er din karakter?" required></textarea>
-        </label>
-
-        <label>
-            Hvorfor Resident RP?
-            <textarea rows="4" required></textarea>
-        </label>
-
-        <button type="submit" class="btn btn-primary">
-            Send ansøgning
-        </button>
-    </form>
-</section>
-
-</body>
-</html>
