@@ -185,3 +185,34 @@ footer {
     color: #000 !important;
     font-weight: 600;
 }
+/* WHITELIST FORM */
+.whitelist-form {
+    max-width: 700px;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.whitelist-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    gap: 0.4rem;
+}
+
+.whitelist-form input,
+.whitelist-form textarea {
+    background: var(--bg-light);
+    border: 1px solid #222836;
+    border-radius: 8px;
+    padding: 0.8rem;
+    color: var(--text);
+    resize: vertical;
+}
+
+.whitelist-form input:focus,
+.whitelist-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
