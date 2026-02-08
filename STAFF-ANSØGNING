@@ -33,7 +33,7 @@
 document.getElementById("staffForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  fetch("DIN_STAFF_WEBHOOK_URL", {
+  fetch("https://discord.com/api/webhooks/1470183606809792583/HQZdB0cd5hrI4_uLxqBQ3xAVUDhlw1vFlXCsLcDyxC-O6ICXYTfeNRfI6Lf_brOZTIUk", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
