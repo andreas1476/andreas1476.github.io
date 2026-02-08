@@ -1,59 +1,31 @@
-<div class="rp-form-wrapper">
-<h2>Whitelist-ansøgning</h2>
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whitelist | Resident RP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<form id="whitelistForm">
+<section class="cta">
+    <h2>Whitelist-ansøgning</h2>
+    <p class="section-text" style="margin: 0 auto 2rem;">
+        For at spille på Resident RP skal du være whitelisted.
+        Ansøgningen foregår via vores Discord.
+    </p>
 
-  <div class="rp-field">
-    <label>Discord navn</label>
-    <input type="text" required placeholder="Navn#1234">
-  </div>
+    <!-- DISCORD LINK -->
+    <a href="https://discord.gg/tbdQYDa4hB" 
+       class="btn btn-primary" 
+       target="_blank">
+        Gå til Discord
+    </a>
 
-  <div class="rp-field">
-    <label>Alder</label>
-    <input type="number" required>
-  </div>
+    <div style="margin-top:2rem;">
+        <a href="index.html" class="btn btn-secondary">⬅ Tilbage</a>
+    </div>
+</section>
 
-  <div class="rp-field">
-    <label>Fortæl lidt om dig selv</label>
-    <textarea required placeholder="Minimum 50 ord"></textarea>
-    <small>Minimum 50 ord – useriøse ansøgninger afvises.</small>
-  </div>
-
-  <div class="rp-field">
-    <label>RP-erfaring</label>
-    <textarea required placeholder="Fortæl om din RP-erfaring"></textarea>
-    <small>Minimum 50 ord – vis forståelse for RP-regler.</small>
-  </div>
-
-  <div class="rp-submit">
-    <button type="submit">Send ansøgning</button>
-  </div>
-</form>
-</div>
-
-<script>
-document.getElementById("whitelistForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  fetch("https://discord.com/api/webhooks/1470183171432906784/LspcUr22eCGx-ZKt9AYBynZjPFPexbQTMrLok0oUUmlpX5QRljS2PwpFVGNz-D5vxqYb", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      embeds: [{
-        title: "📝 Ny Whitelist-ansøgning",
-        color: 5793266,
-        fields: [
-          { name: "Discord", value: e.target[0].value },
-          { name: "Alder", value: e.target[1].value },
-          { name: "Om spilleren", value: e.target[2].value },
-          { name: "RP-erfaring", value: e.target[3].value }
-        ],
-        footer: { text: "Resident RP" }
-      }]
-    })
-  });
-
-  alert("Ansøgning sendt!");
-  e.target.reset();
-});
-</script>
+</body>
+</html>
