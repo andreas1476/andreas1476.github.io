@@ -1,64 +1,56 @@
-<!DOCTYPE html>
-<html lang="da">
-<head>
-    <meta charset="UTF-8">
-    <title>Ansøgning | Resident RP</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<div class="rp-form-wrapper">
 
-<header class="page-header">
-    <h1>📝 Ansøgning</h1>
-    <nav>
-        <a href="index.html">Forside</a>
-        <a href="regler.html">Regler</a>
-        <a href="ansogning.html">Ansøgning</a>
-    </nav>
-</header>
+  <h2>Whitelist-ansøgning</h2>
+  <p class="intro">
+    Denne ansøgning bruges til at vurdere, om du passer ind på Resident RP.
+    Vi forventer seriøse og gennemarbejdede svar.
+  </p>
 
-<section class="section">
-    <form class="staff-svar">
-        <label>
-            Discord navn
-            <input type="text" placeholder="Navn#0000" required>
-        </label>
+  <form>
 
-        <label>
-            Alder
-            <input type="number" required>
-        </label>
+    <div class="rp-field">
+      <label for="discord">Discord navn</label>
+      <input type="text" id="discord" name="discord" placeholder="Navn#1234" required>
+      <small>Dit Discord-navn skal matche det, du bruger på vores Discord.</small>
+    </div>
 
-        <label>
-            Hvad ansøger du om?
-            <select>
-                <option>Whitelist</option>
-                <option>Staff</option>
-            </select>
-        </label>
+    <div class="rp-field">
+      <label for="age">Alder</label>
+      <input type="number" id="age" name="age" placeholder="Fx 18" required>
+      <small>Du skal opfylde serverens alderskrav.</small>
+    </div>
 
-        <label>
-            Fortæl lidt om dig selv
-            <textarea rows="4" required></textarea>
-        </label>
+    <div class="rp-field">
+      <label for="applyfor">Hvad ansøger du om?</label>
+      <select id="applyfor" name="applyfor">
+        <option>Whitelist</option>
+      </select>
+    </div>
 
-        <label>
-            RP-erfaring
-            <textarea rows="4" required></textarea>
-        </label>
+    <div class="rp-field">
+      <label for="about">Fortæl lidt om dig selv</label>
+      <textarea id="about" name="about"
+        placeholder="Beskriv hvem du er som person, hvordan du opfører dig i RP, og hvorfor du gerne vil spille på Resident RP."
+        required></textarea>
+      <small>Minimum 50 ord. Useriøse eller meget korte svar afvises.</small>
+    </div>
 
-        <button type="submit" class="btn primary">
-            Send ansøgning
-        </button>
+    <div class="rp-field">
+      <label for="experience">RP-erfaring</label>
+      <textarea id="experience" name="experience"
+        placeholder="Fortæl om din tidligere RP-erfaring, hvilke roller du har spillet, og hvordan du sikrer realistisk RP."
+        required></textarea>
+      <small>Minimum 50 ord. Vis at du forstår RP-regler som powergaming, metagaming og NLR.</small>
+    </div>
 
-        <p class="note">
-            ⚠ Ansøgninger behandles via Discord
-        </p>
-    </form>
-</section>
+    <div class="rp-submit">
+      <button type="submit">Send ansøgning</button>
+    </div>
 
-<footer>
-    © 2026 Resident RP
-</footer>
+    <p class="rp-warning">
+      ⚠️ Ansøgninger med trolling, manglende indsats eller brud på Resident RP’s regler vil blive afvist.
+    </p>
 
-</body>
-</html>
+  </form>
+
+</div>
