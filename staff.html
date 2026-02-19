@@ -8,92 +8,43 @@
     color: #ffffff;
     font-family: Arial, sans-serif;
 }
-
-.staff-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.staff-form label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-}
-
 .staff-form input,
-.staff-form textarea,
-.staff-form select {
+.staff-form textarea {
     width: 100%;
     padding: 10px;
-    margin-top: 5px;
+    margin-top: 10px;
     border-radius: 6px;
     border: none;
-    font-size: 14px;
 }
-
-.staff-form textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
 .staff-form button {
-    margin-top: 20px;
-    width: 100%;
+    margin-top: 15px;
     padding: 12px;
+    width: 100%;
     background: #ff6600;
+    color: white;
     border: none;
     border-radius: 6px;
-    color: white;
-    font-size: 16px;
     cursor: pointer;
-    transition: 0.3s;
-}
-
-.staff-form button:hover {
-    background: #ff8533;
 }
 </style>
 
 <div class="staff-form">
-    <h2>📝 Staff Ansøgning</h2>
+<h2>📝 Staff Ansøgning</h2>
 
-    <form action="#" method="post">
+<form action="/send-ansogning.php" method="post">
 
-        <label>Fulde navn:</label>
-        <input type="text" name="navn" required>
+<input type="text" name="navn" placeholder="Fulde navn" required>
+<input type="number" name="alder" placeholder="Alder" required>
+<input type="text" name="discord" placeholder="Discord (brugernavn#0000)" required>
+<input type="text" name="ingame" placeholder="Ingame navn" required>
+<input type="text" name="hvorfor dig " placeholder="hvorfor skal vi vælge dig" required>   
 
-        <label>Alder:</label>
-        <input type="number" name="alder" required>
+<textarea name="erfaring" placeholder="Tidligere staff erfaring"></textarea>
+<textarea name="motivation" placeholder="Hvorfor vil du være staff?" required></textarea>
 
-        <label>Discord navn + ID:</label>
-        <input type="text" name="discord" placeholder="Brugernavn#1234" required>
+<input type="text" name="timer" placeholder="Timer pr. uge" required>
 
-        <label>Steam / Ingame navn:</label>
-        <input type="text" name="ingame" required>
+<button type="submit">Send Ansøgning</button>
 
-        <label>Har du tidligere været staff?</label>
-        <select name="tidligere_staff" required>
-            <option value="">Vælg</option>
-            <option value="Ja">Ja</option>
-            <option value="Nej">Nej</option>
-        </select>
-
-        <label>Hvis ja, hvor og hvilken rolle?</label>
-        <textarea name="erfaring_detaljer"></textarea>
-
-        <label>Hvorfor vil du være staff hos os?</label>
-        <textarea name="motivation" required></textarea>
-
-        <label>Hvad kan du bidrage med?</label>
-        <textarea name="bidrag" required></textarea>
-
-        <label>Hvordan håndterer du konflikter?</label>
-        <textarea name="konflikt" required></textarea>
-
-        <label>Hvor mange timer kan du være aktiv om ugen?</label>
-        <input type="text" name="timer" required>
-
-        <button type="submit">Send Ansøgning</button>
-
-    </form>
+</form>
 </div>
