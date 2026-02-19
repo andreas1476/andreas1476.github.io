@@ -1,111 +1,99 @@
-<!DOCTYPE html>
-<html lang="da">
-<head>
-    <meta charset="UTF-8">
-    <title>Resident RP – Staff Panel</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<section>
-    <h2>Whitelist – Staff Panel</h2>
-    <p class="section-text">
-        Status gemmes lokalt på din computer.
-    </p>
-
-    <div id="applications" class="features"></div>
-</section>
-
-<script>
-const responseWebhook = "INDSÆT_SVAR_WEBHOOK_URL_HER";
-
-const applications = [
-    {
-        id: 1,
-        discord: "User#1234",
-        age: 19,
-        experience: "2 års seriøs RP",
-        character: "Civil mekaniker",
-        status: "Afventer"
-    }
-];
-
-function getStatus(id) {
-    return localStorage.getItem("app_" + id) || "Afventer";
+<style>
+.staff-form {
+    max-width: 700px;
+    margin: auto;
+    padding: 25px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
 }
 
-function setStatus(id, status) {
-    localStorage.setItem("app_" + id, status);
+.staff-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-function sendDiscordResponse(app, status) {
-    const color =
-        status === "Godkendt" ? 3066993 :
-        status === "Afvist" ? 15158332 :
-        15105570;
-
-    const message = {
-        embeds: [{
-            title: "📋 Whitelist-ansøgning behandlet",
-            color: color,
-            fields: [
-                { name: "Discord", value: app.discord },
-                { name: "Resultat", value: status },
-                { name: "Karakter", value: app.character }
-            ],
-            footer: { text: "Resident RP Staff" }
-        }]
-    };
-
-    fetch(responseWebhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(message)
-    });
+.staff-form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
 }
 
-function handleDecision(id, status) {
-    const app = applications.find(a => a.id === id);
-    setStatus(id, status);
-    sendDiscordResponse(app, status);
-    render();
+.staff-form input,
+.staff-form textarea,
+.staff-form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
 }
 
-function render() {
-    const container = document.getElementById("applications");
-    container.innerHTML = "";
-
-    applications.forEach(app => {
-        const status = getStatus(app.id);
-
-        const div = document.createElement("div");
-        div.className = "feature";
-
-        div.innerHTML = `
-            <h3>${app.discord}</h3>
-            <p><strong>Alder:</strong> ${app.age}</p>
-            <p><strong>RP:</strong> ${app.experience}</p>
-            <p><strong>Karakter:</strong> ${app.character}</p>
-            <p><strong>Status:</strong>
-                <span class="status ${status}">
-                    ${status}
-                </span>
-            </p>
-
-            <div style="margin-top:1rem; display:flex; gap:1rem;">
-                <button class="btn btn-primary"
-                    onclick="handleDecision(${app.id}, 'Godkendt')">
-                    Godkend
-                </button>
-                <button class="btn btn-secondary"
-                    onclick="handleDecision(${app.id}, 'Afvist')">
-                    Afvis
-                </button>
-            </div>
-        `;
-        container.appendChild(div);
-    });
+.staff-form textarea {
+    min-height: 100px;
+    resize: vertical;
 }
 
-render();
-</script>
+.staff-form button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background: #ff6600;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.staff-form button:hover {
+    background: #ff8533;
+}
+</style>
+
+<div class="staff-form">
+    <h2>📝 Staff Ansøgning</h2>
+
+    <form action="#" method="post">
+
+        <label>Fulde navn:</label>
+        <input type="text" name="navn" required>
+
+        <label>Alder:</label>
+        <input type="number" name="alder" required>
+
+        <label>Discord navn + ID:</label>
+        <input type="text" name="discord" placeholder="Brugernavn#1234" required>
+
+        <label>Steam / Ingame navn:</label>
+        <input type="text" name="ingame" required>
+
+        <label>Har du tidligere været staff?</label>
+        <select name="tidligere_staff" required>
+            <option value="">Vælg</option>
+            <option value="Ja">Ja</option>
+            <option value="Nej">Nej</option>
+        </select>
+
+        <label>Hvis ja, hvor og hvilken rolle?</label>
+        <textarea name="erfaring_detaljer"></textarea>
+
+        <label>Hvorfor vil du være staff hos os?</label>
+        <textarea name="motivation" required></textarea>
+
+        <label>Hvad kan du bidrage med?</label>
+        <textarea name="bidrag" required></textarea>
+
+        <label>Hvordan håndterer du konflikter?</label>
+        <textarea name="konflikt" required></textarea>
+
+        <label>Hvor mange timer kan du være aktiv om ugen?</label>
+        <input type="text" name="timer" required>
+
+        <button type="submit">Send Ansøgning</button>
+
+    </form>
+</div>
