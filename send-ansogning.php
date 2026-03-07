@@ -2,7 +2,7 @@
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-$webhookurl = "DIN_WEBHOOK_HER";
+$webhookurl = "https://discord.com/api/webhooks/1479863435658526981/tw2iMtwmMQsl8MNCAGzBF8zhoW2XkZG8Y3ng9a2omjiJ7qlaGfA-0jwV2mZayD2icFtk";
 
 /* Hent og rens data */
 
