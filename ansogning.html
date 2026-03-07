@@ -1,56 +1,141 @@
 <div class="rp-form-wrapper">
 
-  <h2>Whitelist-ansøgning</h2>
-  <p class="intro">
-    Denne ansøgning bruges til at vurdere, om du passer ind på Resident RP.
-    Vi forventer seriøse og gennemarbejdede svar.
-  </p>
+<h2>📋 Resident RP Whitelist Ansøgning</h2>
 
-  <form>
+<p class="intro">
+Denne ansøgning bruges til at vurdere, om du passer ind på Resident RP.
+Vi forventer seriøse og gennemarbejdede svar. Lav kvalitet kan føre til afvisning.
+</p>
 
-    <div class="rp-field">
-      <label for="discord">Discord navn</label>
-      <input type="text" id="discord" name="discord" placeholder="Navn#1234" required>
-      <small>Dit Discord-navn skal matche det, du bruger på vores Discord.</small>
-    </div>
+<form id="whitelistForm">
 
-    <div class="rp-field">
-      <label for="age">Alder</label>
-      <input type="number" id="age" name="age" placeholder="Fx 18" required>
-      <small>Du skal opfylde serverens alderskrav.</small>
-    </div>
+<div class="rp-field">
+<label for="discord">Discord navn</label>
+<input type="text" id="discord" name="discord" placeholder="Navn#1234" required>
+<small>Dit Discord-navn skal matche det du bruger på vores Discord.</small>
+</div>
 
-    <div class="rp-field">
-      <label for="applyfor">Hvad ansøger du om?</label>
-      <select id="applyfor" name="applyfor">
-        <option>Whitelist</option>
-      </select>
-    </div>
+<div class="rp-field">
+<label for="age">Alder</label>
+<input type="number" id="age" name="age" placeholder="Fx 18" required>
+<small>Du skal opfylde serverens alderskrav.</small>
+</div>
 
-    <div class="rp-field">
-      <label for="about">Fortæl lidt om dig selv</label>
-      <textarea id="about" name="about"
-        placeholder="Beskriv hvem du er som person, hvordan du opfører dig i RP, og hvorfor du gerne vil spille på Resident RP."
-        required></textarea>
-      <small>Minimum 50 ord. Useriøse eller meget korte svar afvises.</small>
-    </div>
+<div class="rp-field">
+<label for="character">Karakter idé</label>
+<textarea id="character" name="character"
+placeholder="Beskriv din karakter. Hvad er deres baggrund, personlighed og mål?"
+required></textarea>
+<small>Minimum 50 ord.</small>
+</div>
 
-    <div class="rp-field">
-      <label for="experience">RP-erfaring</label>
-      <textarea id="experience" name="experience"
-        placeholder="Fortæl om din tidligere RP-erfaring, hvilke roller du har spillet, og hvordan du sikrer realistisk RP."
-        required></textarea>
-      <small>Minimum 50 ord. Vis at du forstår RP-regler som powergaming, metagaming og NLR.</small>
-    </div>
+<div class="rp-field">
+<label for="about">Fortæl lidt om dig selv</label>
+<textarea id="about" name="about"
+placeholder="Beskriv hvem du er som person og hvordan du spiller RP."
+required></textarea>
+</div>
 
-    <div class="rp-submit">
-      <button type="submit">Send ansøgning</button>
-    </div>
+<div class="rp-field">
+<label for="experience">RP erfaring</label>
+<textarea id="experience" name="experience"
+placeholder="Hvilke RP servere har du spillet på? Hvilke roller har du haft?"
+required></textarea>
+<small>Vis at du forstår RP regler som Metagaming, Powergaming og NLR.</small>
+</div>
 
-    <p class="rp-warning">
-      ⚠️ Ansøgninger med trolling, manglende indsats eller brud på Resident RP’s regler vil blive afvist.
-    </p>
+<div class="rp-field">
+<label for="rules">Har du læst serverens regler?</label>
+<select id="rules" name="rules" required>
+<option value="">Vælg</option>
+<option value="Ja">Ja</option>
+<option value="Nej">Nej</option>
+</select>
+</div>
 
-  </form>
+<div class="rp-submit">
+<button type="submit">Send ansøgning</button>
+</div>
+
+<p class="rp-warning">
+⚠️ Ansøgninger med trolling, manglende indsats eller brud på Resident RP regler vil blive afvist.
+</p>
+
+<p id="formStatus"></p>
+
+</form>
 
 </div>
+
+
+<script>
+
+const webhookURL = "https://discord.com/api/webhooks/1479863435658526981/tw2iMtwmMQsl8MNCAGzBF8zhoW2XkZG8Y3ng9a2omjiJ7qlaGfA-0jwV2mZayD2icFtk";
+
+document.getElementById("whitelistForm").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const discord = document.getElementById("discord").value;
+const age = document.getElementById("age").value;
+const character = document.getElementById("character").value;
+const about = document.getElementById("about").value;
+const experience = document.getElementById("experience").value;
+const rules = document.getElementById("rules").value;
+
+if(character.length < 50){
+alert("Karakter beskrivelsen skal være mindst 50 ord.");
+return;
+}
+
+fetch(webhookURL, {
+
+method: "POST",
+
+headers: {
+"Content-Type": "application/json"
+},
+
+body: JSON.stringify({
+
+embeds: [{
+
+title: "📋 Ny Resident RP Whitelist Ansøgning",
+
+color: 5814783,
+
+fields: [
+
+{ name: "Discord", value: discord },
+{ name: "Alder", value: age, inline: true },
+{ name: "Karakter", value: character },
+{ name: "Om spilleren", value: about },
+{ name: "RP erfaring", value: experience },
+{ name: "Regler læst", value: rules }
+
+],
+
+timestamp: new Date()
+
+}]
+
+})
+
+})
+
+.then(() => {
+
+document.getElementById("formStatus").innerText = "✅ Ansøgning sendt til staff!";
+document.getElementById("whitelistForm").reset();
+
+})
+
+.catch(() => {
+
+document.getElementById("formStatus").innerText = "❌ Kunne ikke sende ansøgning.";
+
+});
+
+});
+
+</script>
