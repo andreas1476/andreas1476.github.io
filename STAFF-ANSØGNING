@@ -1,56 +1,129 @@
 <div class="rp-form-wrapper">
-<h2>Staff-ansøgning</h2>
+
+<h2>🛡️ test Staff Ansøgning</h2>
+
+<p class="intro">
+Staff hjælper med at holde serveren fair og seriøs.
+Vi forventer modne og ansvarlige personer.
+</p>
 
 <form id="staffForm">
 
-  <div class="rp-field">
-    <label>Discord navn</label>
-    <input type="text" required>
-  </div>
-
-  <div class="rp-field">
-    <label>Alder</label>
-    <input type="number" required>
-  </div>
-
-  <div class="rp-field">
-    <label>Hvorfor vil du være staff?</label>
-    <textarea required placeholder="Minimum 75 ord"></textarea>
-  </div>
-
-  <div class="rp-field">
-    <label>Tid pr. uge</label>
-    <input type="text" required placeholder="Fx 10-15 timer">
-  </div>
-
-  <div class="rp-submit">
-    <button type="submit">Send staff-ansøgning</button>
-  </div>
-</form>
+<div class="rp-field">
+<label for="discord">Discord navn</label>
+<input type="text" id="discord" placeholder="Navn#1234" required>
 </div>
 
+<div class="rp-field">
+<label for="age">Alder</label>
+<input type="number" id="age" placeholder="Fx 18" required>
+</div>
+
+<div class="rp-field">
+<label for="experience">Tidligere staff erfaring</label>
+<textarea id="experience"
+placeholder="Har du været staff på andre servere?"
+required></textarea>
+</div>
+
+<div class="rp-field">
+<label for="motivation">Hvorfor vil du være staff?</label>
+<textarea id="motivation"
+placeholder="Minimum 75 tegn"
+required></textarea>
+</div>
+
+<div class="rp-field">
+<label for="time">Hvor mange timer kan du være aktiv pr uge?</label>
+<input type="text" id="time" placeholder="Fx 10-15 timer" required>
+</div>
+
+<div class="rp-submit">
+<button type="submit">Send staff ansøgning</button>
+</div>
+
+<p id="staffStatus"></p>
+
+</form>
+
+</div>
+
+
 <script>
-document.getElementById("staffForm").addEventListener("submit", function(e) {
-  e.preventDefault();
 
-  fetch("https://discord.com/api/webhooks/1470183606809792583/HQZdB0cd5hrI4_uLxqBQ3xAVUDhlw1vFlXCsLcDyxC-O6ICXYTfeNRfI6Lf_brOZTIUk", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      embeds: [{
-        title: "🛡️ Ny Staff-ansøgning",
-        color: 15548997,
-        fields: [
-          { name: "Discord", value: e.target[0].value },
-          { name: "Alder", value: e.target[1].value },
-          { name: "Motivation", value: e.target[2].value },
-          { name: "Tid pr. uge", value: e.target[3].value }
-        ]
-      }]
-    })
-  });
+const webhookURL = "https://discord.com/api/webhooks/1479863435658526981/tw2iMtwmMQsl8MNCAGzBF8zhoW2XkZG8Y3ng9a2omjiJ7qlaGfA-0jwV2mZayD2icFtk";
 
-  alert("Staff-ansøgning sendt!");
-  e.target.reset();
+const form = document.getElementById("staffForm");
+const status = document.getElementById("staffStatus");
+
+form.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const discord = document.getElementById("discord").value;
+const age = document.getElementById("age").value;
+const experience = document.getElementById("experience").value;
+const motivation = document.getElementById("motivation").value;
+const time = document.getElementById("time").value;
+
+if(motivation.length < 75){
+
+alert("Din motivation skal være mindst 75 tegn.");
+return;
+
+}
+
+fetch(webhookURL, {
+
+method: "POST",
+
+headers: {
+"Content-Type": "application/json"
+},
+
+body: JSON.stringify({
+
+embeds: [{
+
+title: "🛡️ test Staff Ansøgning",
+
+color: 3447003,
+
+fields: [
+
+{ name: "Discord", value: discord },
+
+{ name: "Alder", value: age, inline: true },
+
+{ name: "Staff erfaring", value: experience },
+
+{ name: "Motivation", value: motivation },
+
+{ name: "Timer pr uge", value: time, inline: true }
+
+],
+
+timestamp: new Date()
+
+}]
+
+})
+
+})
+
+.then(()=>{
+
+status.innerText = "✅ Ansøgning sendt til staff!";
+form.reset();
+
+})
+
+.catch(()=>{
+
+status.innerText = "❌ Kunne ikke sende ansøgning.";
+
 });
+
+});
+
 </script>
