@@ -1,100 +1,76 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resident RP | Dansk FiveM Roleplay</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<nav class="navbar">
-    <div class="nav-container">
-        <div class="logo">Resident RP</div>
+<body class="bg-gray-900 text-white font-sans">
 
-        <div class="nav-links">
-            <a href="index.html">Forside</a>
-            <a href="regler.html">Regler</a>
-            <a href="whitelist.html">Whitelist</a>
-            <form action="/send-ansogning.php" method="post"> 
-            <a href="https://discord.gg/DITDISCORDLINK" target="_blank" class="nav-btn">
-                Discord
-            </a>
-        </div>
+  <!-- Navbar -->
+  <nav class="bg-black/60 backdrop-blur sticky top-0">
+    <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+      <h1 class="text-xl font-bold">Min FiveM Server</h1>
+      <div class="space-x-6">
+        <a href="#home" class="hover:text-gray-300">Forside</a>
+        <a href="#about" class="hover:text-gray-300">Om Serveren</a>
+        <a href="#rules" class="hover:text-gray-300">Regler</a>
+        <a href="#join" class="hover:text-gray-300">Join</a>
+      </div>
     </div>
-</nav>
+  </nav>
 
-    <!-- HERO -->
-    <div class="hero">
-        <div>
-            <h1>Resident RP</h1>
-            <p>
-                Seriøst dansk FiveM roleplay – hvor historier, relationer
-                og konsekvenser er i centrum. Ingen speedrun. Kun ægte RP.
-            </p>
+  <!-- Hero -->
+  <section id="home" class="text-center py-24 px-6">
+    <h2 class="text-5xl font-bold mb-6">Velkommen til vores FiveM Server</h2>
+    <p class="text-gray-300 max-w-2xl mx-auto mb-8">
+      Oplev realistisk roleplay, aktive admins og et stærkt community.
+      Hop ind på serveren og start din historie i dag.
+    </p>
 
-           <div class="buttons">
-    <a href="whitelist.html" class="btn btn-primary">
-        Ansøg om whitelist</a>
-    <a href="regler.html" class="btn btn-secondary">Læs reglerne</a>
-</div>
- 
-        
+    <a href="#join" class="bg-white text-black px-8 py-3 rounded-2xl font-semibold hover:scale-105 transition">Join Server</a>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="max-w-5xl mx-auto py-20 px-6">
+    <h3 class="text-3xl font-bold mb-6">Om Serveren</h3>
+    <p class="text-gray-300 leading-relaxed">
+      Denne FiveM server er lavet til spillere der elsker seriøs roleplay.
+      Vi tilbyder mange jobs, custom biler, scripts og events.
+      Vores mål er at skabe det bedste RP community.
+    </p>
+  </section>
+
+  <!-- Rules -->
+  <section id="rules" class="bg-gray-800 py-20 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h3 class="text-3xl font-bold mb-8">Server Regler</h3>
+
+      <ul class="space-y-4 text-gray-300">
+        <li>• Respekter alle spillere</li>
+        <li>• Ingen trolling eller griefing</li>
+        <li>• Følg admin instruktioner</li>
+        <li>• Seriøs roleplay forventes</li>
+      </ul>
     </div>
+  </section>
 
-    <!-- ABOUT -->
-    <section>
-        <h2>Hvad er Resident RP?</h2>
-        <p class="section-text">
-            Resident RP er et dansk roleplay-community for spillere,
-            der tager RP seriøst. Vi prioriterer kvalitet over kvantitet
-            og skaber rammerne for realistiske og langsigtede RP-forløb –
-            både civilt, kriminelt og offentligt.
-        </p>
-    </section>
+  <!-- Join -->
+  <section id="join" class="text-center py-24 px-6">
+    <h3 class="text-3xl font-bold mb-6">Join Serveren</h3>
 
-    <!-- FEATURES -->
-    <section>
-        <h2>Hvorfor vælge Resident RP?</h2>
+    <p class="text-gray-300 mb-8">Klik på knappen herunder for at joine serveren.</p>
 
-        <div class="features">
-            <div class="feature">
-                <h3>🎭 Seriøst RP</h3>
-                <p>Realistiske scenarier, karakterudvikling og konsekvenser.</p>
-            </div>
+    <a href="#" class="bg-green-500 px-10 py-4 rounded-2xl font-bold hover:scale-105 transition">Connect to FiveM</a>
 
-            <div class="feature">
-                <h3>🛡️ Aktiv staff</h3>
-                <p>Erfarent staff-team der sikrer fairplay.</p>
-            </div>
+    <p class="text-gray-400 mt-6">https://discord.gg/fnD5wSJT</p>
+  </section>
 
-            <div class="feature">
-                <h3>⚙️ Gennemtænkt server</h3>
-                <p>Custom scripts og balanceret økonomi.</p>
-            </div>
-
-            <div class="feature">
-                <h3>🤝 Stærkt community</h3>
-                <p>Respekt og samarbejde i centrum.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta">
-        <h2>Klar til at blive en del af Resident RP?</h2>
-        <p class="section-text">
-            Vi leder ikke efter flest spillere – vi leder efter de rigtige.
-            Læs reglerne og send din whitelist-ansøgning via Discord.
-        </p>
-
-        <a href="whitelist.html">Whitelist</a>
-    </section>
-
-    <footer>
-        © 2026 Resident RP • Dansk FiveM Roleplay
-    </footer>
+  <!-- Footer -->
+  <footer class="bg-black text-center py-6 text-gray-400">
+    © 2026 Min FiveM Server
+  </footer>
 
 </body>
 </html>
