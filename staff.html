@@ -1,50 +1,98 @@
 <style>
+
 .staff-form {
-    max-width: 700px;
+    max-width: 750px;
     margin: auto;
-    padding: 25px;
-    background: #1e1e1e;
-    border-radius: 10px;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
+    padding: 30px;
+    background: #161a20;
+    border: 1px solid #1f2430;
+    border-radius: 12px;
+    color: #eaeaea;
+    font-family: "Segoe UI", sans-serif;
 }
+
+.staff-form h2{
+    margin-bottom:20px;
+    text-align:center;
+}
+
 .staff-form input,
-.staff-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 6px;
-    border: none;
+.staff-form textarea{
+
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border-radius:8px;
+    border:1px solid #2a2f3a;
+    background:#0f1115;
+    color:#eaeaea;
+    font-size:14px;
 }
-.staff-form button {
-    margin-top: 15px;
-    padding: 12px;
-    width: 100%;
-    background: #ff6600;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+
+.staff-form input:focus,
+.staff-form textarea:focus{
+
+    outline:none;
+    border-color:#3da9fc;
+
 }
+
+.staff-form textarea{
+
+    min-height:100px;
+    resize:vertical;
+
+}
+
+.staff-form button{
+
+    margin-top:18px;
+    padding:13px;
+    width:100%;
+    background:#3da9fc;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.2s;
+
+}
+
+.staff-form button:hover{
+
+    background:#63b9ff;
+    transform:translateY(-2px);
+
+}
+
 </style>
 
+
 <div class="staff-form">
+
 <h2>📝 Staff Ansøgning</h2>
 
 <form action="/send-ansogning.php" method="post">
 
 <input type="text" name="navn" placeholder="Fulde navn" required>
-<input type="number" name="alder" placeholder="Alder" required>
+
+<input type="number" name="alder" placeholder="Alder" min="13" required>
+
 <input type="text" name="discord" placeholder="Discord (brugernavn#0000)" required>
+
 <input type="text" name="ingame" placeholder="Ingame navn" required>
-<input type="text" name="hvorfor dig " placeholder="hvorfor skal vi vælge dig" required>   
+
+<input type="text" name="why" placeholder="Hvorfor skal vi vælge dig?" required>
 
 <textarea name="erfaring" placeholder="Tidligere staff erfaring"></textarea>
+
 <textarea name="motivation" placeholder="Hvorfor vil du være staff?" required></textarea>
 
-<input type="text" name="timer" placeholder="Timer pr. uge" required>
+<input type="text" name="timer" placeholder="Hvor mange timer kan du være aktiv pr uge?" required>
 
 <button type="submit">Send Ansøgning</button>
 
 </form>
+
 </div>
