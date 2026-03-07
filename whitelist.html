@@ -1,67 +1,151 @@
 <form class="whitelist-form" id="whitelistForm">
-    <label>
-        Discord-navn
-        <input type="text" id="discord" required>
-    </label>
 
-    <label>
-        Alder
-        <input type="number" id="age" required>
-    </label>
+<label>
+Discord navn
+<input type="text" id="discord" placeholder="Brugernavn#0000" required>
+</label>
 
-    <label>
-        RP-erfaring
-        <textarea id="experience" required></textarea>
-    </label>
+<label>
+Alder
+<input type="number" id="age" min="13" max="99" required>
+</label>
 
-   
-   
-    <label>
-        Karakter-idé
-        <textarea id="character" required></textarea>
-    </label>
+<label>
+Hvor længe har du spillet RP?
+<input type="text" id="rpTime" placeholder="fx 1 år">
+</label>
 
-    <label>
-        Hvorfor Resident RP?
-        <textarea id="why" required></textarea>
-    </label>
+<label>
+RP erfaring
+<textarea id="experience" placeholder="Hvilke servers har du spillet på?" required></textarea>
+</label>
 
-    <button type="submit" class="btn btn-primary">
-        Send ansøgning
-    </button>
+<label>
+Din karakter idé
+<textarea id="character" placeholder="Fortæl om din karakter..." required></textarea>
+</label>
+
+<label>
+Hvorfor vil du spille på Resident RP?
+<textarea id="why" required></textarea>
+</label>
+
+<label>
+Har du læst reglerne?
+<select id="rules" required>
+<option value="">Vælg</option>
+<option value="Ja">Ja</option>
+<option value="Nej">Nej</option>
+</select>
+</label>
+
+<button type="submit" class="btn btn-primary">
+Send whitelist ansøgning
+</button>
+
 </form>
 
 <p id="formStatus"></p>
 
 <script>
-const webhookURL = "https://discord.com/api/webhooks/1470183171432906784/LspcUr22eCGx-ZKt9AYBynZjPFPexbQTMrLok0oUUmlpX5QRljS2PwpFVGNz-D5vxqYb";
 
-document.getElementById("whitelistForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+const webhookURL = "DIN_WEBHOOK_HER";
 
-    fetch(webhookURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            embeds: [{
-                title: "📋 Ny whitelist-ansøgning",
-                color: 3447003,
-                fields: [
-                    { name: "Discord", value: discord.value },
-                    { name: "Alder", value: age.value },
-                    { name: "RP-erfaring", value: experience.value },
-                    { name: "Karakter", value: character.value },
-                    { name: "Hvorfor Resident RP?", value: why.value }
-                ]
-            }]
-        })
-    }).then(() => {
-        formStatus.innerText = "✅ Ansøgning sendt!";
-        whitelistForm.reset();
-    }).catch(() => {
-        formStatus.innerText = "❌ Noget gik galt.";
-    });
+const form = document.getElementById("whitelistForm");
+const status = document.getElementById("formStatus");
+
+form.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const discord = document.getElementById("discord").value;
+const age = document.getElementById("age").value;
+const rpTime = document.getElementById("rpTime").value;
+const experience = document.getElementById("experience").value;
+const character = document.getElementById("character").value;
+const why = document.getElementById("why").value;
+const rules = document.getElementById("rules").value;
+
+fetch(webhookURL, {
+
+method: "POST",
+
+headers: {
+"Content-Type": "application/json"
+},
+
+body: JSON.stringify({
+
+embeds: [{
+
+title: "📋 Ny Resident RP Whitelist Ansøgning",
+
+color: 5814783,
+
+timestamp: new Date(),
+
+fields: [
+
+{
+name: "👤 Discord",
+value: discord,
+inline: true
+},
+
+{
+name: "🎂 Alder",
+value: age,
+inline: true
+},
+
+{
+name: "⏳ RP Erfaring",
+value: rpTime,
+inline: true
+},
+
+{
+name: "🎮 RP Servere",
+value: experience
+},
+
+{
+name: "🧍 Karakter Idé",
+value: character
+},
+
+{
+name: "⭐ Hvorfor Resident RP",
+value: why
+},
+
+{
+name: "📜 Læst Regler",
+value: rules,
+inline: true
+}
+
+]
+
+}]
+
+})
+
+})
+
+.then(() => {
+
+status.innerText = "✅ Ansøgning sendt til staff!";
+form.reset();
+
+})
+
+.catch(() => {
+
+status.innerText = "❌ Kunne ikke sende ansøgning.";
+
 });
-</script>
 
-<body>
+});
+
+</script>
