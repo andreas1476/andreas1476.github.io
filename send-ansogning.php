@@ -1,48 +1,116 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $webhookurl = "https://discord.com/api/webhooks/1474057895816593662/2yz52oYSdl2Kka7R8xrDXIgPfOgC3LM1yDbfoGXcplj7t1dOfKQocLY_3-o7_dccTNnB";
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // Indsamle data fra formular
-    $navn = htmlspecialchars($_POST['navn']);
-    $alder = htmlspecialchars($_POST['alder']);
-    $discord = htmlspecialchars($_POST['discord']);
-    $ingame = htmlspecialchars($_POST['ingame']);
-    $erfaring = htmlspecialchars($_POST['erfaring']);
-    $motivation = htmlspecialchars($_POST['motivation']);
-    $timer = htmlspecialchars($_POST['timer']);
+$webhookurl = "DIN_WEBHOOK_HER";
 
-    // Forbered embed til Discord
-    $message = [
-        "embeds" => [
-            [
-                "title" => "📥 Ny Staff Ansøgning",
-                "color" => hexdec("ffaa00"), // Gul
-                "fields" => [
-                    ["name" => "Navn", "value" => $navn, "inline" => true],
-                    ["name" => "Alder", "value" => $alder, "inline" => true],
-                    ["name" => "Discord", "value" => $discord],
-                    ["name" => "Ingame Navn", "value" => $ingame],
-                    ["name" => "Tidligere Erfaring", "value" => $erfaring],
-                    ["name" => "Motivation", "value" => $motivation],
-                    ["name" => "Timer pr. uge", "value" => $timer],
-                    ["name" => "hvorfor skal vi vælge dig", "value" => $hvorfor dig],
-                ],
-                "footer" => ["text" => "Staff Ansøgnings System"],
-                "timestamp" => date("c")
-            ]
-        ]
-    ];
+/* Hent og rens data */
 
-    // Send til Discord
-    $ch = curl_init($webhookurl);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-type: application/json']);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($message));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_exec($ch);
-    curl_close($ch);
+$navn = htmlspecialchars($_POST['navn'] ?? 'Ikke udfyldt');
+$alder = htmlspecialchars($_POST['alder'] ?? 'Ikke udfyldt');
+$discord = htmlspecialchars($_POST['discord'] ?? 'Ikke udfyldt');
+$ingame = htmlspecialchars($_POST['ingame'] ?? 'Ikke udfyldt');
+$why = htmlspecialchars($_POST['why'] ?? 'Ikke udfyldt');
+$erfaring = htmlspecialchars($_POST['erfaring'] ?? 'Ingen erfaring skrevet');
+$motivation = htmlspecialchars($_POST['motivation'] ?? 'Ikke udfyldt');
+$timer = htmlspecialchars($_POST['timer'] ?? 'Ikke udfyldt');
 
-    echo "success";
+/* Discord embed */
+
+$data = [
+
+"embeds" => [
+
+[
+"title" => "📥 Ny Staff Ansøgning",
+
+"color" => hexdec("3da9fc"),
+
+"fields" => [
+
+[
+"name" => "👤 Navn",
+"value" => $navn,
+"inline" => true
+],
+
+[
+"name" => "🎂 Alder",
+"value" => $alder,
+"inline" => true
+],
+
+[
+"name" => "💬 Discord",
+"value" => $discord
+],
+
+[
+"name" => "🎮 Ingame Navn",
+"value" => $ingame
+],
+
+[
+"name" => "⭐ Hvorfor skal vi vælge dig",
+"value" => $why
+],
+
+[
+"name" => "🛠 Staff Erfaring",
+"value" => $erfaring
+],
+
+[
+"name" => "🔥 Motivation",
+"value" => $motivation
+],
+
+[
+"name" => "⏰ Timer pr uge",
+"value" => $timer,
+"inline" => true
+]
+
+],
+
+"footer" => [
+"text" => "Resident RP Staff System"
+],
+
+"timestamp" => date("c")
+
+]
+
+]
+
+];
+
+/* Send til Discord */
+
+$ch = curl_init($webhookurl);
+
+curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+curl_close($ch);
+
+/* Response */
+
+if ($httpcode === 204) {
+
+echo "success";
+
+} else {
+
+echo "error";
+
 }
+
+}
+
 ?>
