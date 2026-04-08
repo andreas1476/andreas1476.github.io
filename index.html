@@ -30,9 +30,11 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 .whitelist {border-top: 5px solid #f1c40f;}
 .staff {border-top: 5px solid #00ccff;}
 .bande {border-top: 5px solid #ff4d4d;}
+#login-area {text-align:center;margin-bottom:20px;}
 </style>
 </head>
 <body>
+
 <nav>
 <h2>Resident RP</h2>
 <div>
@@ -48,6 +50,12 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <p>Udfyld ansøgning og se alle ansøgninger nedenfor</p>
 </header>
 
+<!-- LOGIN -->
+<div id="login-area">
+    <button id="login-btn">Log ind med Discord (Ejer)</button>
+    <span id="user-info"></span>
+</div>
+
 <!-- WHITELIST FORM -->
 <section id="whitelist-section" class="section">
 <h2>Whitelist Ansøgning</h2>
@@ -58,7 +66,7 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <textarea id="w_q4" placeholder="Hvorfor vil du spille hos os?"></textarea>
 <textarea id="w_q5" placeholder="Tidligere servererfaring"></textarea>
 <textarea id="w_q6" placeholder="Roller du kan spille"></textarea>
-<input id="w_q7" placeholder="Hvor mange timer om ugen?">
+<input id="w_q7" placeholder="Hvor mange timer om ugen?"></input>
 <textarea id="w_q8" placeholder="Hvordan vil du bidrage til RP-miljøet?"></textarea>
 <textarea id="w_q9" placeholder="Kendskab til regler"></textarea>
 <textarea id="w_q10" placeholder="Eventuelle kommentarer"></textarea>
@@ -76,7 +84,7 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <textarea id="s_q4" placeholder="Hvorfor vil du være staff?"></textarea>
 <textarea id="s_q5" placeholder="Hvilke staff roller kan du udfylde?"></textarea>
 <textarea id="s_q6" placeholder="Konflikthåndtering erfaring"></textarea>
-<input id="s_q7" placeholder="Hvor mange timer om ugen?">
+<input id="s_q7" placeholder="Hvor mange timer om ugen?"></input>
 <textarea id="s_q8" placeholder="Tidligere staff erfaring"></textarea>
 <textarea id="s_q9" placeholder="Kendskab til vores regler"></textarea>
 <textarea id="s_q10" placeholder="Eventuelle kommentarer"></textarea>
@@ -119,6 +127,25 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 </footer>
 
 <script>
+// ----- KONFIGURATION -----
+const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
+const OWNER_DISCORD_ID = "1403723318124744826"; // Skift til ejerens Discord ID
+const OWNER_DISCORD_ID = "1037115435629424710"; // Skift til ejerens Discord ID
+let currentUser = null;
+
+// ----- SIMPEL LOGIN SIMULERING -----
+document.getElementById("login-btn").addEventListener("click", () => {
+    const discordID = prompt("Indtast dit Discord ID for login:");
+    if(discordID === OWNER_DISCORD_ID){
+        currentUser = discordID;
+        document.getElementById("user-info").innerText = "Logget ind som ejer";
+        loadApps();
+        alert("Login succesfuldt! Du kan nu godkende/afvise ansøgninger.");
+    } else {
+        alert("Du har ikke tilladelse til at logge ind som ejer.");
+    }
+});
+
 // ----- SEND ANSØGNING -----
 function submitApp(type) {
     let data = {};
@@ -127,22 +154,46 @@ function submitApp(type) {
         data[`Q${i}`] = el ? el.value : '';
         if(el) el.value = '';
     }
-
-    let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     const appData = {id: Date.now(), type, status: 'Ny', ...data};
+    let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     apps.push(appData);
     localStorage.setItem('apps', JSON.stringify(apps));
+    sendToDiscord(type + " Ansøgning", appData);
     loadApps();
     alert(type + " ansøgning sendt!");
 }
 
+// ----- SEND TIL DISCORD -----
+function sendToDiscord(title, dataObj, status="Ny") {
+    fetch(webhookURL, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: "Resident RP",
+            embeds: [{
+                title: title + " - " + status,
+                color: status === "Godkendt" ? 65280 : status === "Afvist" ? 16711680 : 16766720,
+                fields: Object.keys(dataObj)
+                    .filter(k => !['id','type','status'].includes(k))
+                    .map(key => ({name: key.toUpperCase(), value: String(dataObj[key]), inline:false})),
+                footer: { text: "Resident RP Ansøgning System" }
+            }]
+        })
+    }).catch(err => console.log("Fejl ved Discord webhook:", err));
+}
+
 // ----- STATUS OG FILTRERING -----
 function setStatus(id, status) {
+    if(currentUser !== OWNER_DISCORD_ID){
+        alert("Kun ejeren kan ændre status!");
+        return;
+    }
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     let app = apps.find(a => a.id === id);
     if(!app) return;
     app.status = status;
     localStorage.setItem('apps', JSON.stringify(apps));
+    sendToDiscord(app.type + " Ansøgning", app, status);
     loadApps();
 }
 
@@ -154,25 +205,31 @@ function loadApps() {
     const appsDiv = document.getElementById('apps');
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     appsDiv.innerHTML = '';
-    let filtered = apps.filter(a => (currentFilter === 'All' || a.type === currentFilter) && a.status === 'Ny' );
-    if(filtered.length === 0){
+
+    if(apps.length === 0){
         appsDiv.innerHTML = "<p>Ingen ansøgninger endnu.</p>";
         return;
     }
-    filtered.forEach(app => {
+
+    apps.forEach(app => {
         const typeClass = app.type === "Whitelist" ? "whitelist" : app.type === "Staff" ? "staff" : "bande";
         const card = document.createElement('div');
         card.className = `app-card ${typeClass}`;
+
         let html = `<h3>${app.type} - ${app.status}</h3>`;
         Object.keys(app).forEach(k => {
             if(!['id','type','status'].includes(k)){
                 html += `<div class="field"><b>${k}:</b> ${app[k]}</div>`;
             }
         });
-        html += `<div class="status-buttons">
-            <button onclick="setStatus(${app.id}, 'Godkendt')">✅ Godkend</button>
-            <button onclick="setStatus(${app.id}, 'Afvist')">❌ Afvis</button>
-        </div>`;
+
+        if(app.status === 'Ny' && currentUser === OWNER_DISCORD_ID){
+            html += `<div class="status-buttons">
+                        <button onclick="setStatus(${app.id}, 'Godkendt')">✅ Godkend</button>
+                        <button onclick="setStatus(${app.id}, 'Afvist')">❌ Afvis</button>
+                     </div>`;
+        }
+
         card.innerHTML = html;
         appsDiv.appendChild(card);
     });
@@ -180,5 +237,6 @@ function loadApps() {
 
 loadApps();
 </script>
+
 </body>
 </html>
