@@ -15,10 +15,10 @@ header {height:100vh;display:flex;flex-direction:column;justify-content:center;a
 .join {background:#f1c40f;color:black;}
 .discord {background:#5865F2;}
 section {padding:80px 20px;text-align:center;}
-.form {max-width:500px;margin:auto;text-align:left;}
-input, textarea {width:100%;padding:10px;margin:10px 0;border-radius:8px;border:none;}
-button {padding:12px 20px;border:none;border-radius:8px;background:#f1c40f;font-weight:bold;cursor:pointer;}
-.admin-panel {display:none;max-width:800px;margin:auto;text-align:left;background:#111;padding:20px;border-radius:10px;}
+.form {max-width:600px;margin:auto;text-align:left;}
+input, textarea {width:100%;padding:10px;margin:10px 0;border-radius:8px;border:none;background:#222;color:white;}
+button {padding:12px 20px;border:none;border-radius:8px;background:#f1c40f;font-weight:bold;cursor:pointer;margin:5px;}
+.admin-panel {display:none;max-width:900px;margin:auto;text-align:left;background:#111;padding:20px;border-radius:10px;}
 .app {background:#1a1a1a;padding:10px;margin:10px 0;border-radius:8px;}
 footer {padding:30px;background:#111;text-align:center;color:#777;}
 </style>
@@ -46,10 +46,16 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <section id="whitelist">
 <h2>Whitelist Ansøgning</h2>
 <div class="form">
-<input id="w_name" placeholder="Navn">
-<input id="w_age" placeholder="Alder">
-<textarea id="w_exp" placeholder="Erfaring"></textarea>
-<textarea id="w_why" placeholder="Hvorfor?"></textarea>
+<input id="w_q1" placeholder="Navn">
+<input id="w_q2" placeholder="Alder">
+<textarea id="w_q3" placeholder="Erfaring med RP"></textarea>
+<textarea id="w_q4" placeholder="Hvorfor vil du spille hos os?"></textarea>
+<textarea id="w_q5" placeholder="Tidligere servererfaring"></textarea>
+<textarea id="w_q6" placeholder="Roller du kan spille"></textarea>
+<input id="w_q7" placeholder="Hvor mange timer om ugen?"></input>
+<textarea id="w_q8" placeholder="Hvordan vil du bidrage til RP-miljøet?"></textarea>
+<textarea id="w_q9" placeholder="Kendskab til regler"></textarea>
+<textarea id="w_q10" placeholder="Eventuelle kommentarer"></textarea>
 <button onclick="submitWhitelist()">Send</button>
 </div>
 </section>
@@ -58,10 +64,16 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <section id="staff">
 <h2>Staff Ansøgning</h2>
 <div class="form">
-<input id="s_name" placeholder="Navn">
-<input id="s_age" placeholder="Alder">
-<textarea id="s_exp" placeholder="Staff erfaring"></textarea>
-<textarea id="s_why" placeholder="Hvorfor dig?"></textarea>
+<input id="s_q1" placeholder="Navn">
+<input id="s_q2" placeholder="Alder">
+<textarea id="s_q3" placeholder="Erfaring som staff"></textarea>
+<textarea id="s_q4" placeholder="Hvorfor vil du være staff?"></textarea>
+<textarea id="s_q5" placeholder="Hvilke staff roller kan du udfylde?"></textarea>
+<textarea id="s_q6" placeholder="Konflikthåndtering erfaring"></textarea>
+<input id="s_q7" placeholder="Hvor mange timer om ugen?"></input>
+<textarea id="s_q8" placeholder="Tidligere staff erfaring"></textarea>
+<textarea id="s_q9" placeholder="Kendskab til vores regler"></textarea>
+<textarea id="s_q10" placeholder="Eventuelle kommentarer"></textarea>
 <button onclick="submitStaff()">Send</button>
 </div>
 </section>
@@ -70,9 +82,16 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <section id="bande">
 <h2>Bande Ansøgning</h2>
 <div class="form">
-<input id="b_name" placeholder="Bande navn">
-<input id="b_members" placeholder="Antal medlemmer">
-<textarea id="b_plan" placeholder="Planer"></textarea>
+<input id="b_q1" placeholder="Bande navn">
+<input id="b_q2" placeholder="Antal medlemmer">
+<textarea id="b_q3" placeholder="Planer for banden"></textarea>
+<textarea id="b_q4" placeholder="Hvorfor oprette denne bande?"></textarea>
+<textarea id="b_q5" placeholder="Roller i banden"></textarea>
+<textarea id="b_q6" placeholder="Tidligere bande erfaring"></textarea>
+<textarea id="b_q7" placeholder="Strategi for samarbejde"></textarea>
+<textarea id="b_q8" placeholder="Hvilke typer aktiviteter vil I lave?"></textarea>
+<textarea id="b_q9" placeholder="Eventuelle regler indenfor banden"></textarea>
+<textarea id="b_q10" placeholder="Kontaktperson"></textarea>
 <button onclick="submitBande()">Send</button>
 </div>
 </section>
@@ -82,7 +101,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <h2>🔐 Admin Panel</h2>
 <input type="password" id="adminPass" placeholder="Kodeord">
 <button onclick="login()">Login</button>
-
 <div class="admin-panel" id="panel">
 <h3>Ansøgninger</h3>
 <div id="apps"></div>
@@ -97,7 +115,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
 const adminPassword = "resident1234";
 
-// Funktion til at sende beskeder til Discord
 function sendToDiscord(title, dataObj, status="Ny") {
   fetch(webhookURL, {
     method: "POST",
@@ -107,84 +124,68 @@ function sendToDiscord(title, dataObj, status="Ny") {
       embeds: [{
         title: title + " - " + status,
         color: status === "Godkendt" ? 65280 : status === "Afvist" ? 16711680 : 16766720,
-        fields: Object.keys(dataObj).map(key => ({
-          name: key.toUpperCase(),
-          value: String(dataObj[key]),
-          inline: false
-        })),
+        fields: Object.keys(dataObj).map(key => ({name: key.toUpperCase(), value: String(dataObj[key]), inline: false})),
         footer: { text: "Resident RP Ansøgning System" }
       }]
     })
   });
 }
 
-// Gemmer ansøgning i localStorage
 function saveApp(type, data) {
   let apps = JSON.parse(localStorage.getItem('apps') || '[]');
   apps.push({id: Date.now(), type, status: "Ny", ...data});
   localStorage.setItem('apps', JSON.stringify(apps));
 }
 
-// WHITELIST
 function submitWhitelist() {
-  let data = {name: w_name.value, age: w_age.value, exp: w_exp.value, why: w_why.value};
+  let data = {};
+  for(let i=1;i<=10;i++){ data[`Q${i}`] = document.getElementById(`w_q${i}`).value; }
   saveApp("Whitelist", data);
   sendToDiscord("Whitelist Ansøgning", data);
   alert('Sendt!');
 }
 
-// STAFF
 function submitStaff() {
-  let data = {name: s_name.value, age: s_age.value, exp: s_exp.value, why: s_why.value};
+  let data = {};
+  for(let i=1;i<=10;i++){ data[`Q${i}`] = document.getElementById(`s_q${i}`).value; }
   saveApp("Staff", data);
   sendToDiscord("Staff Ansøgning", data);
   alert('Sendt!');
 }
 
-// BANDE
 function submitBande() {
-  let data = {name: b_name.value, members: b_members.value, plan: b_plan.value};
+  let data = {};
+  for(let i=1;i<=10;i++){ data[`Q${i}`] = document.getElementById(`b_q${i}`).value; }
   saveApp("Bande", data);
   sendToDiscord("Bande Ansøgning", data);
   alert('Sendt!');
 }
 
-// ADMIN LOGIN
 function login() {
-  if(adminPass.value === adminPassword) {
-    panel.style.display = 'block';
-    loadApps();
-  } else alert('Forkert kode');
+  if(adminPass.value === adminPassword) { panel.style.display = 'block'; loadApps(); }
+  else alert('Forkert kode');
 }
 
-// LOAD APPS
 function loadApps() {
   let apps = JSON.parse(localStorage.getItem('apps') || '[]');
   appsDiv.innerHTML = '';
   apps.forEach(a => {
     if(a.status === "Ny") {
-      appsDiv.innerHTML += `
-        <div class="app">
-          <b>${a.type}</b> - ${a.name || a.b_name}<br>
-          ${Object.keys(a).filter(k => !["id","type","status"].includes(k)).map(k => `<b>${k}:</b> ${a[k]}<br>`).join('')}
-          <button onclick="handleApp(${a.id}, true)">✅ Godkend</button>
-          <button onclick="handleApp(${a.id}, false)">❌ Afvis</button>
-        </div>
-      `;
+      appsDiv.innerHTML += `<div class="app"><b>${a.type}</b><br>${Object.keys(a).filter(k=>!['id','type','status'].includes(k)).map(k=>`<b>${k}:</b> ${a[k]}<br>`).join('')}<button onclick="handleApp(${a.id},true)">✅ Godkend</button><button onclick="handleApp(${a.id},false)">❌ Afvis</button></div>`;
     }
   });
 }
 
-// GODKEND / AFVIS
 function handleApp(id, approve) {
   let apps = JSON.parse(localStorage.getItem('apps') || '[]');
-  let app = apps.find(a => a.id === id);
+  let app = apps.find(a=>a.id===id);
   if(!app) return;
-
   app.status = approve ? "Godkendt" : "Afvist";
   localStorage.setItem('apps', JSON.stringify(apps));
-  
   sendToDiscord(app.type + " Ansøgning", app, app.status);
-  loadApps(); // opdater panel
+  loadApps();
 }
 </script>
+
+</body>
+</html>
