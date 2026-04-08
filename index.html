@@ -31,6 +31,11 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 .whitelist {border-top: 5px solid #f1c40f;}
 .staff {border-top: 5px solid #00ccff;}
 .bande {border-top: 5px solid #ff4d4d;}
+
+/* Skjul sektioner indtil login */
+.section:not(#login-section) {
+  display: none;
+}
 </style>
 </head>
 <body>
@@ -49,6 +54,16 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <h1>Resident RP Ansøgninger</h1>
 <p>Udfyld ansøgning og se alle ansøgninger nedenfor</p>
 </header>
+
+<!-- LOGIN SECTION -->
+<section id="login-section" class="section">
+<h2>Log ind med Discord for at ansøge</h2>
+<a id="discord-login" href="#">
+<button style="padding:10px 20px;background:#7289da;color:white;border:none;border-radius:5px;cursor:pointer;">
+Log ind med Discord
+</button>
+</a>
+</section>
 
 <!-- WHITELIST FORM -->
 <section id="whitelist-section" class="section">
@@ -121,17 +136,77 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 </footer>
 
 <script>
-// Discord Webhook
+// ----- DISCORD LOGIN -----
+// ----- DISCORD LOGIN -----
+const DISCORD_CLIENT_ID = "1404453298370641981";
+const REDIRECT_URI = encodeURIComponent("https://discord.com/oauth2/authorize?client_id=1404453298370641981");
+const SCOPE = "identify";
+
+// Sæt login URL
+document.getElementById('discord-login').href = 
+  `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPE}`;
+
+function getDiscordUser() {
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const token = params.get('access_token');
+
+    if(token) {
+        // Fetch Discord brugerdata
+        fetch("https://discord.com/api/users/@me", {
+            headers: {Authorization: `Bearer ${token}`}
+        })
+        .then(res => res.json())
+        .then(user => {
+            localStorage.setItem('discordLoggedIn', 'true');
+            localStorage.setItem('discordUser', `${user.username}#${user.discriminator}`);
+            showAllSections();
+            alert(`Logget ind som ${user.username}#${user.discriminator}`);
+            // Fjern token fra URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        })
+        .catch(err => console.log("Discord API fejl:", err));
+    } else {
+        if(localStorage.getItem('discordLoggedIn') === 'true') {
+            showAllSections();
+        } else {
+            // Hvis ikke logget ind, skjul alle sektioner undtagen login
+            hideAllSectionsExceptLogin();
+        }
+    }
+}
+
+function showAllSections() {
+    document.getElementById('login-section').style.display = 'none';
+    document.querySelectorAll('.section').forEach(sec => sec.style.display='block');
+}
+
+function hideAllSectionsExceptLogin() {
+    document.getElementById('login-section').style.display = 'block';
+    document.querySelectorAll('.section').forEach(sec => {
+        if(sec.id !== 'login-section') sec.style.display='none';
+    });
+}
+
+getDiscordUser();
+// ----- DISCORD WEBHOOK -----
 const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
 
 // Submit ansøgning
 function submitApp(type) {
+    if(localStorage.getItem('discordLoggedIn') !== 'true') {
+        alert("Du skal logge ind med Discord først!");
+        return;
+    }
+
     let data = {};
     for (let i = 1; i <= 10; i++) {
         const el = document.getElementById(`${type[0].toLowerCase()}_q${i}`);
         data[`Q${i}`] = el ? el.value : '';
         if(el) el.value = '';
     }
+
+    data['Discord'] = localStorage.getItem('discordUser');
 
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     const appData = {id: Date.now(), type, status: 'Ny', ...data};
@@ -186,7 +261,6 @@ function loadApps() {
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     appsDiv.innerHTML = '';
 
-    // Kun vis nye ansøgninger
     let filtered = apps.filter(a => 
         (currentFilter === 'All' || a.type === currentFilter) &&
         a.status === 'Ny'
@@ -223,3 +297,5 @@ function loadApps() {
 // Load ved start
 loadApps();
 </script>
+</body>
+</html>
