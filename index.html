@@ -121,10 +121,10 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 </footer>
 
 <script>
-// Indsæt din Discord Webhook URL her
-const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag"; 
+// Discord Webhook
+const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
 
-// Submit function for all types
+// Submit ansøgning
 function submitApp(type) {
     let data = {};
     for (let i = 1; i <= 10; i++) {
@@ -132,20 +132,18 @@ function submitApp(type) {
         data[`Q${i}`] = el ? el.value : '';
         if(el) el.value = '';
     }
-    // Gem i localStorage
+
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     const appData = {id: Date.now(), type, status: 'Ny', ...data};
     apps.push(appData);
     localStorage.setItem('apps', JSON.stringify(apps));
-    
-    // Send til Discord
-    sendToDiscord(type + " Ansøgning", appData);
 
+    sendToDiscord(type + " Ansøgning", appData);
     loadApps();
-    alert(type + ' ansøgning sendt!');
+    alert(type + " ansøgning sendt!");
 }
 
-// Funktion til at sende ansøgning til Discord
+// Send til Discord
 function sendToDiscord(title, dataObj, status="Ny") {
     fetch(webhookURL, {
         method: "POST",
@@ -156,41 +154,42 @@ function sendToDiscord(title, dataObj, status="Ny") {
                 title: title + " - " + status,
                 color: status === "Godkendt" ? 65280 : status === "Afvist" ? 16711680 : 16766720,
                 fields: Object.keys(dataObj)
-                        .filter(k=>!['id','type','status'].includes(k))
-                        .map(key=>({name: key.toUpperCase(), value: String(dataObj[key]), inline:false})),
+                    .filter(k => !['id','type','status'].includes(k))
+                    .map(key => ({name: key.toUpperCase(), value: String(dataObj[key]), inline:false})),
                 footer: { text: "Resident RP Ansøgning System" }
             }]
         })
     }).catch(err => console.log("Fejl ved Discord webhook:", err));
 }
 
-// Approve or Reject an app
+// Godkend eller afvis
 function setStatus(id, status) {
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
-    let app = apps.find(a=>a.id===id);
+    let app = apps.find(a => a.id === id);
     if(!app) return;
     app.status = status;
     localStorage.setItem('apps', JSON.stringify(apps));
-    sendToDiscord(app.type + " Ansøgning", app, status); // Send opdatering til Discord
-    loadApps();
+    sendToDiscord(app.type + " Ansøgning", app, status);
+    loadApps(); // opdater listen
 }
 
-// Filter apps by type
+// Filtrér
 let currentFilter = 'All';
 function filterApps(type) {
     currentFilter = type;
     loadApps();
 }
 
+// Vis ansøgninger
 function loadApps() {
     const appsDiv = document.getElementById('apps');
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     appsDiv.innerHTML = '';
 
-    // Filtrér apps baseret på filter OG status
+    // Kun vis nye ansøgninger
     let filtered = apps.filter(a => 
         (currentFilter === 'All' || a.type === currentFilter) &&
-        a.status === 'Ny' // kun vis nye ansøgninger
+        a.status === 'Ny'
     );
 
     if(filtered.length === 0){
@@ -202,8 +201,7 @@ function loadApps() {
         const typeClass = app.type === "Whitelist" ? "whitelist" : app.type === "Staff" ? "staff" : "bande";
         const card = document.createElement('div');
         card.className = `app-card ${typeClass}`;
-        let bgColor = '#f1c40f'; // Ny = gul
-        card.style.borderTop = `5px solid ${bgColor}`;
+        card.style.borderTop = `5px solid #f1c40f`;
 
         let html = `<h3>${app.type} - ${app.status}</h3>`;
         Object.keys(app).forEach(k => {
@@ -211,11 +209,17 @@ function loadApps() {
                 html += `<div class="field"><b>${k}:</b> ${app[k]}</div>`;
             }
         });
+
         html += `<div class="status-buttons">
-                    <button class="status-approved" onclick="setStatus(${app.id}, 'Godkendt')">✅ Godkend</button>
-                    <button class="status-rejected" onclick="setStatus(${app.id}, 'Afvist')">❌ Afvis</button>
+                    <button onclick="setStatus(${app.id}, 'Godkendt')">✅ Godkend</button>
+                    <button onclick="setStatus(${app.id}, 'Afvist')">❌ Afvis</button>
                  </div>`;
+
         card.innerHTML = html;
         appsDiv.appendChild(card);
     });
 }
+
+// Load ved start
+loadApps();
+</script>
