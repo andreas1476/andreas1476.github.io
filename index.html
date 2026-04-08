@@ -129,8 +129,7 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <script>
 // ----- KONFIGURATION -----
 const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
-const OWNER_DISCORD_ID = "1403723318124744826"; // Skift til ejerens Discord ID
-const OWNER_DISCORD_ID = "1037115435629424710"; // Skift til ejerens Discord ID
+const OWNER_DISCORD_ID = "1403723318124744826"; // Kun én ejer ID
 let currentUser = null;
 
 // ----- SIMPEL LOGIN SIMULERING -----
@@ -159,8 +158,8 @@ function submitApp(type) {
     apps.push(appData);
     localStorage.setItem('apps', JSON.stringify(apps));
     sendToDiscord(type + " Ansøgning", appData);
-    loadApps();
     alert(type + " ansøgning sendt!");
+    loadApps();
 }
 
 // ----- SEND TIL DISCORD -----
