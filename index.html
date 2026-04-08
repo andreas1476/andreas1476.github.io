@@ -121,6 +121,9 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 </footer>
 
 <script>
+// Indsæt din Discord Webhook URL her
+const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag"; 
+
 // Submit function for all types
 function submitApp(type) {
     let data = {};
@@ -129,18 +132,36 @@ function submitApp(type) {
         data[`Q${i}`] = el ? el.value : '';
         if(el) el.value = '';
     }
+    // Gem i localStorage
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
-    apps.push({id: Date.now(), type, status: 'Ny', ...data});
+    const appData = {id: Date.now(), type, status: 'Ny', ...data};
+    apps.push(appData);
     localStorage.setItem('apps', JSON.stringify(apps));
+    
+    // Send til Discord
+    sendToDiscord(type + " Ansøgning", appData);
+
     loadApps();
     alert(type + ' ansøgning sendt!');
 }
 
-// Filter apps by type
-let currentFilter = 'All';
-function filterApps(type) {
-    currentFilter = type;
-    loadApps();
+// Funktion til at sende ansøgning til Discord
+function sendToDiscord(title, dataObj, status="Ny") {
+    fetch(webhookURL, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: "Resident RP",
+            embeds: [{
+                title: title + " - " + status,
+                color: status === "Godkendt" ? 65280 : status === "Afvist" ? 16711680 : 16766720,
+                fields: Object.keys(dataObj)
+                        .filter(k=>!['id','type','status'].includes(k))
+                        .map(key=>({name: key.toUpperCase(), value: String(dataObj[key]), inline:false})),
+                footer: { text: "Resident RP Ansøgning System" }
+            }]
+        })
+    }).catch(err => console.log("Fejl ved Discord webhook:", err));
 }
 
 // Approve or Reject an app
@@ -150,10 +171,18 @@ function setStatus(id, status) {
     if(!app) return;
     app.status = status;
     localStorage.setItem('apps', JSON.stringify(apps));
+    sendToDiscord(app.type + " Ansøgning", app, status); // Send opdatering til Discord
     loadApps();
 }
 
-// Load and display apps with status colors
+// Filter apps by type
+let currentFilter = 'All';
+function filterApps(type) {
+    currentFilter = type;
+    loadApps();
+}
+
+// Load and display apps
 function loadApps() {
     const appsDiv = document.getElementById('apps');
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
@@ -189,6 +218,3 @@ function loadApps() {
 // Load apps on page load
 loadApps();
 </script>
-
-</body>
-</html>
