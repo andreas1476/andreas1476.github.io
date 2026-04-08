@@ -182,24 +182,29 @@ function filterApps(type) {
     loadApps();
 }
 
-// Load and display apps
 function loadApps() {
     const appsDiv = document.getElementById('apps');
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     appsDiv.innerHTML = '';
-    let filtered = currentFilter === 'All' ? apps : apps.filter(a => a.type === currentFilter);
+
+    // Filtrér apps baseret på filter OG status
+    let filtered = apps.filter(a => 
+        (currentFilter === 'All' || a.type === currentFilter) &&
+        a.status === 'Ny' // kun vis nye ansøgninger
+    );
+
     if(filtered.length === 0){
         appsDiv.innerHTML = "<p>Ingen ansøgninger endnu.</p>";
         return;
     }
+
     filtered.forEach(app => {
         const typeClass = app.type === "Whitelist" ? "whitelist" : app.type === "Staff" ? "staff" : "bande";
         const card = document.createElement('div');
-        let bgColor = '#f1c40f'; // Ny = gul
-        if(app.status === 'Godkendt') bgColor = '#00cc00';
-        if(app.status === 'Afvist') bgColor = '#ff0000';
         card.className = `app-card ${typeClass}`;
+        let bgColor = '#f1c40f'; // Ny = gul
         card.style.borderTop = `5px solid ${bgColor}`;
+
         let html = `<h3>${app.type} - ${app.status}</h3>`;
         Object.keys(app).forEach(k => {
             if(!['id','type','status'].includes(k)){
@@ -207,14 +212,10 @@ function loadApps() {
             }
         });
         html += `<div class="status-buttons">
-            <button class="status-approved" onclick="setStatus(${app.id}, 'Godkendt')">✅ Godkend</button>
-            <button class="status-rejected" onclick="setStatus(${app.id}, 'Afvist')">❌ Afvis</button>
-        </div>`;
+                    <button class="status-approved" onclick="setStatus(${app.id}, 'Godkendt')">✅ Godkend</button>
+                    <button class="status-rejected" onclick="setStatus(${app.id}, 'Afvist')">❌ Afvis</button>
+                 </div>`;
         card.innerHTML = html;
         appsDiv.appendChild(card);
     });
 }
-
-// Load apps on page load
-loadApps();
-</script>
