@@ -62,7 +62,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <div class="form">
 <input id="w_q1" placeholder="Navn">
 <input id="w_q2" placeholder="Alder">
-<input id="w_discord" placeholder="Discord (brugernavn#1234)">
 <textarea id="w_q3" placeholder="Erfaring med RP"></textarea>
 <textarea id="w_q4" placeholder="Hvorfor vil du spille hos os?"></textarea>
 <textarea id="w_q5" placeholder="Tidligere servererfaring"></textarea>
@@ -81,7 +80,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <div class="form">
 <input id="s_q1" placeholder="Navn">
 <input id="s_q2" placeholder="Alder">
-<input id="s_discord" placeholder="Discord (brugernavn#1234)">
 <textarea id="s_q3" placeholder="Erfaring som staff"></textarea>
 <textarea id="s_q4" placeholder="Hvorfor vil du være staff?"></textarea>
 <textarea id="s_q5" placeholder="Hvilke staff roller kan du udfylde?"></textarea>
@@ -100,7 +98,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <div class="form">
 <input id="b_q1" placeholder="Bande navn">
 <input id="b_q2" placeholder="Antal medlemmer">
-<input id="b_discord" placeholder="Discord kontaktperson (brugernavn#1234)">
 <textarea id="b_q3" placeholder="Planer for banden"></textarea>
 <textarea id="b_q4" placeholder="Hvorfor oprette denne bande?"></textarea>
 <textarea id="b_q5" placeholder="Roller i banden"></textarea>
@@ -108,7 +105,7 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <textarea id="b_q7" placeholder="Strategi for samarbejde"></textarea>
 <textarea id="b_q8" placeholder="Hvilke typer aktiviteter vil I lave?"></textarea>
 <textarea id="b_q9" placeholder="Eventuelle regler indenfor banden"></textarea>
-<textarea id="b_q10" placeholder="Eventuelle kommentarer"></textarea>
+<textarea id="b_q10" placeholder="Kontaktperson"></textarea>
 <button onclick="submitApp('Bande')">Send Bande</button>
 </div>
 </section>
@@ -133,7 +130,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 // KONFIGURATION
 const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
 const OWNER_DISCORD_ID = "1403723318124744826";
-const OWNER_DISCORD_ID = "1037115435629424710";    
 let currentUser = null;
 
 // LOGIN
@@ -152,11 +148,6 @@ document.getElementById("login-btn").addEventListener("click", () => {
 // SEND ANSØGNING
 function submitApp(type) {
     let data = {};
-    const discordInputId = type[0].toLowerCase() + "_discord";
-    const discordEl = document.getElementById(discordInputId);
-    data["Discord"] = discordEl ? discordEl.value : "";
-    if(discordEl) discordEl.value = '';
-
     for (let i = 1; i <= 10; i++) {
         const el = document.getElementById(`${type[0].toLowerCase()}_q${i}`);
         data[`Q${i}`] = el ? el.value : '';
@@ -197,12 +188,13 @@ function setStatus(id, status) {
         return;
     }
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
+    // Find app og fjern den efter status ændring
     let appIndex = apps.findIndex(a => a.id === id);
     if(appIndex === -1) return;
     let app = apps[appIndex];
     app.status = status;
     sendToDiscord(app.type + " Ansøgning", app, status);
-    apps.splice(appIndex, 1);
+    apps.splice(appIndex, 1); // fjern fra localStorage
     localStorage.setItem('apps', JSON.stringify(apps));
     loadApps();
 }
@@ -215,6 +207,7 @@ function loadApps() {
     const appsDiv = document.getElementById('apps');
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
 
+    // Filtrering
     let filteredApps = currentFilter === 'All' ? apps : apps.filter(a => a.type === currentFilter);
 
     appsDiv.innerHTML = '';
