@@ -95,12 +95,27 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 
 <script>
 const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
-const adminPassword = "resident123";
+const adminPassword = "resident1234";
 
-function sendToDiscord(title, data) {
+function sendToDiscord(title, dataObj) {
   fetch(webhookURL, {
     method: "POST",
     headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      username: "Resident RP",
+      embeds: [{
+        title: title,
+        color: 16766720,
+        fields: Object.keys(dataObj).map(key => ({
+          name: key.toUpperCase(),
+          value: String(dataObj[key]),
+          inline: false
+        })),
+        footer: { text: "Resident RP Ansøgning System" }
+      }]
+    })
+  });
+},
     body: JSON.stringify({content: `**${title}**\n${data}`})
   });
 }
