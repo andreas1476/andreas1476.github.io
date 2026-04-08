@@ -27,15 +27,10 @@ button {padding:8px 15px;border:none;border-radius:6px;background:#f1c40f;font-w
 .filter-buttons {text-align:center;margin-bottom:20px;}
 .filter-buttons button {margin:0 5px;}
 footer {padding:30px;background:#111;text-align:center;color:#777;}
-/* Kort farver baseret på type */
 .whitelist {border-top: 5px solid #f1c40f;}
 .staff {border-top: 5px solid #00ccff;}
 .bande {border-top: 5px solid #ff4d4d;}
-
-/* Skjul sektioner indtil login */
-.section:not(#login-section) {
-  display: none;
-}
+.section:not(#login-section) {display:none;}
 </style>
 </head>
 <body>
@@ -137,12 +132,10 @@ Log ind med Discord
 
 <script>
 // ----- DISCORD LOGIN -----
-// ----- DISCORD LOGIN -----
-const DISCORD_CLIENT_ID = "1404453298370641981";
-const REDIRECT_URI = encodeURIComponent("https://discord.com/oauth2/authorize?client_id=1404453298370641981");
+const DISCORD_CLIENT_ID = "DIN_CLIENT_ID_HER";
+const REDIRECT_URI = encodeURIComponent("DIN_REDIRECT_URI_HER");
 const SCOPE = "identify";
 
-// Sæt login URL
 document.getElementById('discord-login').href = 
   `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPE}`;
 
@@ -152,7 +145,6 @@ function getDiscordUser() {
     const token = params.get('access_token');
 
     if(token) {
-        // Fetch Discord brugerdata
         fetch("https://discord.com/api/users/@me", {
             headers: {Authorization: `Bearer ${token}`}
         })
@@ -162,7 +154,6 @@ function getDiscordUser() {
             localStorage.setItem('discordUser', `${user.username}#${user.discriminator}`);
             showAllSections();
             alert(`Logget ind som ${user.username}#${user.discriminator}`);
-            // Fjern token fra URL
             window.history.replaceState({}, document.title, window.location.pathname);
         })
         .catch(err => console.log("Discord API fejl:", err));
@@ -170,7 +161,6 @@ function getDiscordUser() {
         if(localStorage.getItem('discordLoggedIn') === 'true') {
             showAllSections();
         } else {
-            // Hvis ikke logget ind, skjul alle sektioner undtagen login
             hideAllSectionsExceptLogin();
         }
     }
@@ -189,10 +179,10 @@ function hideAllSectionsExceptLogin() {
 }
 
 getDiscordUser();
+
 // ----- DISCORD WEBHOOK -----
 const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
 
-// Submit ansøgning
 function submitApp(type) {
     if(localStorage.getItem('discordLoggedIn') !== 'true') {
         alert("Du skal logge ind med Discord først!");
@@ -218,7 +208,6 @@ function submitApp(type) {
     alert(type + " ansøgning sendt!");
 }
 
-// Send til Discord
 function sendToDiscord(title, dataObj, status="Ny") {
     fetch(webhookURL, {
         method: "POST",
@@ -237,7 +226,6 @@ function sendToDiscord(title, dataObj, status="Ny") {
     }).catch(err => console.log("Fejl ved Discord webhook:", err));
 }
 
-// Godkend eller afvis
 function setStatus(id, status) {
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     let app = apps.find(a => a.id === id);
@@ -245,17 +233,15 @@ function setStatus(id, status) {
     app.status = status;
     localStorage.setItem('apps', JSON.stringify(apps));
     sendToDiscord(app.type + " Ansøgning", app, status);
-    loadApps(); // opdater listen
+    loadApps();
 }
 
-// Filtrér
 let currentFilter = 'All';
 function filterApps(type) {
     currentFilter = type;
     loadApps();
 }
 
-// Vis ansøgninger
 function loadApps() {
     const appsDiv = document.getElementById('apps');
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
@@ -294,7 +280,6 @@ function loadApps() {
     });
 }
 
-// Load ved start
 loadApps();
 </script>
 </body>
