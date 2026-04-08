@@ -33,7 +33,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 </style>
 </head>
 <body>
-
 <nav>
 <h2>Resident RP</h2>
 <div>
@@ -59,13 +58,10 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <textarea id="w_q4" placeholder="Hvorfor vil du spille hos os?"></textarea>
 <textarea id="w_q5" placeholder="Tidligere servererfaring"></textarea>
 <textarea id="w_q6" placeholder="Roller du kan spille"></textarea>
-<input id="w_q7" placeholder="Hvor mange timer om ugen?"></input>
+<input id="w_q7" placeholder="Hvor mange timer om ugen?">
 <textarea id="w_q8" placeholder="Hvordan vil du bidrage til RP-miljøet?"></textarea>
 <textarea id="w_q9" placeholder="Kendskab til regler"></textarea>
 <textarea id="w_q10" placeholder="Eventuelle kommentarer"></textarea>
-<!-- Discord felter -->
-<input id="w_discordTag" placeholder="Discord Tag (fx Player#1234)">
-<input id="w_discordID" placeholder="Discord ID (unik ID)">
 <button onclick="submitApp('Whitelist')">Send Whitelist</button>
 </div>
 </section>
@@ -80,13 +76,10 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <textarea id="s_q4" placeholder="Hvorfor vil du være staff?"></textarea>
 <textarea id="s_q5" placeholder="Hvilke staff roller kan du udfylde?"></textarea>
 <textarea id="s_q6" placeholder="Konflikthåndtering erfaring"></textarea>
-<input id="s_q7" placeholder="Hvor mange timer om ugen?"></input>
+<input id="s_q7" placeholder="Hvor mange timer om ugen?">
 <textarea id="s_q8" placeholder="Tidligere staff erfaring"></textarea>
 <textarea id="s_q9" placeholder="Kendskab til vores regler"></textarea>
 <textarea id="s_q10" placeholder="Eventuelle kommentarer"></textarea>
-<!-- Discord felter -->
-<input id="s_discordTag" placeholder="Discord Tag (fx Player#1234)">
-<input id="s_discordID" placeholder="Discord ID (unik ID)">
 <button onclick="submitApp('Staff')">Send Staff</button>
 </div>
 </section>
@@ -105,9 +98,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <textarea id="b_q8" placeholder="Hvilke typer aktiviteter vil I lave?"></textarea>
 <textarea id="b_q9" placeholder="Eventuelle regler indenfor banden"></textarea>
 <textarea id="b_q10" placeholder="Kontaktperson"></textarea>
-<!-- Discord felter -->
-<input id="b_discordTag" placeholder="Discord Tag (fx Player#1234)">
-<input id="b_discordID" placeholder="Discord ID (unik ID)">
 <button onclick="submitApp('Bande')">Send Bande</button>
 </div>
 </section>
@@ -129,18 +119,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 </footer>
 
 <script>
-// ----- DISCORD WEBHOOK -----
-const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
-
-// ----- VALIDERING -----
-function isValidDiscordTag(tag) {
-    return /^.{2,32}#\d{4}$/.test(tag);
-}
-
-function isValidDiscordID(id) {
-    return /^\d{17,20}$/.test(id);
-}
-
 // ----- SEND ANSØGNING -----
 function submitApp(type) {
     let data = {};
@@ -150,50 +128,12 @@ function submitApp(type) {
         if(el) el.value = '';
     }
 
-    // Discord felter
-    const discordTag = document.getElementById(`${type[0].toLowerCase()}_discordTag`).value.trim();
-    const discordID = document.getElementById(`${type[0].toLowerCase()}_discordID`).value.trim();
-
-    if(!isValidDiscordTag(discordTag)) {
-        alert("Indtast et gyldigt Discord Tag (fx Player#1234)");
-        return;
-    }
-
-    if(!isValidDiscordID(discordID)) {
-        alert("Indtast et gyldigt Discord ID (kun tal, min. 17 cifre)");
-        return;
-    }
-
-    data['DiscordTag'] = discordTag;
-    data['DiscordID'] = discordID;
-
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     const appData = {id: Date.now(), type, status: 'Ny', ...data};
     apps.push(appData);
     localStorage.setItem('apps', JSON.stringify(apps));
-
-    sendToDiscord(type + " Ansøgning", appData);
     loadApps();
     alert(type + " ansøgning sendt!");
-}
-
-// ----- SEND TIL DISCORD -----
-function sendToDiscord(title, dataObj, status="Ny") {
-    fetch(webhookURL, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            username: "Resident RP",
-            embeds: [{
-                title: title + " - " + status,
-                color: status === "Godkendt" ? 65280 : status === "Afvist" ? 16711680 : 16766720,
-                fields: Object.keys(dataObj)
-                    .filter(k => !['id','type','status'].includes(k))
-                    .map(key => ({name: key.toUpperCase(), value: String(dataObj[key]), inline:false})),
-                footer: { text: "Resident RP Ansøgning System" }
-            }]
-        })
-    }).catch(err => console.log("Fejl ved Discord webhook:", err));
 }
 
 // ----- STATUS OG FILTRERING -----
@@ -203,50 +143,36 @@ function setStatus(id, status) {
     if(!app) return;
     app.status = status;
     localStorage.setItem('apps', JSON.stringify(apps));
-    sendToDiscord(app.type + " Ansøgning", app, status);
     loadApps();
 }
 
 let currentFilter = 'All';
-function filterApps(type) {
-    currentFilter = type;
-    loadApps();
-}
+function filterApps(type) { currentFilter = type; loadApps(); }
 
 // ----- VIS ANSØGNINGER -----
 function loadApps() {
     const appsDiv = document.getElementById('apps');
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     appsDiv.innerHTML = '';
-
-    let filtered = apps.filter(a => 
-        (currentFilter === 'All' || a.type === currentFilter) &&
-        a.status === 'Ny'
-    );
-
+    let filtered = apps.filter(a => (currentFilter === 'All' || a.type === currentFilter) && a.status === 'Ny' );
     if(filtered.length === 0){
         appsDiv.innerHTML = "<p>Ingen ansøgninger endnu.</p>";
         return;
     }
-
     filtered.forEach(app => {
         const typeClass = app.type === "Whitelist" ? "whitelist" : app.type === "Staff" ? "staff" : "bande";
         const card = document.createElement('div');
         card.className = `app-card ${typeClass}`;
-        card.style.borderTop = `5px solid #f1c40f`;
-
         let html = `<h3>${app.type} - ${app.status}</h3>`;
         Object.keys(app).forEach(k => {
             if(!['id','type','status'].includes(k)){
                 html += `<div class="field"><b>${k}:</b> ${app[k]}</div>`;
             }
         });
-
         html += `<div class="status-buttons">
-                    <button onclick="setStatus(${app.id}, 'Godkendt')">✅ Godkend</button>
-                    <button onclick="setStatus(${app.id}, 'Afvist')">❌ Afvis</button>
-                 </div>`;
-
+            <button onclick="setStatus(${app.id}, 'Godkendt')">✅ Godkend</button>
+            <button onclick="setStatus(${app.id}, 'Afvist')">❌ Afvis</button>
+        </div>`;
         card.innerHTML = html;
         appsDiv.appendChild(card);
     });
