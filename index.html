@@ -1,76 +1,145 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Test</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resident RP</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+body {margin:0;font-family:'Poppins',sans-serif;background:#0b0b0b;color:white;}
+nav {display:flex;justify-content:space-between;padding:20px 40px;background:#111;position:fixed;width:100%;top:0;z-index:1000;}
+nav h2 {color:#f1c40f;}
+nav a {color:white;margin-left:20px;text-decoration:none;}
+header {height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:#000;}
+h1 {font-size:60px;margin:0;}
+p {color:#ccc;max-width:600px;}
+.btn {padding:15px 30px;border-radius:10px;text-decoration:none;font-weight:600;margin:10px;display:inline-block;}
+.join {background:#f1c40f;color:black;}
+.discord {background:#5865F2;}
+section {padding:80px 20px;text-align:center;}
+.form {max-width:500px;margin:auto;text-align:left;}
+input, textarea {width:100%;padding:10px;margin:10px 0;border-radius:8px;border:none;}
+button {padding:12px 20px;border:none;border-radius:8px;background:#f1c40f;font-weight:bold;}
+.shop {display:flex;justify-content:center;flex-wrap:wrap;}
+.shop-item {background:#1a1a1a;margin:15px;padding:20px;border-radius:15px;width:250px;}
+footer {padding:30px;background:#111;text-align:center;color:#777;}
+</style>
 </head>
-<body class="bg-gray-900 text-white font-sans">
+<body>
 
-  <!-- Navbar -->
-  <nav class="bg-black/60 backdrop-blur sticky top-0">
-    <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
-      <h1 class="text-xl font-bold">Min FiveM Server</h1>
-      <div class="space-x-6">
-        <a href="#home" class="hover:text-gray-300">Forside</a>
-        <a href="#about" class="hover:text-gray-300">Om Serveren</a>
-        <a href="#rules" class="hover:text-gray-300">Regler</a>
-        <a href="#join" class="hover:text-gray-300">Join</a>
-      </div>
-    </div>
-  </nav>
+<nav>
+<h2>Resident RP</h2>
+<div>
+<a href="#">Hjem</a>
+<a href="#whitelist">Whitelist</a>
+<a href="#staff">Staff</a>
+<a href="#bande">Bande</a>
+<a href="#donation">Donation</a>
+</div>
+</nav>
 
-  <!-- Hero -->
-  <section id="home" class="text-center py-24 px-6">
-    <h2 class="text-5xl font-bold mb-6">Velkommen til vores FiveM Server</h2>
-    <p class="text-gray-300 max-w-2xl mx-auto mb-8">
-      Oplev realistisk roleplay, aktive admins og et stærkt community.
-      Hop ind på serveren og start din historie i dag.
-    </p>
+<header>
+<h1>RESIDENT RP</h1>
+<p>Danmarks fedeste FiveM RP server</p>
+<a class="btn join" href="fivem://connect/DIN-IP-HER">Join Server</a>
+<a class="btn discord" href="https://discord.gg/8cS9Mz3PBZ">Discord</a>
+</header>
 
-    <a href="#join" class="bg-white text-black px-8 py-3 rounded-2xl font-semibold hover:scale-105 transition">Join Server</a>
-  </section>
+<section id="whitelist">
+<h2>📋 Whitelist Ansøgning</h2>
+<div class="form">
+<input placeholder="Navn">
+<input placeholder="Alder">
+<textarea placeholder="RP erfaring"></textarea>
+<textarea placeholder="Hvorfor vil du spille?"></textarea>
+<button>Send ansøgning</button>
+</div>
+</section>
 
-  <!-- About -->
-  <section id="about" class="max-w-5xl mx-auto py-20 px-6">
-    <h3 class="text-3xl font-bold mb-6">Om Serveren</h3>
-    <p class="text-gray-300 leading-relaxed">
-      Denne FiveM server er lavet til spillere der elsker seriøs roleplay.
-      Vi tilbyder mange jobs, custom biler, scripts og events.
-      Vores mål er at skabe det bedste RP community.
-    </p>
-  </section>
+<section id="staff">
+<h2>🛠️ Staff Ansøgning</h2>
+<div class="form">
+<input placeholder="Navn">
+<input placeholder="Alder">
+<textarea placeholder="Erfaring som staff"></textarea>
+<textarea placeholder="Hvorfor dig?"></textarea>
+<button>Send ansøgning</button>
+</div>
+</section>
 
-  <!-- Rules -->
-  <section id="rules" class="bg-gray-800 py-20 px-6">
-    <div class="max-w-5xl mx-auto">
-      <h3 class="text-3xl font-bold mb-8">Server Regler</h3>
+<section id="bande">
+<h2>🔫 Bande Ansøgning</h2>
+<div class="form">
+<input placeholder="Bande navn">
+<input placeholder="Medlemmer">
+<textarea placeholder="Planer for banden"></textarea>
+<button>Send ansøgning</button>
+</div>
+</section>
 
-      <ul class="space-y-4 text-gray-300">
-        <li>• Respekter alle spillere</li>
-        <li>• Ingen trolling eller griefing</li>
-        <li>• Følg admin instruktioner</li>
-        <li>• Seriøs roleplay forventes</li>
-      </ul>
-    </div>
-  </section>
+<section id="donation">
+<h2>💰 Donation / VIP</h2>
+<div class="shop">
+<div class="shop-item">VIP Bronze<br>50 kr</div>
+<div class="shop-item">VIP Silver<br>100 kr</div>
+<div class="shop-item">VIP Gold<br>200 kr</div>
+</div>
+<p>Kontakt os på Discord for køb</p>
+</section>
 
-  <!-- Join -->
-  <section id="join" class="text-center py-24 px-6">
-    <h3 class="text-3xl font-bold mb-6">Join Serveren</h3>
+<footer>
+<p>© 2026 Resident RP</p>
+</footer>
 
-    <p class="text-gray-300 mb-8">Klik på knappen herunder for at joine serveren.</p>
+<script>
+const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
 
-    <a href="#" class="bg-green-500 px-10 py-4 rounded-2xl font-bold hover:scale-105 transition">Connect to FiveM</a>
+function sendToDiscord(title, data) {
+  fetch(webhookURL, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      username: "Resident RP Ansøgning",
+      embeds: [{
+        title: title,
+        description: data,
+        color: 16766720
+      }]
+    })
+  });
+}
 
-    <p class="text-gray-400 mt-6">https://discord.gg/fnD5wSJT</p>
-  </section>
+// Hook forms
+const forms = document.querySelectorAll('.form');
+forms[0].querySelector('button').onclick = () => {
+  const inputs = forms[0].querySelectorAll('input, textarea');
+  let data = `Navn: ${inputs[0].value}
+Alder: ${inputs[1].value}
+Erfaring: ${inputs[2].value}
+Hvorfor: ${inputs[3].value}`;
+  sendToDiscord("Whitelist Ansøgning", data);
+  alert("Ansøgning sendt!");
+};
 
-  <!-- Footer -->
-  <footer class="bg-black text-center py-6 text-gray-400">
-    © 2026 Min FiveM Server
-  </footer>
+forms[1].querySelector('button').onclick = () => {
+  const inputs = forms[1].querySelectorAll('input, textarea');
+  let data = `Navn: ${inputs[0].value}
+Alder: ${inputs[1].value}
+Erfaring: ${inputs[2].value}
+Hvorfor: ${inputs[3].value}`;
+  sendToDiscord("Staff Ansøgning", data);
+  alert("Ansøgning sendt!");
+};
+
+forms[2].querySelector('button').onclick = () => {
+  const inputs = forms[2].querySelectorAll('input, textarea');
+  let data = `Bande: ${inputs[0].value}
+Medlemmer: ${inputs[1].value}
+Planer: ${inputs[2].value}`;
+  sendToDiscord("Bande Ansøgning", data);
+  alert("Ansøgning sendt!");
+};
+</script>
 
 </body>
 </html>
