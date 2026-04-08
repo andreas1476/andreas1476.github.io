@@ -97,15 +97,16 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
 const adminPassword = "resident1234";
 
-function sendToDiscord(title, dataObj) {
+// Funktion til at sende beskeder til Discord
+function sendToDiscord(title, dataObj, status="Ny") {
   fetch(webhookURL, {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
       username: "Resident RP",
       embeds: [{
-        title: title,
-        color: 16766720,
+        title: title + " - " + status,
+        color: status === "Godkendt" ? 65280 : status === "Afvist" ? 16711680 : 16766720,
         fields: Object.keys(dataObj).map(key => ({
           name: key.toUpperCase(),
           value: String(dataObj[key]),
@@ -115,52 +116,40 @@ function sendToDiscord(title, dataObj) {
       }]
     })
   });
-},
-    body: JSON.stringify({content: `**${title}**\n${data}`})
-  });
 }
 
+// Gemmer ansøgning i localStorage
 function saveApp(type, data) {
   let apps = JSON.parse(localStorage.getItem('apps') || '[]');
-  apps.push({type, ...data});
+  apps.push({id: Date.now(), type, status: "Ny", ...data});
   localStorage.setItem('apps', JSON.stringify(apps));
 }
 
+// WHITELIST
 function submitWhitelist() {
-  let data = {
-    name: w_name.value,
-    age: w_age.value,
-    exp: w_exp.value,
-    why: w_why.value
-  };
+  let data = {name: w_name.value, age: w_age.value, exp: w_exp.value, why: w_why.value};
   saveApp("Whitelist", data);
-  sendToDiscord("Whitelist Ansøgning", JSON.stringify(data));
+  sendToDiscord("Whitelist Ansøgning", data);
   alert('Sendt!');
 }
 
+// STAFF
 function submitStaff() {
-  let data = {
-    name: s_name.value,
-    age: s_age.value,
-    exp: s_exp.value,
-    why: s_why.value
-  };
+  let data = {name: s_name.value, age: s_age.value, exp: s_exp.value, why: s_why.value};
   saveApp("Staff", data);
-  sendToDiscord("Staff Ansøgning", JSON.stringify(data));
+  sendToDiscord("Staff Ansøgning", data);
   alert('Sendt!');
 }
 
+// BANDE
 function submitBande() {
-  let data = {
-    name: b_name.value,
-    members: b_members.value,
-    plan: b_plan.value
-  };
+  let data = {name: b_name.value, members: b_members.value, plan: b_plan.value};
   saveApp("Bande", data);
-  sendToDiscord("Bande Ansøgning", JSON.stringify(data));
+  sendToDiscord("Bande Ansøgning", data);
   alert('Sendt!');
 }
 
+// ADMIN LOGIN
 function login() {
   if(adminPass.value === adminPassword) {
     panel.style.display = 'block';
@@ -168,14 +157,34 @@ function login() {
   } else alert('Forkert kode');
 }
 
+// LOAD APPS
 function loadApps() {
   let apps = JSON.parse(localStorage.getItem('apps') || '[]');
   appsDiv.innerHTML = '';
   apps.forEach(a => {
-    appsDiv.innerHTML += `<div class="app"><b>${a.type}</b><br>${JSON.stringify(a)}</div>`;
+    if(a.status === "Ny") {
+      appsDiv.innerHTML += `
+        <div class="app">
+          <b>${a.type}</b> - ${a.name || a.b_name}<br>
+          ${Object.keys(a).filter(k => !["id","type","status"].includes(k)).map(k => `<b>${k}:</b> ${a[k]}<br>`).join('')}
+          <button onclick="handleApp(${a.id}, true)">✅ Godkend</button>
+          <button onclick="handleApp(${a.id}, false)">❌ Afvis</button>
+        </div>
+      `;
+    }
   });
 }
-</script>
 
-</body>
-</html>
+// GODKEND / AFVIS
+function handleApp(id, approve) {
+  let apps = JSON.parse(localStorage.getItem('apps') || '[]');
+  let app = apps.find(a => a.id === id);
+  if(!app) return;
+
+  app.status = approve ? "Godkendt" : "Afvist";
+  localStorage.setItem('apps', JSON.stringify(apps));
+  
+  sendToDiscord(app.type + " Ansøgning", app, app.status);
+  loadApps(); // opdater panel
+}
+</script>
