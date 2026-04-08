@@ -11,17 +11,15 @@ nav {display:flex;justify-content:space-between;padding:20px 40px;background:#11
 nav h2 {color:#f1c40f;}
 nav a {color:white;margin-left:20px;text-decoration:none;}
 header {height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:#000;}
-h1 {font-size:60px;margin:0;}
-p {color:#ccc;max-width:600px;}
 .btn {padding:15px 30px;border-radius:10px;text-decoration:none;font-weight:600;margin:10px;display:inline-block;}
 .join {background:#f1c40f;color:black;}
 .discord {background:#5865F2;}
 section {padding:80px 20px;text-align:center;}
 .form {max-width:500px;margin:auto;text-align:left;}
 input, textarea {width:100%;padding:10px;margin:10px 0;border-radius:8px;border:none;}
-button {padding:12px 20px;border:none;border-radius:8px;background:#f1c40f;font-weight:bold;}
-.shop {display:flex;justify-content:center;flex-wrap:wrap;}
-.shop-item {background:#1a1a1a;margin:15px;padding:20px;border-radius:15px;width:250px;}
+button {padding:12px 20px;border:none;border-radius:8px;background:#f1c40f;font-weight:bold;cursor:pointer;}
+.admin-panel {display:none;max-width:800px;margin:auto;text-align:left;background:#111;padding:20px;border-radius:10px;}
+.app {background:#1a1a1a;padding:10px;margin:10px 0;border-radius:8px;}
 footer {padding:30px;background:#111;text-align:center;color:#777;}
 </style>
 </head>
@@ -34,111 +32,134 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <a href="#whitelist">Whitelist</a>
 <a href="#staff">Staff</a>
 <a href="#bande">Bande</a>
-<a href="#donation">Donation</a>
+<a href="#admin">Admin</a>
 </div>
 </nav>
 
 <header>
 <h1>RESIDENT RP</h1>
-<p>Danmarks fedeste FiveM RP server</p>
-<a class="btn join" href="fivem://connect/DIN-IP-HER">Join Server</a>
-<a class="btn discord" href="https://discord.gg/8cS9Mz3PBZ">Discord</a>
+<a class="btn join" href="#">Join Server</a>
+<a class="btn discord" href="https://discord.gg/fv9zQXZ7vh">Discord</a>
 </header>
 
+<!-- WHITELIST -->
 <section id="whitelist">
-<h2>📋 Whitelist Ansøgning</h2>
+<h2>Whitelist Ansøgning</h2>
 <div class="form">
-<input placeholder="Navn">
-<input placeholder="Alder">
-<textarea placeholder="RP erfaring"></textarea>
-<textarea placeholder="Hvorfor vil du spille?"></textarea>
-<button>Send ansøgning</button>
+<input id="w_name" placeholder="Navn">
+<input id="w_age" placeholder="Alder">
+<textarea id="w_exp" placeholder="Erfaring"></textarea>
+<textarea id="w_why" placeholder="Hvorfor?"></textarea>
+<button onclick="submitWhitelist()">Send</button>
 </div>
 </section>
 
+<!-- STAFF -->
 <section id="staff">
-<h2>🛠️ Staff Ansøgning</h2>
+<h2>Staff Ansøgning</h2>
 <div class="form">
-<input placeholder="Navn">
-<input placeholder="Alder">
-<textarea placeholder="Erfaring som staff"></textarea>
-<textarea placeholder="Hvorfor dig?"></textarea>
-<button>Send ansøgning</button>
+<input id="s_name" placeholder="Navn">
+<input id="s_age" placeholder="Alder">
+<textarea id="s_exp" placeholder="Staff erfaring"></textarea>
+<textarea id="s_why" placeholder="Hvorfor dig?"></textarea>
+<button onclick="submitStaff()">Send</button>
 </div>
 </section>
 
+<!-- BANDE -->
 <section id="bande">
-<h2>🔫 Bande Ansøgning</h2>
+<h2>Bande Ansøgning</h2>
 <div class="form">
-<input placeholder="Bande navn">
-<input placeholder="Medlemmer">
-<textarea placeholder="Planer for banden"></textarea>
-<button>Send ansøgning</button>
+<input id="b_name" placeholder="Bande navn">
+<input id="b_members" placeholder="Antal medlemmer">
+<textarea id="b_plan" placeholder="Planer"></textarea>
+<button onclick="submitBande()">Send</button>
 </div>
 </section>
 
-<section id="donation">
-<h2>💰 Donation / VIP</h2>
-<div class="shop">
-<div class="shop-item">VIP Bronze<br>50 kr</div>
-<div class="shop-item">VIP Silver<br>100 kr</div>
-<div class="shop-item">VIP Gold<br>200 kr</div>
+<!-- ADMIN -->
+<section id="admin">
+<h2>🔐 Admin Panel</h2>
+<input type="password" id="adminPass" placeholder="Kodeord">
+<button onclick="login()">Login</button>
+
+<div class="admin-panel" id="panel">
+<h3>Ansøgninger</h3>
+<div id="apps"></div>
 </div>
-<p>Kontakt os på Discord for køb</p>
 </section>
 
 <footer>
-<p>© 2026 Resident RP</p>
+<p>© Resident RP</p>
 </footer>
 
 <script>
 const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
+const adminPassword = "resident123";
 
 function sendToDiscord(title, data) {
   fetch(webhookURL, {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      username: "Resident RP Ansøgning",
-      embeds: [{
-        title: title,
-        description: data,
-        color: 16766720
-      }]
-    })
+    body: JSON.stringify({content: `**${title}**\n${data}`})
   });
 }
 
-// Hook forms
-const forms = document.querySelectorAll('.form');
-forms[0].querySelector('button').onclick = () => {
-  const inputs = forms[0].querySelectorAll('input, textarea');
-  let data = `Navn: ${inputs[0].value}
-Alder: ${inputs[1].value}
-Erfaring: ${inputs[2].value}
-Hvorfor: ${inputs[3].value}`;
-  sendToDiscord("Whitelist Ansøgning", data);
-  alert("Ansøgning sendt!");
-};
+function saveApp(type, data) {
+  let apps = JSON.parse(localStorage.getItem('apps') || '[]');
+  apps.push({type, ...data});
+  localStorage.setItem('apps', JSON.stringify(apps));
+}
 
-forms[1].querySelector('button').onclick = () => {
-  const inputs = forms[1].querySelectorAll('input, textarea');
-  let data = `Navn: ${inputs[0].value}
-Alder: ${inputs[1].value}
-Erfaring: ${inputs[2].value}
-Hvorfor: ${inputs[3].value}`;
-  sendToDiscord("Staff Ansøgning", data);
-  alert("Ansøgning sendt!");
-};
+function submitWhitelist() {
+  let data = {
+    name: w_name.value,
+    age: w_age.value,
+    exp: w_exp.value,
+    why: w_why.value
+  };
+  saveApp("Whitelist", data);
+  sendToDiscord("Whitelist Ansøgning", JSON.stringify(data));
+  alert('Sendt!');
+}
 
-forms[2].querySelector('button').onclick = () => {
-  const inputs = forms[2].querySelectorAll('input, textarea');
-  let data = `Bande: ${inputs[0].value}
-Medlemmer: ${inputs[1].value}
-Planer: ${inputs[2].value}`;
-  sendToDiscord("Bande Ansøgning", data);
-  alert("Ansøgning sendt!");
-};
+function submitStaff() {
+  let data = {
+    name: s_name.value,
+    age: s_age.value,
+    exp: s_exp.value,
+    why: s_why.value
+  };
+  saveApp("Staff", data);
+  sendToDiscord("Staff Ansøgning", JSON.stringify(data));
+  alert('Sendt!');
+}
+
+function submitBande() {
+  let data = {
+    name: b_name.value,
+    members: b_members.value,
+    plan: b_plan.value
+  };
+  saveApp("Bande", data);
+  sendToDiscord("Bande Ansøgning", JSON.stringify(data));
+  alert('Sendt!');
+}
+
+function login() {
+  if(adminPass.value === adminPassword) {
+    panel.style.display = 'block';
+    loadApps();
+  } else alert('Forkert kode');
+}
+
+function loadApps() {
+  let apps = JSON.parse(localStorage.getItem('apps') || '[]');
+  appsDiv.innerHTML = '';
+  apps.forEach(a => {
+    appsDiv.innerHTML += `<div class="app"><b>${a.type}</b><br>${JSON.stringify(a)}</div>`;
+  });
+}
 </script>
 
 </body>
