@@ -187,15 +187,24 @@ function setStatus(id, status) {
         alert("Kun ejeren kan ændre status!");
         return;
     }
+
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
-    // Find app og fjern den efter status ændring
+
+    // Find appen der skal ændres
     let appIndex = apps.findIndex(a => a.id === id);
     if(appIndex === -1) return;
+
     let app = apps[appIndex];
     app.status = status;
+
+    // Send opdatering til Discord
     sendToDiscord(app.type + " Ansøgning", app, status);
-    apps.splice(appIndex, 1); // fjern fra localStorage
+
+    // Fjern appen fra localStorage efter status ændring
+    apps.splice(appIndex, 1);
     localStorage.setItem('apps', JSON.stringify(apps));
+
+    // Opdater visningen
     loadApps();
 }
 
