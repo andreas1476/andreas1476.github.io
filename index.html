@@ -30,7 +30,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 .whitelist {border-top: 5px solid #f1c40f;}
 .staff {border-top: 5px solid #00ccff;}
 .bande {border-top: 5px solid #ff4d4d;}
-.section:not(#login-section) {display:none;}
 </style>
 </head>
 <body>
@@ -50,16 +49,6 @@ footer {padding:30px;background:#111;text-align:center;color:#777;}
 <p>Udfyld ansøgning og se alle ansøgninger nedenfor</p>
 </header>
 
-<!-- LOGIN SECTION -->
-<section id="login-section" class="section">
-<h2>Log ind med Discord for at ansøge</h2>
-<a id="discord-login" href="#">
-<button style="padding:10px 20px;background:#7289da;color:white;border:none;border-radius:5px;cursor:pointer;">
-Log ind med Discord
-</button>
-</a>
-</section>
-
 <!-- WHITELIST FORM -->
 <section id="whitelist-section" class="section">
 <h2>Whitelist Ansøgning</h2>
@@ -74,6 +63,9 @@ Log ind med Discord
 <textarea id="w_q8" placeholder="Hvordan vil du bidrage til RP-miljøet?"></textarea>
 <textarea id="w_q9" placeholder="Kendskab til regler"></textarea>
 <textarea id="w_q10" placeholder="Eventuelle kommentarer"></textarea>
+<!-- Discord felter -->
+<input id="w_discordTag" placeholder="Discord Tag (fx Player#1234)">
+<input id="w_discordID" placeholder="Discord ID (unik ID)">
 <button onclick="submitApp('Whitelist')">Send Whitelist</button>
 </div>
 </section>
@@ -92,6 +84,9 @@ Log ind med Discord
 <textarea id="s_q8" placeholder="Tidligere staff erfaring"></textarea>
 <textarea id="s_q9" placeholder="Kendskab til vores regler"></textarea>
 <textarea id="s_q10" placeholder="Eventuelle kommentarer"></textarea>
+<!-- Discord felter -->
+<input id="s_discordTag" placeholder="Discord Tag (fx Player#1234)">
+<input id="s_discordID" placeholder="Discord ID (unik ID)">
 <button onclick="submitApp('Staff')">Send Staff</button>
 </div>
 </section>
@@ -110,6 +105,9 @@ Log ind med Discord
 <textarea id="b_q8" placeholder="Hvilke typer aktiviteter vil I lave?"></textarea>
 <textarea id="b_q9" placeholder="Eventuelle regler indenfor banden"></textarea>
 <textarea id="b_q10" placeholder="Kontaktperson"></textarea>
+<!-- Discord felter -->
+<input id="b_discordTag" placeholder="Discord Tag (fx Player#1234)">
+<input id="b_discordID" placeholder="Discord ID (unik ID)">
 <button onclick="submitApp('Bande')">Send Bande</button>
 </div>
 </section>
@@ -131,66 +129,20 @@ Log ind med Discord
 </footer>
 
 <script>
-// ----- DISCORD LOGIN -----
-const DISCORD_CLIENT_ID = "DIN_CLIENT_ID_HER";
-const REDIRECT_URI = encodeURIComponent("DIN_REDIRECT_URI_HER");
-const SCOPE = "identify";
-
-document.getElementById('discord-login').href = 
-  `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPE}`;
-
-function getDiscordUser() {
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    const token = params.get('access_token');
-
-    if(token) {
-        fetch("https://discord.com/api/users/@me", {
-            headers: {Authorization: `Bearer ${token}`}
-        })
-        .then(res => res.json())
-        .then(user => {
-            localStorage.setItem('discordLoggedIn', 'true');
-            // Gem både tag og unik ID
-            localStorage.setItem('discordUserTag', `${user.username}#${user.discriminator}`);
-            localStorage.setItem('discordUserID', user.id);
-            showAllSections();
-            alert(`Logget ind som ${user.username}#${user.discriminator}`);
-            window.history.replaceState({}, document.title, window.location.pathname);
-        })
-        .catch(err => console.log("Discord API fejl:", err));
-    } else {
-        if(localStorage.getItem('discordLoggedIn') === 'true') {
-            showAllSections();
-        } else {
-            hideAllSectionsExceptLogin();
-        }
-    }
-}
-
-function showAllSections() {
-    document.getElementById('login-section').style.display = 'none';
-    document.querySelectorAll('.section').forEach(sec => sec.style.display='block');
-}
-
-function hideAllSectionsExceptLogin() {
-    document.getElementById('login-section').style.display = 'block';
-    document.querySelectorAll('.section').forEach(sec => {
-        if(sec.id !== 'login-section') sec.style.display='none';
-    });
-}
-
-getDiscordUser();
-
 // ----- DISCORD WEBHOOK -----
 const webhookURL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
 
-function submitApp(type) {
-    if(localStorage.getItem('discordLoggedIn') !== 'true') {
-        alert("Du skal logge ind med Discord først!");
-        return;
-    }
+// ----- VALIDERING -----
+function isValidDiscordTag(tag) {
+    return /^.{2,32}#\d{4}$/.test(tag);
+}
 
+function isValidDiscordID(id) {
+    return /^\d{17,20}$/.test(id);
+}
+
+// ----- SEND ANSØGNING -----
+function submitApp(type) {
     let data = {};
     for (let i = 1; i <= 10; i++) {
         const el = document.getElementById(`${type[0].toLowerCase()}_q${i}`);
@@ -198,9 +150,22 @@ function submitApp(type) {
         if(el) el.value = '';
     }
 
-    // Tilføj Discord oplysninger
-    data['DiscordTag'] = localStorage.getItem('discordUserTag');
-    data['DiscordID'] = localStorage.getItem('discordUserID');
+    // Discord felter
+    const discordTag = document.getElementById(`${type[0].toLowerCase()}_discordTag`).value.trim();
+    const discordID = document.getElementById(`${type[0].toLowerCase()}_discordID`).value.trim();
+
+    if(!isValidDiscordTag(discordTag)) {
+        alert("Indtast et gyldigt Discord Tag (fx Player#1234)");
+        return;
+    }
+
+    if(!isValidDiscordID(discordID)) {
+        alert("Indtast et gyldigt Discord ID (kun tal, min. 17 cifre)");
+        return;
+    }
+
+    data['DiscordTag'] = discordTag;
+    data['DiscordID'] = discordID;
 
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     const appData = {id: Date.now(), type, status: 'Ny', ...data};
@@ -212,6 +177,7 @@ function submitApp(type) {
     alert(type + " ansøgning sendt!");
 }
 
+// ----- SEND TIL DISCORD -----
 function sendToDiscord(title, dataObj, status="Ny") {
     fetch(webhookURL, {
         method: "POST",
@@ -230,6 +196,7 @@ function sendToDiscord(title, dataObj, status="Ny") {
     }).catch(err => console.log("Fejl ved Discord webhook:", err));
 }
 
+// ----- STATUS OG FILTRERING -----
 function setStatus(id, status) {
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     let app = apps.find(a => a.id === id);
@@ -246,6 +213,7 @@ function filterApps(type) {
     loadApps();
 }
 
+// ----- VIS ANSØGNINGER -----
 function loadApps() {
     const appsDiv = document.getElementById('apps');
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
