@@ -151,7 +151,9 @@ function getDiscordUser() {
         .then(res => res.json())
         .then(user => {
             localStorage.setItem('discordLoggedIn', 'true');
-            localStorage.setItem('discordUser', `${user.username}#${user.discriminator}`);
+            // Gem både tag og unik ID
+            localStorage.setItem('discordUserTag', `${user.username}#${user.discriminator}`);
+            localStorage.setItem('discordUserID', user.id);
             showAllSections();
             alert(`Logget ind som ${user.username}#${user.discriminator}`);
             window.history.replaceState({}, document.title, window.location.pathname);
@@ -196,7 +198,9 @@ function submitApp(type) {
         if(el) el.value = '';
     }
 
-    data['Discord'] = localStorage.getItem('discordUser');
+    // Tilføj Discord oplysninger
+    data['DiscordTag'] = localStorage.getItem('discordUserTag');
+    data['DiscordID'] = localStorage.getItem('discordUserID');
 
     let apps = JSON.parse(localStorage.getItem('apps') || '[]');
     const appData = {id: Date.now(), type, status: 'Ny', ...data};
