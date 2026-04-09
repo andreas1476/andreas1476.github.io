@@ -12,23 +12,69 @@ body {
   margin: 0;
 }
 
+/* HEADER */
 header {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 20px 40px;
   background: #111827;
 }
 
 nav a {
-  margin-left: 15px;
+  margin-left: 20px;
   color: #ccc;
   cursor: pointer;
 }
 
+nav a:hover {
+  color: white;
+}
+
+/* HERO */
+.hero {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(rgba(15,23,42,0.8), rgba(15,23,42,0.9)),
+              url('https://images.unsplash.com/photo-1508057198894-247b23fe5ade') center/cover;
+}
+
+.hero h1 {
+  font-size: 60px;
+}
+
+.hero p {
+  color: #94a3b8;
+  margin: 10px 0 30px;
+}
+
+.btn {
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.primary {
+  background: #5865F2;
+}
+
+.primary:hover {
+  background: #4752c4;
+}
+
+/* SECTIONS */
 .section {
   padding: 40px;
 }
 
+.hidden {
+  display: none;
+}
+
+/* FORM */
 input, select, textarea {
   display: block;
   width: 300px;
@@ -38,6 +84,7 @@ input, select, textarea {
   border: none;
 }
 
+/* BUTTON */
 button {
   padding: 10px 20px;
   border: none;
@@ -57,7 +104,23 @@ button {
 .approve { background: green; }
 .reject { background: red; margin-left: 10px; }
 
-.hidden { display: none; }
+/* FEATURES */
+.features {
+  padding: 60px;
+  text-align: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.card-box {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+}
 </style>
 </head>
 
@@ -66,13 +129,35 @@ button {
 <header>
   <div>Resident RP</div>
   <nav>
+    <a onclick="show('home')">Forside</a>
     <a onclick="show('form')">Ansøg</a>
-    <a onclick="show('admin')">Admin Panel</a>
+    <a onclick="show('admin')">Admin</a>
   </nav>
 </header>
 
+<!-- FORSIDE -->
+<div id="home">
+  <section class="hero">
+    <div>
+      <h1>Resident RP</h1>
+      <p>Realistisk roleplay uden kompromiser</p>
+      <button class="btn primary" onclick="show('form')">Ansøg Whitelist</button>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>Hvorfor vælge os?</h2>
+    <div class="cards">
+      <div class="card-box">🎭 Seriøst RP</div>
+      <div class="card-box">👮 Aktive fraktioner</div>
+      <div class="card-box">🌆 Custom scripts</div>
+      <div class="card-box">🤝 Stærkt community</div>
+    </div>
+  </section>
+</div>
+
 <!-- FORM -->
-<div id="form" class="section">
+<div id="form" class="section hidden">
   <h2>Lav en ansøgning</h2>
 
   <select id="type">
@@ -101,6 +186,7 @@ function save() {
 }
 
 function show(section) {
+  document.getElementById("home").classList.add("hidden");
   document.getElementById("form").classList.add("hidden");
   document.getElementById("admin").classList.add("hidden");
 
