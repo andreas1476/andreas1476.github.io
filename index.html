@@ -160,14 +160,13 @@ button {
 <div id="form" class="section hidden">
   <h2>Lav en ansøgning</h2>
 
-  <select id="type">
-    <option>Whitelist</option>
-    <option>Staff</option>
-    <option>Bande</option>
+  <select id="type" onchange="loadQuestions()">
+    <option value="Whitelist">Whitelist</option>
+    <option value="Staff">Staff</option>
+    <option value="Bande">Bande</option>
   </select>
 
-  <input id="name" placeholder="Navn">
-  <textarea id="text" placeholder="Din ansøgning"></textarea>
+  <div id="questions"></div>
 
   <button onclick="sendApplication()">Send</button>
 </div>
@@ -181,6 +180,58 @@ button {
 <script>
 let apps = JSON.parse(localStorage.getItem("apps")) || [];
 
+const questionSets = {
+  Whitelist: [
+    "Hvad er dit navn?",
+    "Hvor gammel er du?",
+    "Hvorfor vil du spille på serveren?",
+    "Hvad er RP for dig?",
+    "Har du erfaring med RP?",
+    "Beskriv din karakter",
+    "Hvordan håndterer du konflikter?",
+    "Kender du reglerne?",
+    "Hvad vil du bidrage med?",
+    "Andet vi skal vide?"
+  ],
+  Staff: [
+    "Hvad er dit navn?",
+    "Alder?",
+    "Hvorfor vil du være staff?",
+    "Har du erfaring som staff?",
+    "Hvordan håndterer du konflikter?",
+    "Hvor aktiv er du?",
+    "Hvad er god RP?",
+    "Hvordan vil du hjælpe spillere?",
+    "Hvad gør en god admin?",
+    "Andet?"
+  ],
+  Bande: [
+    "Bandens navn?",
+    "Hvor mange medlemmer?",
+    "Hvad er jeres historie?",
+    "Hvad er jeres mål?",
+    "Hvilken type bande er I?",
+    "Hvordan skaber I RP?",
+    "Har I erfaring?",
+    "Hvordan håndterer I konflikter?",
+    "Hvad gør jer unikke?",
+    "Andet?"
+  ]
+};
+
+function loadQuestions() {
+  let type = document.getElementById("type").value;
+  let container = document.getElementById("questions");
+  container.innerHTML = "";
+
+  questionSets[type].forEach((q, i) => {
+    container.innerHTML += `
+      <label>${q}</label>
+      <textarea id="q${i}" placeholder="Svar..."></textarea>
+    `;
+  });
+}
+
 function save() {
   localStorage.setItem("apps", JSON.stringify(apps));
 }
@@ -191,15 +242,26 @@ function show(section) {
   document.getElementById("admin").classList.add("hidden");
 
   document.getElementById(section).classList.remove("hidden");
+
+  if(section === "form") loadQuestions();
   render();
 }
 
 function sendApplication() {
+  let type = document.getElementById("type").value;
+  let answers = [];
+
+  questionSets[type].forEach((q, i) => {
+    answers.push({
+      question: q,
+      answer: document.getElementById(`q${i}`).value
+    });
+  });
+
   let app = {
     id: Date.now(),
-    type: document.getElementById("type").value,
-    name: document.getElementById("name").value,
-    text: document.getElementById("text").value
+    type: type,
+    answers: answers
   };
 
   apps.push(app);
@@ -215,10 +277,14 @@ function render() {
     let div = document.createElement("div");
     div.className = "card";
 
+    let answersHTML = app.answers.map(a => `
+      <b>${a.question}</b><br>
+      ${a.answer}<br><br>
+    `).join("");
+
     div.innerHTML = `
-      <b>${app.type}</b><br>
-      ${app.name}<br>
-      ${app.text}<br><br>
+      <h3>${app.type}</h3>
+      ${answersHTML}
       <button class="approve" onclick="approve(${app.id})">Godkend</button>
       <button class="reject" onclick="reject(${app.id})">Afvis</button>
     `;
