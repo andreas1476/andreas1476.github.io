@@ -178,43 +178,43 @@ button {
 </div>
 
 <script>
-let apps = JSON.parse(localStorage.getItem("apps")) || [];
+let WEBHOOK_URL = "https://discord.com/api/webhooks/1491550284353372311/yA0sTjy1UpuIvIahY9ImvqT4wwoh2du7PPJwkuuv9RnY660oy3KS3-JYOCfocKTyUDag";
 
 const questionSets = {
   Whitelist: [
     "Hvad er dit navn?",
     "Hvor gammel er du?",
-    "Hvorfor vil du spille på serveren?",
-    "Hvad er RP for dig?",
-    "Har du erfaring med RP?",
+    "Hvorfor vil du spille her?",
+    "Hvad er RP?",
+    "Har du erfaring?",
     "Beskriv din karakter",
     "Hvordan håndterer du konflikter?",
     "Kender du reglerne?",
     "Hvad vil du bidrage med?",
-    "Andet vi skal vide?"
+    "Andet?"
   ],
   Staff: [
-    "Hvad er dit navn?",
+    "Navn?",
     "Alder?",
-    "Hvorfor vil du være staff?",
-    "Har du erfaring som staff?",
-    "Hvordan håndterer du konflikter?",
-    "Hvor aktiv er du?",
+    "Hvorfor staff?",
+    "Erfaring?",
+    "Konflikthåndtering?",
+    "Aktivitet?",
     "Hvad er god RP?",
-    "Hvordan vil du hjælpe spillere?",
+    "Hvordan hjælper du spillere?",
     "Hvad gør en god admin?",
     "Andet?"
   ],
   Bande: [
     "Bandens navn?",
-    "Hvor mange medlemmer?",
-    "Hvad er jeres historie?",
-    "Hvad er jeres mål?",
-    "Hvilken type bande er I?",
-    "Hvordan skaber I RP?",
-    "Har I erfaring?",
-    "Hvordan håndterer I konflikter?",
-    "Hvad gør jer unikke?",
+    "Medlemmer?",
+    "Historie?",
+    "Mål?",
+    "Type bande?",
+    "RP stil?",
+    "Erfaring?",
+    "Konflikter?",
+    "Unikhed?",
     "Andet?"
   ]
 };
@@ -227,13 +227,9 @@ function loadQuestions() {
   questionSets[type].forEach((q, i) => {
     container.innerHTML += `
       <label>${q}</label>
-      <textarea id="q${i}" placeholder="Svar..."></textarea>
+      <textarea id="q${i}"></textarea>
     `;
   });
-}
-
-function save() {
-  localStorage.setItem("apps", JSON.stringify(apps));
 }
 
 function show(section) {
@@ -244,7 +240,6 @@ function show(section) {
   document.getElementById(section).classList.remove("hidden");
 
   if(section === "form") loadQuestions();
-  render();
 }
 
 function sendApplication() {
@@ -252,57 +247,23 @@ function sendApplication() {
   let answers = [];
 
   questionSets[type].forEach((q, i) => {
-    answers.push({
-      question: q,
-      answer: document.getElementById(`q${i}`).value
-    });
+    let answer = document.getElementById(`q${i}`).value;
+    answers.push(`**${q}**\n${answer}`);
   });
 
-  let app = {
-    id: Date.now(),
-    type: type,
-    answers: answers
-  };
+  let content = `📥 **Ny ${type} ansøgning**\n\n${answers.join("\n\n")}`;
 
-  apps.push(app);
-  save();
-  alert("Ansøgning sendt!");
-}
-
-function render() {
-  let container = document.getElementById("applications");
-  container.innerHTML = "";
-
-  apps.forEach(app => {
-    let div = document.createElement("div");
-    div.className = "card";
-
-    let answersHTML = app.answers.map(a => `
-      <b>${a.question}</b><br>
-      ${a.answer}<br><br>
-    `).join("");
-
-    div.innerHTML = `
-      <h3>${app.type}</h3>
-      ${answersHTML}
-      <button class="approve" onclick="approve(${app.id})">Godkend</button>
-      <button class="reject" onclick="reject(${app.id})">Afvis</button>
-    `;
-
-    container.appendChild(div);
+  fetch(WEBHOOK_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      content: content
+    })
   });
-}
 
-function approve(id) {
-  apps = apps.filter(a => a.id !== id);
-  save();
-  render();
-}
-
-function reject(id) {
-  apps = apps.filter(a => a.id !== id);
-  save();
-  render();
+  alert("Ansøgning sendt til Discord!");
 }
 </script>
 
