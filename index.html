@@ -2,183 +2,157 @@
 <html lang="da">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resident RP Ansøgninger</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<title>Resident RP</title>
+
 <style>
-body {margin:0;font-family:'Poppins',sans-serif;background:#0b0b0b;color:white;}
-nav {display:flex;justify-content:space-between;padding:20px 40px;background:#111;position:fixed;width:100%;top:0;z-index:1000;}
-nav h2 {color:#f1c40f;}
-nav a {color:white;margin-left:20px;text-decoration:none;}
-header {height:30vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:#000;}
-.section {padding:100px 20px 40px 20px;}
-h2 {margin-bottom:20px;text-align:center;}
-.form {max-width:600px;margin:auto;text-align:left;}
-input, textarea {width:100%;padding:10px;margin:10px 0;border-radius:8px;border:none;background:#222;color:white;}
-button {padding:8px 15px;border:none;border-radius:6px;background:#f1c40f;font-weight:bold;cursor:pointer;margin:3px;}
-.grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:20px;}
-.app-card {padding:20px;border-radius:10px;box-shadow:0 0 15px rgba(0,0,0,0.6);transition: transform 0.2s;position:relative;}
-.app-card:hover {transform: translateY(-5px);}
-.app-card h3 {margin:0 0 10px 0;text-align:center;}
-.field {margin-bottom:8px;}
-.field b {color:#f1c40f;}
-.status-buttons {text-align:center;margin-top:10px;}
-.status-buttons button {background:#333;color:white;}
-.filter-buttons {text-align:center;margin-bottom:20px;}
-.filter-buttons button {margin:0 5px;}
-footer {padding:30px;background:#111;text-align:center;color:#777;}
-.whitelist {border-top: 5px solid #f1c40f;}
-.staff {border-top: 5px solid #00ccff;}
-.bande {border-top: 5px solid #ff4d4d;}
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background: #111827;
+}
+
+nav a {
+  margin-left: 15px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.section {
+  padding: 40px;
+}
+
+input, select, textarea {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background: #5865F2;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.approve { background: green; }
+.reject { background: red; margin-left: 10px; }
+
+.hidden { display: none; }
 </style>
 </head>
+
 <body>
-<nav>
-<h2>Resident RP</h2>
-<div>
-<a href="#whitelist-section">Whitelist</a>
-<a href="#staff-section">Staff</a>
-<a href="#bande-section">Bande</a>
-<a href="#apps-section">Ansøgninger</a>
-</div>
-</nav>
 
 <header>
-<h1>Resident RP Ansøgninger</h1>
-<p>Udfyld ansøgning og se alle ansøgninger nedenfor</p>
+  <div>Resident RP</div>
+  <nav>
+    <a onclick="show('form')">Ansøg</a>
+    <a onclick="show('admin')">Admin Panel</a>
+  </nav>
 </header>
 
-<!-- WHITELIST FORM -->
-<section id="whitelist-section" class="section">
-<h2>Whitelist Ansøgning</h2>
-<div class="form">
-<input id="w_q1" placeholder="Navn">
-<input id="w_q2" placeholder="Alder">
-<textarea id="w_q3" placeholder="Erfaring med RP"></textarea>
-<textarea id="w_q4" placeholder="Hvorfor vil du spille hos os?"></textarea>
-<textarea id="w_q5" placeholder="Tidligere servererfaring"></textarea>
-<textarea id="w_q6" placeholder="Roller du kan spille"></textarea>
-<input id="w_q7" placeholder="Hvor mange timer om ugen?">
-<textarea id="w_q8" placeholder="Hvordan vil du bidrage til RP-miljøet?"></textarea>
-<textarea id="w_q9" placeholder="Kendskab til regler"></textarea>
-<textarea id="w_q10" placeholder="Eventuelle kommentarer"></textarea>
-<button onclick="submitApp('Whitelist')">Send Whitelist</button>
-</div>
-</section>
+<!-- FORM -->
+<div id="form" class="section">
+  <h2>Lav en ansøgning</h2>
 
-<!-- STAFF FORM -->
-<section id="staff-section" class="section">
-<h2>Staff Ansøgning</h2>
-<div class="form">
-<input id="s_q1" placeholder="Navn">
-<input id="s_q2" placeholder="Alder">
-<textarea id="s_q3" placeholder="Erfaring som staff"></textarea>
-<textarea id="s_q4" placeholder="Hvorfor vil du være staff?"></textarea>
-<textarea id="s_q5" placeholder="Hvilke staff roller kan du udfylde?"></textarea>
-<textarea id="s_q6" placeholder="Konflikthåndtering erfaring"></textarea>
-<input id="s_q7" placeholder="Hvor mange timer om ugen?">
-<textarea id="s_q8" placeholder="Tidligere staff erfaring"></textarea>
-<textarea id="s_q9" placeholder="Kendskab til vores regler"></textarea>
-<textarea id="s_q10" placeholder="Eventuelle kommentarer"></textarea>
-<button onclick="submitApp('Staff')">Send Staff</button>
-</div>
-</section>
+  <select id="type">
+    <option>Whitelist</option>
+    <option>Staff</option>
+    <option>Bande</option>
+  </select>
 
-<!-- BANDE FORM -->
-<section id="bande-section" class="section">
-<h2>Bande Ansøgning</h2>
-<div class="form">
-<input id="b_q1" placeholder="Bande navn">
-<input id="b_q2" placeholder="Antal medlemmer">
-<textarea id="b_q3" placeholder="Planer for banden"></textarea>
-<textarea id="b_q4" placeholder="Hvorfor oprette denne bande?"></textarea>
-<textarea id="b_q5" placeholder="Roller i banden"></textarea>
-<textarea id="b_q6" placeholder="Tidligere bande erfaring"></textarea>
-<textarea id="b_q7" placeholder="Strategi for samarbejde"></textarea>
-<textarea id="b_q8" placeholder="Hvilke typer aktiviteter vil I lave?"></textarea>
-<textarea id="b_q9" placeholder="Eventuelle regler indenfor banden"></textarea>
-<textarea id="b_q10" placeholder="Kontaktperson"></textarea>
-<button onclick="submitApp('Bande')">Send Bande</button>
-</div>
-</section>
+  <input id="name" placeholder="Navn">
+  <textarea id="text" placeholder="Din ansøgning"></textarea>
 
-<!-- DISPLAY APPS -->
-<section id="apps-section" class="section">
-<h2>Ansøgninger</h2>
-<div class="filter-buttons">
-<button onclick="filterApps('All')">Alle</button>
-<button onclick="filterApps('Whitelist')">Whitelist</button>
-<button onclick="filterApps('Staff')">Staff</button>
-<button onclick="filterApps('Bande')">Bande</button>
+  <button onclick="sendApplication()">Send</button>
 </div>
-<div class="grid" id="apps"></div>
-</section>
 
-<footer>
-<p>© Resident RP</p>
-</footer>
+<!-- ADMIN -->
+<div id="admin" class="section hidden">
+  <h2>Ansøgninger</h2>
+  <div id="applications"></div>
+</div>
 
 <script>
-// ----- SEND ANSØGNING -----
-function submitApp(type) {
-    let data = {};
-    for (let i = 1; i <= 10; i++) {
-        const el = document.getElementById(`${type[0].toLowerCase()}_q${i}`);
-        data[`Q${i}`] = el ? el.value : '';
-        if(el) el.value = '';
-    }
+let apps = JSON.parse(localStorage.getItem("apps")) || [];
 
-    let apps = JSON.parse(localStorage.getItem('apps') || '[]');
-    const appData = {id: Date.now(), type, status: 'Ny', ...data};
-    apps.push(appData);
-    localStorage.setItem('apps', JSON.stringify(apps));
-    loadApps();
-    alert(type + " ansøgning sendt!");
+function save() {
+  localStorage.setItem("apps", JSON.stringify(apps));
 }
 
-// ----- STATUS OG FILTRERING -----
-function setStatus(id, status) {
-    let apps = JSON.parse(localStorage.getItem('apps') || '[]');
-    let app = apps.find(a => a.id === id);
-    if(!app) return;
-    app.status = status;
-    localStorage.setItem('apps', JSON.stringify(apps));
-    loadApps();
+function show(section) {
+  document.getElementById("form").classList.add("hidden");
+  document.getElementById("admin").classList.add("hidden");
+
+  document.getElementById(section).classList.remove("hidden");
+  render();
 }
 
-let currentFilter = 'All';
-function filterApps(type) { currentFilter = type; loadApps(); }
+function sendApplication() {
+  let app = {
+    id: Date.now(),
+    type: document.getElementById("type").value,
+    name: document.getElementById("name").value,
+    text: document.getElementById("text").value
+  };
 
-// ----- VIS ANSØGNINGER -----
-function loadApps() {
-    const appsDiv = document.getElementById('apps');
-    let apps = JSON.parse(localStorage.getItem('apps') || '[]');
-    appsDiv.innerHTML = '';
-    let filtered = apps.filter(a => (currentFilter === 'All' || a.type === currentFilter) && a.status === 'Ny' );
-    if(filtered.length === 0){
-        appsDiv.innerHTML = "<p>Ingen ansøgninger endnu.</p>";
-        return;
-    }
-    filtered.forEach(app => {
-        const typeClass = app.type === "Whitelist" ? "whitelist" : app.type === "Staff" ? "staff" : "bande";
-        const card = document.createElement('div');
-        card.className = `app-card ${typeClass}`;
-        let html = `<h3>${app.type} - ${app.status}</h3>`;
-        Object.keys(app).forEach(k => {
-            if(!['id','type','status'].includes(k)){
-                html += `<div class="field"><b>${k}:</b> ${app[k]}</div>`;
-            }
-        });
-        html += `<div class="status-buttons">
-            <button onclick="setStatus(${app.id}, 'Godkendt')">✅ Godkend</button>
-            <button onclick="setStatus(${app.id}, 'Afvist')">❌ Afvis</button>
-        </div>`;
-        card.innerHTML = html;
-        appsDiv.appendChild(card);
-    });
+  apps.push(app);
+  save();
+  alert("Ansøgning sendt!");
 }
 
-loadApps();
+function render() {
+  let container = document.getElementById("applications");
+  container.innerHTML = "";
+
+  apps.forEach(app => {
+    let div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <b>${app.type}</b><br>
+      ${app.name}<br>
+      ${app.text}<br><br>
+      <button class="approve" onclick="approve(${app.id})">Godkend</button>
+      <button class="reject" onclick="reject(${app.id})">Afvis</button>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+function approve(id) {
+  apps = apps.filter(a => a.id !== id);
+  save();
+  render();
+}
+
+function reject(id) {
+  apps = apps.filter(a => a.id !== id);
+  save();
+  render();
+}
 </script>
+
 </body>
 </html>
