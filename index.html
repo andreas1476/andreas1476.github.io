@@ -154,143 +154,52 @@
 <header>
     <div class="logo">Syndicate 16+</div>
     <nav>
-      <a onclick="show('home')">Forside</a>
-      <a onclick="show('form')">Ansøg</a>
-      <a onclick="show('admin')">Admin</a>
-  </nav>
+        <a href="#">Forside</a>
+        <a href="#">Ansøg</a>
+        <a href="#">Admin</a>
+    </nav>
 </header>
 
-<!-- FORSIDE -->
-<div id="home">
-  <section class="hero">
-    <div>
-      <h1>Syndicate 16+</h1>
-      <p>Realistisk roleplay uden kompromiser</p>
-      <button class="btn primary" onclick="show('form')">Ansøg Whitelist</button>
+<section class="hero">
+    <div class="overlay"></div>
+
+    <div class="hero-content">
+        <h1>SYNDICATE <span>16+</span></h1>
+        <p>
+            Realistisk roleplay uden kompromiser.<br>
+            Velkommen til Syndicate 16+ – en seriøs dansk FiveM roleplay server,
+            hvor fællesskab, realisme og respekt er i centrum.
+        </p>
+
+        <div class="buttons">
+            <button class="btn btn-green">ANSØG WHITELIST</button>
+            <button class="btn btn-dark">JOIN DISCORD</button>
+        </div>
     </div>
-  </section>
 
-  <section class="features">
-    <h2>Hvorfor vælge os?</h2>
-    <div class="cards">
-      <div class="card-box">🎭 Seriøst RP</div>
-      <div class="card-box">👮 Aktive fraktioner</div>
-      <div class="card-box">🌆 Custom scripts</div>
-      <div class="card-box">🤝 Stærkt community</div>
+    <div class="stats">
+        <div class="stat">
+            <h3>87</h3>
+            <p>Aktive spillere</p>
+        </div>
+
+        <div class="stat">
+            <h3>AKTIV</h3>
+            <p>Whitelist status</p>
+        </div>
+
+        <div class="stat">
+            <h3>ONLINE</h3>
+            <p>Server status</p>
+        </div>
+
+        <div class="stat">
+            <h3>2024</h3>
+            <p>Etableret</p>
+        </div>
     </div>
-  </section>
-</div>
 
-<!-- FORM -->
-<div id="form" class="section hidden">
-  <h2>Lav en ansøgning</h2>
-
-  <select id="type" onchange="loadQuestions()">
-    <option value="Whitelist">Whitelist</option>
-    <option value="Staff">Staff</option>
-    <option value="Bande">Bande</option>
-  </select>
-
-  <div id="questions"></div>
-
-  <button onclick="sendApplication()">Send</button>
-</div>
-
-<!-- ADMIN -->
-<div id="admin" class="section hidden">
-  <h2>Ansøgninger</h2>
-  <div id="applications"></div>
-</div>
-
-<script>
-let WEBHOOK_URL = "https://discordapp.com/api/webhooks/1494677792707579975/q9AK_e1uVhIS4Gj40U14s0MOfWb9CNn8hIBKg3EUXdA9x9aEha6rLlyRb7OxOuaFMsem";
-
-const questionSets = {
-  Whitelist: [
-    "Hvad er dit navn?",
-    "Hvor gammel er du?",
-    "Hvorfor vil du spille her?",
-    "Hvad er RP?",
-    "Har du erfaring?",
-    "Beskriv din karakter",
-    "Hvordan håndterer du konflikter?",
-    "Kender du reglerne?",
-    "Hvad vil du bidrage med?",
-    "Andet?"
-  ],
-  Staff: [
-    "Navn?",
-    "Alder?",
-    "Hvorfor staff?",
-    "Erfaring?",
-    "Konflikthåndtering?",
-    "Aktivitet?",
-    "Hvad er god RP?",
-    "Hvordan hjælper du spillere?",
-    "Hvad gør en god admin?",
-    "Andet?"
-  ],
-  Bande: [
-    "Bandens navn?",
-    "Medlemmer?",
-    "Historie?",
-    "Mål?",
-    "Type bande?",
-    "RP stil?",
-    "Erfaring?",
-    "Konflikter?",
-    "Unikhed?",
-    "Andet?"
-  ]
-};
-
-function loadQuestions() {
-  let type = document.getElementById("type").value;
-  let container = document.getElementById("questions");
-  container.innerHTML = "";
-
-  questionSets[type].forEach((q, i) => {
-    container.innerHTML += `
-      <label>${q}</label>
-      <textarea id="q${i}"></textarea>
-    `;
-  });
-}
-
-function show(section) {
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("form").classList.add("hidden");
-  document.getElementById("admin").classList.add("hidden");
-
-  document.getElementById(section).classList.remove("hidden");
-
-  if(section === "form") loadQuestions();
-}
-
-function sendApplication() {
-  let type = document.getElementById("type").value;
-  let answers = [];
-
-  questionSets[type].forEach((q, i) => {
-    let answer = document.getElementById(`q${i}`).value;
-    answers.push(`**${q}**\n${answer}`);
-  });
-
-  let content = `📥 **Ny ${type} ansøgning**\n\n${answers.join("\n\n")}`;
-
-  fetch(WEBHOOK_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      content: content
-    })
-  });
-
-  alert("Ansøgning sendt til Discord!");
-}
-</script>
+</section>
 
 </body>
 </html>
