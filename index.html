@@ -2,208 +2,270 @@
 <html lang="da">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Syndicate 16+</title>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-    }
-
-    body {
-        background: #0b0f0c;
-        color: white;
-    }
-
-    /* NAVBAR */
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 60px;
-        background: rgba(0,0,0,0.6);
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 100;
-        backdrop-filter: blur(10px);
-    }
-
-   .logo img {
-    height: 45px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 0 8px #39ff14);
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  margin: 0;
 }
 
-    nav a {
-        color: white;
-        margin-left: 20px;
-        text-decoration: none;
-        transition: 0.3s;
-    }
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background: #111827;
+}
 
-    nav a:hover {
-        color: #39ff14;
-    }
+nav a {
+  margin-left: 20px;
+  color: #ccc;
+  cursor: pointer;
+}
 
-    /* HERO */
-    .hero {
-        height: 100vh;
-        background: url('https://images.unsplash.com/photo-1504274066651-8d31a536b11a?auto=format&fit=crop&w=1600&q=80') no-repeat center/cover;
-        display: flex;
-        align-items: center;
-        padding: 0 60px;
-        position: relative;
-    }
+nav a:hover {
+  color: white;
+}
 
-    .overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(0,0,0,0.75);
-    }
+/* HERO */
+.hero {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(rgba(15,23,42,0.8), rgba(15,23,42,0.9)),
+              url('https://images.unsplash.com/photo-1508057198894-247b23fe5ade') center/cover;
+}
 
-    .hero-content {
-        position: relative;
-        max-width: 700px;
-    }
+.hero h1 {
+  font-size: 60px;
+}
 
-    .hero h1 {
-        font-size: 60px;
-        font-weight: bold;
-    }
+.hero p {
+  color: #94a3b8;
+  margin: 10px 0 30px;
+}
 
-    .hero h1 span {
-        color: #39ff14;
-    }
+.btn {
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-    .hero p {
-        margin-top: 15px;
-        color: #ccc;
-        line-height: 1.5;
-    }
+.primary {
+  background: #5865F2;
+}
 
-    .buttons {
-        margin-top: 25px;
-    }
+.primary:hover {
+  background: #4752c4;
+}
 
-    .btn {
-        padding: 12px 20px;
-        margin-right: 10px;
-        border: none;
-        cursor: pointer;
-        font-weight: bold;
-        border-radius: 5px;
-        transition: 0.3s;
-    }
+/* SECTIONS */
+.section {
+  padding: 40px;
+}
 
-    .btn-green {
-        background: #39ff14;
-        color: black;
-    }
+.hidden {
+  display: none;
+}
 
-    .btn-green:hover {
-        background: #2ecc10;
-    }
+/* FORM */
+input, select, textarea {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
 
-    .btn-dark {
-        background: transparent;
-        border: 2px solid white;
-        color: white;
-    }
+/* BUTTON */
+button {
+  padding: 10px 20px;
+  border: none;
+  background: #5865F2;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
 
-    .btn-dark:hover {
-        border-color: #39ff14;
-        color: #39ff14;
-    }
+.card {
+  background: #1e293b;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
 
-    /* STATS */
-    .stats {
-        position: absolute;
-        bottom: 40px;
-        left: 60px;
-        display: flex;
-        gap: 40px;
-    }
+.approve { background: green; }
+.reject { background: red; margin-left: 10px; }
 
-    .stat {
-        background: rgba(0,0,0,0.6);
-        padding: 15px 20px;
-        border-radius: 10px;
-        border: 1px solid #222;
-        min-width: 150px;
-    }
+/* FEATURES */
+.features {
+  padding: 60px;
+  text-align: center;
+}
 
-    .stat h3 {
-        color: #39ff14;
-        font-size: 20px;
-    }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
 
-    .stat p {
-        font-size: 12px;
-        color: #aaa;
-    }
-
+.card-box {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+}
 </style>
-
 </head>
+
 <body>
 
 <header>
-    <div class="logo">
-        <img src="/mnt/data/b19c2d65-6d05-4574-8619-8d5071b3d8c4.png" alt="Syndicate Logo">
-    </div>
-
-    <nav>
-        <a href="#">Forside</a>
-        <a href="#">Ansøg</a>
-        <a href="#">Admin</a>
-    </nav>
+  <div>Syndicate 16+</div>
+  <nav>
+    <a onclick="show('home')">Forside</a>
+    <a onclick="show('form')">Ansøg</a>
+    <a onclick="show('admin')">Admin</a>
+  </nav>
 </header>
 
-<section class="hero">
-    <div class="overlay"></div>
-
-    <div class="hero-content">
-        <h1>SYNDICATE <span>16+</span></h1>
-        <p>
-            Realistisk roleplay uden kompromiser.<br>
-            Velkommen til Syndicate 16+ – en seriøs dansk FiveM roleplay server,
-            hvor fællesskab, realisme og respekt er i centrum.
-        </p>
-
-        <div class="buttons">
-            <button class="btn btn-green">ANSØG WHITELIST</button>
-            <button class="btn btn-dark">JOIN DISCORD</button>
-        </div>
+<!-- FORSIDE -->
+<div id="home">
+  <section class="hero">
+    <div>
+      <h1>Syndicate 16+</h1>
+      <p>Realistisk roleplay uden kompromiser</p>
+      <button class="btn primary" onclick="show('form')">Ansøg Whitelist</button>
     </div>
+  </section>
 
-    <div class="stats">
-        <div class="stat">
-            <h3>87</h3>
-            <p>Aktive spillere</p>
-        </div>
-
-        <div class="stat">
-            <h3>AKTIV</h3>
-            <p>Whitelist status</p>
-        </div>
-
-        <div class="stat">
-            <h3>ONLINE</h3>
-            <p>Server status</p>
-        </div>
-
-        <div class="stat">
-            <h3>2024</h3>
-            <p>Etableret</p>
-        </div>
+  <section class="features">
+    <h2>Hvorfor vælge os?</h2>
+    <div class="cards">
+      <div class="card-box">🎭 Seriøst RP</div>
+      <div class="card-box">👮 Aktive fraktioner</div>
+      <div class="card-box">🌆 Custom scripts</div>
+      <div class="card-box">🤝 Stærkt community</div>
     </div>
+  </section>
+</div>
 
-</section>
+<!-- FORM -->
+<div id="form" class="section hidden">
+  <h2>Lav en ansøgning</h2>
+
+  <select id="type" onchange="loadQuestions()">
+    <option value="Whitelist">Whitelist</option>
+    <option value="Staff">Staff</option>
+    <option value="Bande">Bande</option>
+  </select>
+
+  <div id="questions"></div>
+
+  <button onclick="sendApplication()">Send</button>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="section hidden">
+  <h2>Ansøgninger</h2>
+  <div id="applications"></div>
+</div>
+
+<script>
+let WEBHOOK_URL = "https://discordapp.com/api/webhooks/1494677792707579975/q9AK_e1uVhIS4Gj40U14s0MOfWb9CNn8hIBKg3EUXdA9x9aEha6rLlyRb7OxOuaFMsem";
+
+const questionSets = {
+  Whitelist: [
+    "Hvad er dit navn?",
+    "Hvor gammel er du?",
+    "Hvorfor vil du spille her?",
+    "Hvad er RP?",
+    "Har du erfaring?",
+    "Beskriv din karakter",
+    "Hvordan håndterer du konflikter?",
+    "Kender du reglerne?",
+    "Hvad vil du bidrage med?",
+    "Andet?"
+  ],
+  Staff: [
+    "Navn?",
+    "Alder?",
+    "Hvorfor staff?",
+    "Erfaring?",
+    "Konflikthåndtering?",
+    "Aktivitet?",
+    "Hvad er god RP?",
+    "Hvordan hjælper du spillere?",
+    "Hvad gør en god admin?",
+    "Andet?"
+  ],
+  Bande: [
+    "Bandens navn?",
+    "Medlemmer?",
+    "Historie?",
+    "Mål?",
+    "Type bande?",
+    "RP stil?",
+    "Erfaring?",
+    "Konflikter?",
+    "Unikhed?",
+    "Andet?"
+  ]
+};
+
+function loadQuestions() {
+  let type = document.getElementById("type").value;
+  let container = document.getElementById("questions");
+  container.innerHTML = "";
+
+  questionSets[type].forEach((q, i) => {
+    container.innerHTML += `
+      <label>${q}</label>
+      <textarea id="q${i}"></textarea>
+    `;
+  });
+}
+
+function show(section) {
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("form").classList.add("hidden");
+  document.getElementById("admin").classList.add("hidden");
+
+  document.getElementById(section).classList.remove("hidden");
+
+  if(section === "form") loadQuestions();
+}
+
+function sendApplication() {
+  let type = document.getElementById("type").value;
+  let answers = [];
+
+  questionSets[type].forEach((q, i) => {
+    let answer = document.getElementById(`q${i}`).value;
+    answers.push(`**${q}**\n${answer}`);
+  });
+
+  let content = `📥 **Ny ${type} ansøgning**\n\n${answers.join("\n\n")}`;
+
+  fetch(WEBHOOK_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      content: content
+    })
+  });
+
+  alert("Ansøgning sendt til Discord!");
+}
+</script>
 
 </body>
 </html>
