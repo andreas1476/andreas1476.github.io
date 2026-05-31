@@ -1,283 +1,417 @@
+```html
 <!DOCTYPE html>
 <html lang="da">
 <head>
 <meta charset="UTF-8">
-<title>Test 16+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghost PVP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
 <style>
-body {
-  font-family: Arial;
-  background: #0f172a;
-  color: white;
-  margin: 0;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#050505;
+    color:white;
+    font-family:Arial, sans-serif;
 }
 
 /* HEADER */
-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 40px;
-  background: #111827;
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:20px 50px;
+
+    background:#000;
+    border-bottom:2px solid #ff0000;
+
+    position:sticky;
+    top:0;
+    z-index:999;
 }
 
-nav a {
-  margin-left: 20px;
-  color: #ccc;
-  cursor: pointer;
+.logo{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:40px;
+    color:#ff0000;
+    letter-spacing:3px;
 }
 
-nav a:hover {
-  color: white;
+nav a{
+    color:white;
+    margin-left:25px;
+    cursor:pointer;
+    text-decoration:none;
+    font-weight:bold;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#ff0000;
 }
 
 /* HERO */
-.hero {
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: linear-gradient(rgba(15,23,42,0.8), rgba(15,23,42,0.9)),
-              url('https://images.unsplash.com/photo-1508057198894-247b23fe5ade') center/cover;
+
+.hero{
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+    rgba(0,0,0,.8),
+    rgba(0,0,0,.9)
+    ),
+    url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1920&q=80");
+
+    background-size:cover;
+    background-position:center;
 }
 
-.hero h1 {
-  font-size: 60px;
+.hero h1{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:140px;
+    line-height:.9;
+
+    text-shadow:
+    0 0 10px #ff0000,
+    0 0 30px #ff0000;
 }
 
-.hero p {
-  color: #94a3b8;
-  margin: 10px 0 30px;
+.hero h1 span{
+    color:#ff0000;
+    display:block;
 }
 
-.btn {
-  padding: 12px 25px;
-  border-radius: 8px;
-  cursor: pointer;
-  border: none;
+.hero p{
+    margin-top:20px;
+    font-size:22px;
+    color:#d1d5db;
 }
 
-.primary {
-  background: #5865F2;
-  color: white;
+.btn{
+    margin-top:25px;
+
+    padding:14px 35px;
+
+    border:none;
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    transition:.3s;
 }
 
-.primary:hover {
-  background: #4752c4;
+.primary{
+    background:#ff0000;
+    color:white;
+
+    box-shadow:
+    0 0 20px rgba(255,0,0,.6);
 }
 
-.secondary {
-  background: #1e293b;
-  color: white;
-  margin-left: 10px;
-  border: 1px solid #334155;
+.primary:hover{
+    background:#c40000;
+
+    transform:translateY(-3px);
 }
 
-.secondary:hover {
-  background: #334155;
+.secondary{
+    background:#111;
+    color:white;
+
+    border:1px solid #333;
+    margin-left:10px;
 }
 
-/* SECTIONS */
-.section {
-  padding: 40px;
-}
-
-.hidden {
-  display: none;
-}
-
-/* FORM */
-textarea, select {
-  display: block;
-  width: 300px;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-}
-
-/* CARD */
-.card {
-  background: #1e293b;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 10px;
+.secondary:hover{
+    border-color:#ff0000;
 }
 
 /* FEATURES */
-.features {
-  padding: 60px;
-  text-align: center;
+
+.features{
+    padding:80px 40px;
+    text-align:center;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+.features h2{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:50px;
+    margin-bottom:40px;
 }
 
-.card-box {
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 10px;
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
 }
+
+.card-box{
+    background:#111;
+
+    border:1px solid #222;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    transition:.3s;
+}
+
+.card-box:hover{
+    border-color:#ff0000;
+    transform:translateY(-5px);
+}
+
+/* RULES */
+
+.section{
+    padding:50px;
+}
+
+.hidden{
+    display:none;
+}
+
+.card{
+    background:#111;
+    border:1px solid #222;
+
+    border-radius:12px;
+
+    padding:20px;
+    margin-top:15px;
+}
+
+.card h3{
+    color:#ff0000;
+    margin-bottom:10px;
+}
+
+/* FORM */
+
+textarea,
+select{
+    width:100%;
+    max-width:600px;
+
+    padding:12px;
+
+    margin:10px 0 20px;
+
+    background:#111;
+    color:white;
+
+    border:1px solid #333;
+    border-radius:8px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:70px;
+}
+
+header{
+    padding:15px 20px;
+}
+
+.logo{
+    font-size:28px;
+}
+
+nav{
+    display:none;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-  <div>Test 16+</div>
-  <nav>
-    <a onclick="show('home')">Forside</a>
-    <a onclick="show('rules')">Regler</a>
-    <a onclick="show('form')">Ansøg</a>
-  </nav>
+    <div class="logo">GHOST PVP</div>
+
+    <nav>
+        <a onclick="show('home')">Forside</a>
+        <a onclick="show('rules')">Regler</a>
+        <a onclick="show('form')">Ansøg</a>
+    </nav>
 </header>
 
-<!-- HOME -->
 <div id="home">
 
-  <section class="hero">
-    <div>
-      <h1>Test 16+</h1>
-      <p>Realistisk roleplay uden kompromiser</p>
+<section class="hero">
+<div>
 
-      <button class="btn primary" onclick="show('form')">Ansøg Staff</button>
-      <button class="btn secondary" onclick="show('rules')">Regler</button>
-    </div>
-  </section>
+<h1>
+GHOST
+<span>PVP</span>
+</h1>
 
-  <section class="features">
-    <h2>Hvorfor vælge os?</h2>
-    <div class="cards">
-      <div class="card-box">🌆 Custom scripts</div>
-      <div class="card-box">🤝 Stærkt community</div>
-    </div>
-  </section>
+<p>Danmarks hårdeste PvP oplevelse</p>
+
+<button class="btn primary" onclick="show('form')">
+Ansøg Whitelist
+</button>
+
+<button class="btn secondary" onclick="show('rules')">
+Regler
+</button>
+
+</div>
+</section>
+
+<section class="features">
+
+<h2>HVORFOR VÆLGE OS?</h2>
+
+<div class="cards">
+
+<div class="card-box">
+⚔️ Hardcore PvP
 </div>
 
-<!-- RULES -->
+<div class="card-box">
+🚀 Høj FPS & Performance
+</div>
+
+<div class="card-box">
+🎮 Aktivt Community
+</div>
+
+<div class="card-box">
+🛡️ Aktiv Staff Team
+</div>
+
+</div>
+
+</section>
+
+</div>
+
 <div id="rules" class="section hidden">
 
-  <h2>⚔️ Blackout PVP Rules</h2>
+<h2>Ghost PVP Regler</h2>
 
-  <div class="card">
-    <h3>General Rules</h3>
-    <p>
-      ⛔ Religious insults ➜ Permanent Ban<br>
-      💰 Scamming ➜ Permanent Ban<br>
-      🗣️ Trash talk allowed (limits apply)<br>
-      🚫 Racism beyond limits ➜ 1-week ban<br>
-      🚫 Doxxing / leaks ➜ Permanent Ban<br>
-      🚫 Advertising / cheats ➜ Permanent Ban<br>
-      🚫 RMT / cheating / scripts / macros ➜ Permanent Ban<br>
-      🚫 VIP trading abuse ➜ Permanent Ban
-    </p>
-  </div>
+<div class="card">
+<h3>General Rules</h3>
+<p>
+Ingen cheats, scripts, exploits eller RMT.<br>
+Racisme, doxxing og læk af personlige oplysninger giver permanent ban.
+</p>
+</div>
 
-  <div class="card">
-    <h3>AntiCheat</h3>
-    <p>
-      🚫 No recoil / props / window abuse<br>
-      🚫 Any advantage mod = ban<br>
-      💰 Unban may require payment
-    </p>
-  </div>
-
-  <div class="card">
-    <h3>POV Rules</h3>
-    <p>
-      🎥 Must provide 5–7 sec before & after kill<br>
-      ⏱️ Must be sent within 5 minutes<br>
-      🚫 Failure = Ban (Cheating)
-    </p>
-  </div>
-
-  <div class="card">
-    <h3>Press Rules</h3>
-    <p>
-      ⏱️ 30 sec to drop<br>
-      🚫 No press stacking<br>
-      🚫 No revives during press<br>
-      🚫 No re-press for 5 min
-    </p>
-  </div>
-
-  <div class="card">
-    <h3>Zone Rules</h3>
-    <p>
-      🔴 Red Zone = strict combat rules<br>
-      🚫 Roof abuse / car abuse = sanction<br>
-      🚫 Combat logging = ban
-    </p>
-  </div>
-
-  <div class="card">
-    <h3>Loot Rules</h3>
-    <p>
-      ✅ Loot from body only<br>
-      🚫 No glitch looting<br>
-      ✅ Random looting allowed
-    </p>
-  </div>
+<div class="card">
+<h3>PVP Rules</h3>
+<p>
+Ingen combat logging.<br>
+Ingen glitching.<br>
+POV kan kræves af staff.
+</p>
+</div>
 
 </div>
 
-<!-- FORM -->
 <div id="form" class="section hidden">
 
-  <h2>Lav en ansøgning</h2>
+<h2>Whitelist Ansøgning</h2>
 
-  <select id="type" onchange="loadQuestions()">
-    <option value="Staff">Staff</option>
-  </select>
+<select id="type" onchange="loadQuestions()">
+<option value="Staff">Staff</option>
+</select>
 
-  <div id="questions"></div>
+<div id="questions"></div>
 
-  <button onclick="sendApplication()">Send</button>
+<button class="btn primary" onclick="sendApplication()">
+Send Ansøgning
+</button>
+
 </div>
 
 <script>
-let WEBHOOK_URL = "https://discordapp.com/api/webhooks/1510668663496380516/Qt4hoPdzIzdANaInFCHATZc_FmLArsU2c-Wwha8pkOIfKzDi6tmXP949xcGDt0uGpMe3";
+
+const WEBHOOK_URL = "INDSÆT_NY_WEBHOOK_HER";
 
 const questionSets = {
-  Staff: [
-    "Navn?",
-    "Alder?",
-    "Hvorfor staff?",
-    "Erfaring?",
-    "Konflikthåndtering?",
-    "Aktivitet?",
-    "Hvordan hjælper du spillere?",
-    "Hvad gør en god staff?",
-    "Andet?"
-  ],
+Staff:[
+"Navn?",
+"Alder?",
+"Hvorfor staff?",
+"Erfaring?",
+"Konflikthåndtering?",
+"Aktivitet?",
+"Hvordan hjælper du spillere?",
+"Hvad gør en god staff?",
+"Andet?"
+]
 };
 
-function loadQuestions() {
-  let type = document.getElementById("type").value;
-  let container = document.getElementById("questions");
-  container.innerHTML = "";
+function loadQuestions(){
 
-  questionSets[type].forEach((q, i) => {
-    container.innerHTML += `
-      <label>${q}</label>
-      <textarea id="q${i}"></textarea>
-    `;
-  });
+let type=document.getElementById("type").value;
+let container=document.getElementById("questions");
+
+container.innerHTML="";
+
+questionSets[type].forEach((q,i)=>{
+
+container.innerHTML+=`
+<label>${q}</label>
+<textarea id="q${i}"></textarea>
+`;
+
+});
+
 }
 
-function show(section) {
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("rules").classList.add("hidden");
-  document.getElementById("form").classList.add("hidden");
+function show(section){
 
-  document.getElementById(section).classList.remove("hidden");
+document.getElementById("home").classList.add("hidden");
+document.getElementById("rules").classList.add("hidden");
+document.getElementById("form").classList.add("hidden");
 
-  if(section === "form") loadQuestions();
+document.getElementById(section).classList.remove("hidden");
+
+if(section==="form"){
+loadQuestions();
 }
+
+}
+
+async function sendApplication(){
+
+alert("Tilføj din Discord webhook først.");
+
+}
+
 </script>
 
 </body>
 </html>
+```
