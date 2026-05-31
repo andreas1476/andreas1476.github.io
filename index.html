@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="da">
 <head>
@@ -30,7 +29,6 @@ header{
     align-items:center;
 
     padding:20px 50px;
-
     background:#000;
     border-bottom:2px solid #ff0000;
 
@@ -52,7 +50,6 @@ nav a{
     cursor:pointer;
     text-decoration:none;
     font-weight:bold;
-    transition:.3s;
 }
 
 nav a:hover{
@@ -63,18 +60,13 @@ nav a:hover{
 
 .hero{
     height:100vh;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     text-align:center;
 
     background:
-    linear-gradient(
-    rgba(0,0,0,.8),
-    rgba(0,0,0,.9)
-    ),
+    linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,.9)),
     url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1920&q=80");
 
     background-size:cover;
@@ -84,11 +76,7 @@ nav a:hover{
 .hero h1{
     font-family:'Bebas Neue',sans-serif;
     font-size:140px;
-    line-height:.9;
-
-    text-shadow:
-    0 0 10px #ff0000,
-    0 0 30px #ff0000;
+    text-shadow:0 0 30px #ff0000;
 }
 
 .hero h1 span{
@@ -98,49 +86,32 @@ nav a:hover{
 
 .hero p{
     margin-top:20px;
-    font-size:22px;
-    color:#d1d5db;
+    font-size:20px;
+    color:#ccc;
 }
 
 .btn{
     margin-top:25px;
-
     padding:14px 35px;
-
     border:none;
     border-radius:8px;
-
     cursor:pointer;
-
     font-weight:bold;
-
-    transition:.3s;
 }
 
 .primary{
     background:#ff0000;
     color:white;
-
-    box-shadow:
-    0 0 20px rgba(255,0,0,.6);
 }
 
 .primary:hover{
     background:#c40000;
-
-    transform:translateY(-3px);
 }
 
 .secondary{
     background:#111;
     color:white;
-
     border:1px solid #333;
-    margin-left:10px;
-}
-
-.secondary:hover{
-    border-color:#ff0000;
 }
 
 /* FEATURES */
@@ -151,7 +122,6 @@ nav a:hover{
 }
 
 .features h2{
-    font-family:'Bebas Neue',sans-serif;
     font-size:50px;
     margin-bottom:40px;
 }
@@ -164,19 +134,8 @@ nav a:hover{
 
 .card-box{
     background:#111;
-
-    border:1px solid #222;
-
     padding:25px;
-
     border-radius:12px;
-
-    transition:.3s;
-}
-
-.card-box:hover{
-    border-color:#ff0000;
-    transform:translateY(-5px);
 }
 
 /* RULES */
@@ -191,62 +150,32 @@ nav a:hover{
 
 .card{
     background:#111;
-    border:1px solid #222;
-
-    border-radius:12px;
-
     padding:20px;
     margin-top:15px;
+    border-radius:12px;
+    border:1px solid #222;
 }
 
 .card h3{
     color:#ff0000;
-    margin-bottom:10px;
 }
 
 /* FORM */
 
-textarea,
-select{
+textarea,select{
     width:100%;
     max-width:600px;
-
     padding:12px;
-
-    margin:10px 0 20px;
-
+    margin:10px 0;
     background:#111;
     color:white;
-
     border:1px solid #333;
     border-radius:8px;
 }
 
 label{
     display:block;
-    margin-top:15px;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-.hero h1{
-    font-size:70px;
-}
-
-header{
-    padding:15px 20px;
-}
-
-.logo{
-    font-size:28px;
-}
-
-nav{
-    display:none;
-}
-
+    margin-top:10px;
 }
 
 </style>
@@ -255,92 +184,71 @@ nav{
 <body>
 
 <header>
-    <div class="logo">GHOST PVP</div>
+<div class="logo">GHOST PVP</div>
 
-    <nav>
-        <a onclick="show('home')">Forside</a>
-        <a onclick="show('rules')">Regler</a>
-        <a onclick="show('form')">Ansøg</a>
-    </nav>
+<nav>
+<a onclick="show('home')">Forside</a>
+<a onclick="show('rules')">Regler</a>
+<a onclick="show('form')">Ansøg</a>
+</nav>
 </header>
 
+<!-- HOME -->
 <div id="home">
 
 <section class="hero">
 <div>
-
-<h1>
-GHOST
-<span>PVP</span>
-</h1>
-
+<h1>GHOST <span>PVP</span></h1>
 <p>Danmarks hårdeste PvP oplevelse</p>
 
-<button class="btn primary" onclick="show('form')">
-Ansøg Whitelist
-</button>
-
-<button class="btn secondary" onclick="show('rules')">
-Regler
-</button>
-
+<button class="btn primary" onclick="show('form')">Ansøg Staff</button>
+<button class="btn secondary" onclick="show('rules')">Regler</button>
 </div>
 </section>
 
-<section class="features">
-
-<h2>HVORFOR VÆLGE OS?</h2>
-
-<div class="cards">
-
-<div class="card-box">
-⚔️ Hardcore PvP
 </div>
 
-<div class="card-box">
-🚀 Høj FPS & Performance
-</div>
-
-<div class="card-box">
-🎮 Aktivt Community
-</div>
-
-<div class="card-box">
-🛡️ Aktiv Staff Team
-</div>
-
-</div>
-
-</section>
-
-</div>
-
+<!-- RULES -->
 <div id="rules" class="section hidden">
 
-<h2>Ghost PVP Regler</h2>
+<h2>⚔️ Ghost PVP Rules</h2>
 
 <div class="card">
 <h3>General Rules</h3>
 <p>
-Ingen cheats, scripts, exploits eller RMT.<br>
-Racisme, doxxing og læk af personlige oplysninger giver permanent ban.
+⛔ Religious insults ➜ Permanent Ban<br>
+💰 Scamming ➜ Permanent Ban<br>
+🗣️ Trash talk allowed (limits apply)<br>
+🚫 Cheating ➜ Permanent Ban<br>
+🚫 RMT ➜ Permanent Ban<br>
+🚫 Doxxing ➜ Permanent Ban<br>
 </p>
 </div>
 
 <div class="card">
-<h3>PVP Rules</h3>
+<h3>POV Rules</h3>
 <p>
-Ingen combat logging.<br>
-Ingen glitching.<br>
-POV kan kræves af staff.
+🎥 5-7 sek før & efter kill kræves<br>
+⏱️ 5 min til at levere POV<br>
+🚫 Failure = Ban
+</p>
+</div>
+
+<div class="card">
+<h3>Press Rules</h3>
+<p>
+⏱️ 30 sek drop time<br>
+🚫 No stacking / no revive<br>
+🚫 No zone abuse
 </p>
 </div>
 
 </div>
 
+<!-- FORM -->
 <div id="form" class="section hidden">
 
-<h2>Whitelist Ansøgning</h2>
+<h2>Staff Ansøgning</h2>
 
 <select id="type" onchange="loadQuestions()">
 <option value="Staff">Staff</option>
@@ -348,15 +256,13 @@ POV kan kræves af staff.
 
 <div id="questions"></div>
 
-<button class="btn primary" onclick="sendApplication()">
-Send Ansøgning
-</button>
+<button class="btn primary" onclick="sendApplication()">Send Ansøgning</button>
 
 </div>
 
 <script>
 
-const WEBHOOK_URL = "INDSÆT_NY_WEBHOOK_HER";
+const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1510668663496380516/Qt4hoPdzIzdANaInFCHATZc_FmLArsU2c-Wwha8pkOIfKzDi6tmXP949xcGDt0uGpMe3";
 
 const questionSets = {
 Staff:[
@@ -366,52 +272,63 @@ Staff:[
 "Erfaring?",
 "Konflikthåndtering?",
 "Aktivitet?",
-"Hvordan hjælper du spillere?",
-"Hvad gør en god staff?",
-"Andet?"
+"Hvad gør en god staff?"
 ]
 };
 
 function loadQuestions(){
-
 let type=document.getElementById("type").value;
 let container=document.getElementById("questions");
 
 container.innerHTML="";
 
 questionSets[type].forEach((q,i)=>{
-
-container.innerHTML+=`
+container.innerHTML += `
 <label>${q}</label>
 <textarea id="q${i}"></textarea>
 `;
-
 });
-
 }
 
 function show(section){
-
 document.getElementById("home").classList.add("hidden");
 document.getElementById("rules").classList.add("hidden");
 document.getElementById("form").classList.add("hidden");
 
 document.getElementById(section).classList.remove("hidden");
 
-if(section==="form"){
-loadQuestions();
-}
-
+if(section==="form") loadQuestions();
 }
 
 async function sendApplication(){
 
-alert("Tilføj din Discord webhook først.");
+let type = document.getElementById("type").value;
+let answers = questionSets[type].map((q,i)=>{
+return `**${q}**\n${document.getElementById("q"+i).value}`;
+}).join("\n\n");
 
+let payload = {
+content: null,
+embeds: [{
+title: "📩 Ny Staff Ansøgning",
+color: 16711680,
+fields: [{
+name: "Ansøgning",
+value: answers.substring(0, 1024)
+}]
+}]
+};
+
+await fetch(WEBHOOK_URL, {
+method: "POST",
+headers: {"Content-Type":"application/json"},
+body: JSON.stringify(payload)
+});
+
+alert("Ansøgning sendt!");
 }
 
 </script>
 
 </body>
 </html>
-```
