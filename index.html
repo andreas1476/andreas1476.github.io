@@ -55,14 +55,27 @@ nav a:hover {
   border-radius: 8px;
   text-decoration: none;
   cursor: pointer;
+  border: none;
 }
 
 .primary {
   background: #5865F2;
+  color: white;
 }
 
 .primary:hover {
   background: #4752c4;
+}
+
+.secondary {
+  background: #1e293b;
+  color: white;
+  margin-left: 10px;
+  border: 1px solid #334155;
+}
+
+.secondary:hover {
+  background: #334155;
 }
 
 /* SECTIONS */
@@ -101,9 +114,6 @@ button {
   border-radius: 10px;
 }
 
-.approve { background: green; }
-.reject { background: red; margin-left: 10px; }
-
 /* FEATURES */
 .features {
   padding: 60px;
@@ -130,27 +140,24 @@ button {
   <div>Test 16+</div>
   <nav>
     <a onclick="show('home')">Forside</a>
-    <a onclick="show('form')">Ansøg</a>
     <a onclick="show('rules')">Regler</a>
-    </nav>
+    <a onclick="show('form')">Ansøg</a>
+  </nav>
 </header>
 
 <!-- FORSIDE -->
 <div id="home">
-<section class="hero">
-  <div>
-    <h1>Test 16+</h1>
-    <p>Realistisk roleplay uden kompromiser</p>
 
-    <button class="btn primary" onclick="show('form')">
-      Ansøg Whitelist
-    </button>
+  <section class="hero">
+    <div>
+      <h1>Test 16+</h1>
+      <p>Realistisk roleplay uden kompromiser</p>
 
-    <button class="btn secondary" onclick="show('rules')">
-      Regler
-    </button>
-  </div>
-</section>
+      <button class="btn primary" onclick="show('form')">Ansøg Whitelist</button>
+      <button class="btn secondary" onclick="show('rules')">Regler</button>
+    </div>
+  </section>
+
   <section class="features">
     <h2>Hvorfor vælge os?</h2>
     <div class="cards">
@@ -158,6 +165,20 @@ button {
       <div class="card-box">🤝 Stærkt community</div>
     </div>
   </section>
+</div>
+
+<!-- REGLER -->
+<div id="rules" class="section hidden">
+  <h2>⚔️ PVP Regler</h2>
+
+  <div class="card">❌ Ingen cheats eller hacks</div>
+  <div class="card">❌ Ingen bug abuse</div>
+  <div class="card">❌ Ingen racisme eller chikane</div>
+  <div class="card">❌ Ingen reklame for andre servere</div>
+  <div class="card">❌ Ingen exploit af systemer</div>
+  <div class="card">❌ Ingen spam eller griefing</div>
+  <div class="card">✅ Respekter alle spillere</div>
+  <div class="card">✅ Respekter staff</div>
 </div>
 
 <!-- FORM -->
@@ -183,7 +204,6 @@ button {
 let WEBHOOK_URL = "https://discordapp.com/api/webhooks/1510668663496380516/Qt4hoPdzIzdANaInFCHATZc_FmLArsU2c-Wwha8pkOIfKzDi6tmXP949xcGDt0uGpMe3";
 
 const questionSets = {
- 
   Staff: [
     "Navn?",
     "Alder?",
@@ -191,12 +211,11 @@ const questionSets = {
     "Erfaring?",
     "Konflikthåndtering?",
     "Aktivitet?",
-    "Hvad gør du vis en sviner dig til i en ticket",
+    "Hvad gør du hvis en sviner dig til i en ticket?",
     "Hvordan hjælper du spillere?",
     "Hvad gør en god staff?",
     "Andet?"
   ],
-
 };
 
 function loadQuestions() {
@@ -214,6 +233,7 @@ function loadQuestions() {
 
 function show(section) {
   document.getElementById("home").classList.add("hidden");
+  document.getElementById("rules").classList.add("hidden");
   document.getElementById("form").classList.add("hidden");
   document.getElementById("admin").classList.add("hidden");
 
@@ -238,9 +258,7 @@ function sendApplication() {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      content: content
-    })
+    body: JSON.stringify({ content })
   });
 
   alert("Ansøgning sendt til Discord!");
@@ -248,4 +266,4 @@ function sendApplication() {
 </script>
 
 </body>
-</html> kan du laver regler det det her 
+</html>
