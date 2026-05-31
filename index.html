@@ -131,8 +131,7 @@ button {
   <nav>
     <a onclick="show('home')">Forside</a>
     <a onclick="show('form')">Ansøg</a>
-    <a onclick="show('admin')">Admin</a>
-  </nav>
+    </nav>
 </header>
 
 <!-- FORSIDE -->
@@ -181,18 +180,7 @@ button {
 let WEBHOOK_URL = "https://discordapp.com/api/webhooks/1510668663496380516/Qt4hoPdzIzdANaInFCHATZc_FmLArsU2c-Wwha8pkOIfKzDi6tmXP949xcGDt0uGpMe3";
 
 const questionSets = {
-  Whitelist: [
-    "Hvad er dit navn?",
-    "Hvor gammel er du?",
-    "Hvorfor vil du spille her?",
-    "Hvad er RP?",
-    "Har du erfaring?",
-    "Beskriv din karakter",
-    "Hvordan håndterer du konflikter?",
-    "Kender du reglerne?",
-    "Hvad vil du bidrage med?",
-    "Andet?"
-  ],
+ 
   Staff: [
     "Navn?",
     "Alder?",
@@ -200,23 +188,12 @@ const questionSets = {
     "Erfaring?",
     "Konflikthåndtering?",
     "Aktivitet?",
-    "Hvad er god RP?",
+    "Hvad gør du vis en sviner dig til i en ticket",
     "Hvordan hjælper du spillere?",
-    "Hvad gør en god admin?",
+    "Hvad gør en god staff?",
     "Andet?"
   ],
-  Bande: [
-    "Bandens navn?",
-    "Medlemmer?",
-    "Historie?",
-    "Mål?",
-    "Type bande?",
-    "RP stil?",
-    "Erfaring?",
-    "Konflikter?",
-    "Unikhed?",
-    "Andet?"
-  ]
+
 };
 
 function loadQuestions() {
