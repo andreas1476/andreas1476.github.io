@@ -53,7 +53,6 @@ nav a:hover {
 .btn {
   padding: 12px 25px;
   border-radius: 8px;
-  text-decoration: none;
   cursor: pointer;
   border: none;
 }
@@ -88,7 +87,7 @@ nav a:hover {
 }
 
 /* FORM */
-input, select, textarea {
+textarea, select {
   display: block;
   width: 300px;
   margin: 10px 0;
@@ -97,16 +96,7 @@ input, select, textarea {
   border: none;
 }
 
-/* BUTTON */
-button {
-  padding: 10px 20px;
-  border: none;
-  background: #5865F2;
-  color: white;
-  cursor: pointer;
-  border-radius: 6px;
-}
-
+/* CARD */
 .card {
   background: #1e293b;
   padding: 15px;
@@ -145,7 +135,7 @@ button {
   </nav>
 </header>
 
-<!-- FORSIDE -->
+<!-- HOME -->
 <div id="home">
 
   <section class="hero">
@@ -167,22 +157,76 @@ button {
   </section>
 </div>
 
-<!-- REGLER -->
+<!-- RULES -->
 <div id="rules" class="section hidden">
-  <h2>⚔️ PVP Regler</h2>
 
-  <div class="card">❌ Ingen cheats eller hacks</div>
-  <div class="card">❌ Ingen bug abuse</div>
-  <div class="card">❌ Ingen racisme eller chikane</div>
-  <div class="card">❌ Ingen reklame for andre servere</div>
-  <div class="card">❌ Ingen exploit af systemer</div>
-  <div class="card">❌ Ingen spam eller griefing</div>
-  <div class="card">✅ Respekter alle spillere</div>
-  <div class="card">✅ Respekter staff</div>
+  <h2>⚔️ Blackout PVP Rules</h2>
+
+  <div class="card">
+    <h3>General Rules</h3>
+    <p>
+      ⛔ Religious insults ➜ Permanent Ban<br>
+      💰 Scamming ➜ Permanent Ban<br>
+      🗣️ Trash talk allowed (limits apply)<br>
+      🚫 Racism beyond limits ➜ 1-week ban<br>
+      🚫 Doxxing / leaks ➜ Permanent Ban<br>
+      🚫 Advertising / cheats ➜ Permanent Ban<br>
+      🚫 RMT / cheating / scripts / macros ➜ Permanent Ban<br>
+      🚫 VIP trading abuse ➜ Permanent Ban
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Blackout / AntiCheat</h3>
+    <p>
+      🚫 No recoil / props / window abuse<br>
+      🚫 Any advantage mod = ban<br>
+      💰 Unban may require payment
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>POV Rules</h3>
+    <p>
+      🎥 Must provide 5–7 sec before & after kill<br>
+      ⏱️ Must be sent within 5 minutes<br>
+      🚫 Failure = Ban (Cheating)
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Press Rules</h3>
+    <p>
+      ⏱️ 30 sec to drop<br>
+      🚫 No press stacking<br>
+      🚫 No revives during press<br>
+      🚫 No re-press for 5 min
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Zone Rules</h3>
+    <p>
+      🔴 Red Zone = strict combat rules<br>
+      🚫 Roof abuse / car abuse = sanction<br>
+      🚫 Combat logging = ban
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Loot Rules</h3>
+    <p>
+      ✅ Loot from body only<br>
+      🚫 No glitch looting<br>
+      ✅ Random looting allowed
+    </p>
+  </div>
+
 </div>
 
 <!-- FORM -->
 <div id="form" class="section hidden">
+
   <h2>Lav en ansøgning</h2>
 
   <select id="type" onchange="loadQuestions()">
@@ -192,12 +236,6 @@ button {
   <div id="questions"></div>
 
   <button onclick="sendApplication()">Send</button>
-</div>
-
-<!-- ADMIN -->
-<div id="admin" class="section hidden">
-  <h2>Ansøgninger</h2>
-  <div id="applications"></div>
 </div>
 
 <script>
@@ -211,7 +249,6 @@ const questionSets = {
     "Erfaring?",
     "Konflikthåndtering?",
     "Aktivitet?",
-    "Hvad gør du hvis en sviner dig til i en ticket?",
     "Hvordan hjælper du spillere?",
     "Hvad gør en god staff?",
     "Andet?"
@@ -235,33 +272,10 @@ function show(section) {
   document.getElementById("home").classList.add("hidden");
   document.getElementById("rules").classList.add("hidden");
   document.getElementById("form").classList.add("hidden");
-  document.getElementById("admin").classList.add("hidden");
 
   document.getElementById(section).classList.remove("hidden");
 
   if(section === "form") loadQuestions();
-}
-
-function sendApplication() {
-  let type = document.getElementById("type").value;
-  let answers = [];
-
-  questionSets[type].forEach((q, i) => {
-    let answer = document.getElementById(`q${i}`).value;
-    answers.push(`**${q}**\n${answer}`);
-  });
-
-  let content = `📥 **Ny ${type} ansøgning**\n\n${answers.join("\n\n")}`;
-
-  fetch(WEBHOOK_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ content })
-  });
-
-  alert("Ansøgning sendt til Discord!");
 }
 </script>
 
